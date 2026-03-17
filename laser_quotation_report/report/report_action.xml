@@ -1,0 +1,27 @@
+<odoo>
+
+    <record id="action_machine_quotation_report" model="ir.actions.report">
+        <field name="name">Laser Cutting</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+
+        <!-- module_name.template_id -->
+        <field name="report_name">laser_quotation_report.machine_quotation_template</field>
+        <field name="report_file">laser_quotation_report.machine_quotation_template</field>
+
+        <!-- Keep the report callable from Python, but hide it from the Print menu -->
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_machine_quotation_powermax125_report" model="ir.actions.report">
+        <field name="name">Plasma Cutting</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">laser_quotation_report.machine_quotation_powermax125_template</field>
+        <field name="report_file">laser_quotation_report.machine_quotation_powermax125_template</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

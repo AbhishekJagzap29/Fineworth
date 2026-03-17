@@ -1,0 +1,141 @@
+<odoo>
+    <!-- Extend sale order form to allow editing the offer title shown on the PDF -->
+    <record id="view_order_form_offer_title" model="ir.ui.view">
+        <field name="name">sale.order.form.offer.title</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="priority">200</field>
+        <field name="arch" type="xml">
+            <!-- Show the Offer Title right under Payment Terms on the main page -->
+            <!-- <xpath expr="//sheet//field[@name='payment_term_id']" position="after">
+                <field name="offer_title" placeholder="Offer for CNC Fiber Laser Cutting Machine 6000 WATTS"/>
+            </xpath> -->
+            <xpath expr="//sheet//field[@name='payment_term_id']" position="after">
+    <field name="offer_title"
+           invisible="quotation_type != 'laser'"
+           placeholder="Offer for CNC Fiber Laser Cutting Machine 6000 WATTS"/>
+
+    <field name="model_name"
+           invisible="quotation_type != 'laser'"
+           placeholder="FINELASER3015"/>
+            
+</xpath>
+
+            <xpath expr="//sheet//field[@name='partner_id']" position="before">
+                <field name="quotation_type"/>
+            </xpath>
+
+            <!-- Basic Price field directly under GST Treatment -->
+            <xpath expr="//sheet//field[@name='l10n_in_gst_treatment']" position="after">
+                <field name="basic_price" widget="monetary"
+                       invisible="quotation_type != 'plasma'"
+                       string="Basic Price"
+                       help="Base price for the profile cutting machine shown on the quotation PDF."/>
+            </xpath>
+
+
+            <!-- Editable Technical Specification tab appended to the notebook -->
+            <xpath expr="//sheet/notebook/page[.//field[@name='order_line']]" position="attributes">
+                <attribute name="invisible">quotation_type != 'laser'</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="after">
+                <field name="hsn_code" readonly="1" optional="show"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/form//field[@name='name']" position="after">
+                <field name="hsn_code" readonly="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="attributes">
+                <attribute name="string">Rate (INR)</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/form//field[@name='price_unit']" position="attributes">
+                <attribute name="string">Rate (INR)</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree//field[@name='price_subtotal']" position="attributes">
+                <attribute name="string">Amount (INR)</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/form//field[@name='price_subtotal']" position="attributes">
+                <attribute name="string">Amount (INR)</attribute>
+            </xpath>
+
+            <xpath expr="//header/button[@name='action_preview_sale_order']" position="after">
+                <button name="action_print_selected_quotation"
+                        string="Print Quotation"
+                        type="object"
+                        class="btn-secondary"
+                        invisible="state not in ('draft', 'sent', 'sale')"/>
+            </xpath>
+
+            <xpath expr="//sheet/notebook" position="inside">
+                <page name="technical_spec"
+                      string="Technical Specification"
+                      invisible="quotation_type != 'laser'">
+                    <group>
+                        <field name="tech_spec_ids" context="{'default_order_id': active_id}">
+                            <tree editable="bottom" create="false" delete="false">
+                                <field name="sequence" readonly="1"/>
+                                <field name="name" readonly="1"/>
+                                <field name="value"/>
+                            </tree>
+                            <form string="Technical Specification Line">
+                                <group>
+                                    <field name="order_id" invisible="1" readonly="1"/>
+                                    <field name="sequence" readonly="1"/>
+                                    <field name="name" readonly="1"/>
+                                    <field name="value"/>
+                                </group>
+                            </form>
+                        </field>
+                    </group>
+                </page>
+                <page name="plasma_spec"
+                      string="Technical Specification"
+                      invisible="quotation_type != 'plasma'">
+                    <group>
+                        <field name="plasma_spec_ids" context="{'default_order_id': active_id}">
+                            <tree editable="bottom">
+                                <field name="sequence" readonly="1"/>
+                                <field name="name" readonly="1"/>
+                                <field name="value"/>
+                            </tree>
+                            <form string="Plasma Specification Line">
+                                <group>
+                                    <field name="order_id" invisible="1" readonly="1"/>
+                                    <field name="sequence" readonly="1"/>
+                                    <field name="name" readonly="1"/>
+                                    <field name="value"/>
+                                </group>
+                            </form>
+                        </field>
+                    </group>
+                </page>
+                <page name="optional_items"
+                      string="Optional"
+                      invisible="quotation_type != 'laser'">
+                    <group>
+                        <field name="optional_spec_ids" context="{'default_order_id': active_id}">
+                            <tree editable="bottom" create="false" delete="false">
+                                <field name="sequence" readonly="1"/>
+                                <field name="name" readonly="1"/>
+                                <field name="value"/>
+                            </tree>
+                            <form string="Optional Item">
+                                <group>
+                                    <field name="order_id" invisible="1" readonly="1"/>
+                                    <field name="sequence" readonly="1"/>
+                                    <field name="name" readonly="1"/>
+                                    <field name="value"/>
+                                </group>
+                            </form>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

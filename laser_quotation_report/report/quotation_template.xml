@@ -1,0 +1,739 @@
+﻿<odoo>
+    <template id="fw_page_header">
+        <div style="width:100%; margin-bottom:10px;">
+            <img src="/laser_quotation_report/static/src/img/header.png"
+                style="width:100%;"/>
+        </div>
+    </template>
+
+<template id="machine_quotation_template">
+    <t t-call="web.basic_layout">
+        <t t-foreach="docs" t-as="doc">
+                                    <style>
+                            /* Force Times New Roman everywhere */
+                            .page,
+                            .page * {
+                                font-family: "Times New Roman", serif !important;
+                            }
+
+                            .fw {
+                                font-family: "Times New Roman", serif;
+                                font-weight: 400;
+                            }
+
+                            .fw b,
+                            .fw strong {
+                                font-weight: 700;
+                            }
+
+                            .justify-text {
+                                text-align: justify !important;
+                                line-height: 1.6;
+                                margin: 6px 0;
+                                width: 100%;
+                                display: block;
+                                word-spacing: 0.05em;
+                            }
+
+                            /* Left padding for TO section */
+                            .to-section {
+                                padding-left: 40px;
+                                margin-top: 6px;
+                            }
+
+                            /* Black label text like TO and MOB NUM */
+                            .label-text {
+                                font-family: "Times New Roman", serif;
+                                font-size: 16px;
+                                font-weight: bold;
+                                color: #000000;
+                            }
+
+                                                    .blue-text {
+                            font-family: "Times New Roman", serif;
+                            font-size: 17px;
+                            font-weight: bold;
+                            color: #0b2fa6;
+                            line-height: 1.4;
+                            padding-left: 25px;   /* only for address block */
+                        }
+
+                        /* for inline blue text like mobile number */
+                        .blue-inline {
+                            font-family: "Times New Roman", serif;
+                            font-size: 17px;
+                            font-weight: bold;
+                            color: #0b2fa6;
+                        }
+                        </style>
+
+           <!-- PAGE 1 -->
+        <div class="page fw">
+
+    <t t-call="laser_quotation_report.fw_page_header"/>
+     <hr class="line"/>
+                        <!-- TO -->
+                   <!-- TO -->
+                        <div class="label-text">TO</div>
+
+                        <div class="blue-text">
+                            <div t-esc="doc.partner_id.name"/>
+                            <div t-esc="doc.partner_id.city"/>
+                        </div>
+
+                        <br/>
+
+                        <div>
+                            <span class="label-text">MOB NUM:</span>
+                            <span class="blue-inline"
+                                t-esc="doc.partner_id.mobile or doc.partner_id.phone"/>
+                        </div>
+
+    <hr class="line"/>
+
+    <!-- DATE & QUOTATION -->
+    <div style="margin-top:6px;">
+        <!-- <div><b>Date</b> <span t-field="doc.date_order" t-options="{'widget':'date'}"/></div> -->
+        <div>
+    <b>Date</b>
+    <span t-esc="doc.date_order.strftime('%d / %m / %Y')"/>
+</div>
+        <div><b>Quotation no:</b> <span t-field="doc.name"/></div>
+    </div>
+
+    <br/>
+
+    <div><b><u>KIND ATTN Mr:</u></b></div>
+
+    <br/>
+
+                                    <!-- TITLE -->
+                        <div style="font-size:24px; font-weight:bold; text-decoration:underline;margin-bottom:12px;">
+                            <t t-esc="doc.offer_title or 'Offer for CNC Fiber Laser Cutting Machine 6000 WATTS'"/>
+                        </div>
+
+                                    <div style="font-size:18px; font-weight:bold; margin-top:6px;  margin-bottom:20px">
+                                        FINE 2D Cutting Technology for processing Sheet metal With A headtech LASER Controller
+                                    </div>
+
+                                                            <div class="center" style="font-size:18px; font-weight:bold; margin-top:10px;">
+                                Model: <span t-esc="doc.model_name"/>
+                            </div>
+
+                            <div class="center" style="font-size:22px; font-weight:bold; margin-top:4px; margin-bottom:20px;">
+                                    MADE IN INDIA
+                            </div>
+
+                                    <!-- ADDRESS TABLE -->
+                                   <table style="width:90%; margin:25px auto; font-family:'Times New Roman', serif; font-weight:bold; border-collapse:collapse;">
+
+                                                    <tr>
+
+                                                        <!-- LEFT COLUMN -->
+                                                        <td style="width:50%; vertical-align:top; padding:10px 20px;">
+
+                                                            <div style="padding-top:6px; padding-bottom:10px; font-size:16px;">
+                                                                <b><u>PURCHASE ORDER ADDRESS</u></b>
+                                                            </div>
+
+                                                            <div style="line-height:1.8; font-weight:normal;">
+
+                                                                <b>Fine Worth Engineers and Services</b><br/>
+
+                                                                <span style="margin-left:20px;">No.690, Kulathur,</span><br/>
+                                                                <span style="margin-left:20px;">Irugur Road,</span><br/>
+                                                                <span style="margin-left:20px;">Chinniyampalayam,</span><br/>
+                                                                <span style="margin-left:20px;">Coimbatore – 641062</span>
+
+                                                            </div>
+
+                                                        </td>
+
+
+                                                        <!-- RIGHT COLUMN -->
+                                                        <td style="width:50%; vertical-align:top; padding:10px 20px;">
+
+                                                            <div style="padding-top:6px; padding-bottom:10px; font-size:16px;">
+                                                                <b><u>CORRESPONDENCE / POSTAL ADDRESS</u></b>
+                                                            </div>
+
+                                                            <div style="line-height:1.8; font-weight:normal; padding-left:10px;">
+
+                                                                Email:
+                                                                <span style="color:#007bff;">fineworth2010@gmail.com</span><br/>
+
+                                                                <span style="color:#007bff; margin-left:40px;">
+                                                                    info@fineworth.com
+                                                                </span><br/>
+
+                                                                Web:
+                                                                <span style="color:#007bff;">www.fineworth.com</span>
+
+                                                            </div>
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                </table>
+
+                                     <!-- CONTACT BOX -->
+                                        <table style="width:65%; margin:35px auto 0; font-family:'Times New Roman', serif; border-collapse:collapse;">
+                                            <tr>
+                                                <td style="
+                                                    text-align:center;
+                                                    padding:14px;
+                                                    border:1px solid #000;
+                                                    line-height:1.8;
+                                                    font-size:16px;
+                                                ">
+                                                    <b>SATHISH.V</b><br/>
+                                                    <b>MOB: 8870048444, 9944443062</b>
+                                                </td>
+                                            </tr>
+                                        </table>
+            </div>
+
+           <!-- FORCE NEXT PAGE -->
+
+        <div style="page-break-after: always;">
+            </div>
+
+                                <!-- PAGE 2 -->
+                    <div class="page fw">
+                        <t t-call="laser_quotation_report.fw_page_header"/>
+
+                                <style>
+                                    /* Ensure Times New Roman on subsequent pages too */
+                                    .page,
+                                    .page * {
+                                        font-family: "Times New Roman", serif !important;
+                                    }
+
+                                    .spec-table,
+                                    .offer-table {
+                                        width: 88%;
+                                        margin: 0 auto;
+                                        border-collapse: collapse;
+                                    }
+
+                                    .spec-table th,
+                                    .offer-table th {
+                                        border: 1px solid #000;
+                                        padding: 4px;
+                                        font-weight: bold;
+                                        font-size: 14px;
+                                        text-align: center;
+                                    }
+
+                                    .spec-table td {
+                                        border: 1px solid #000;
+                                        padding: 3px 6px;
+                                        font-size: 13px;
+                                          font-family: "Times New Roman", serif !important;
+                                        text-align: center; 
+                                    }
+
+                                    .offer-table td {
+                                        border: 1px solid #000;
+                                        padding: 5px;
+                                        font-size: 13px;
+                                        vertical-align: top;
+                                    }
+
+                                    .center { text-align:center; }
+                                    .right { text-align:right; }
+                                </style>
+
+                                    <!-- TECHNICAL SPECIFICATION -->
+                                        <table class="spec-table"
+                                            style="width:100%; border-collapse:collapse; font-family:'Times New Roman', serif;font-size:20px;">
+                                            <tr>
+                                                <th style="width:10%; padding:10px; font-weight:bold;">Sr.No</th>
+                                                <th style="width:55%; padding:10px; font-weight:bold;">Descriptions</th>
+                                                <th style="width:35%; padding:10px; font-weight:bold;">Technical Specifications</th>
+                                            </tr>
+
+                                           <t t-set="spec_lines" t-value="doc.tech_spec_ids.sorted('sequence')"/>
+                                                <t t-if="spec_lines">
+                                                    <t t-foreach="spec_lines" t-as="spec">
+                                                        <tr style="font-family:'Times New Roman', serif;">
+                                                            <td class="center" style="padding:8px;">
+                                                                <span t-esc="spec.sequence"/>
+                                                            </td>
+                                                            <td>
+                                                                <span t-esc="spec.name"/>
+                                                            </td>
+                                                            <td>
+                                                                <span t-esc="spec.value"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </t>
+                                        </table>
+
+                                        <!-- OFFER TITLE -->
+                                        <div style=" width:95%; margin:15px auto 5px;   color:#2f5fd0;font-weight:bold; font-size:20px; text-align:left;">
+                                            Offer:
+                                        </div>
+
+                                        <!-- OFFER TABLE -->
+                        <table class="offer-table"
+                            style="
+                                    width:100%; margin-top:20px;   margin-bottom:20px;   border-collapse:collapse;font-size:18px;line-height:1.5;">
+                            <tr>
+                                <th style="width:7%; padding:10px;">Sr. No.</th>
+                                <th style="width:43%; padding:10px;">Description</th>
+                                <th style="width:12%; padding:10px;">HSN Code</th>
+                                <th style="width:14%; padding:10px;">Rate (INR)</th>
+                                <th style="width:8%; padding:10px;">Qty</th>
+                                <th style="width:16%; padding:10px;">Amount (INR)</th>
+                            </tr>
+
+                                                                        <t t-set="offer_lines" t-value="doc.order_line.filtered(lambda l: not l.display_type)"/>
+                                                    <t t-set="line_no" t-value="1"/>
+
+                                                    <t t-foreach="offer_lines" t-as="line">
+                                                        <tr>
+
+                                                            <td class="center" style="padding:8px;">
+                                                                <span t-esc="line_no"/>.
+                                                            </td>
+
+                                                            <td style="padding:8px;">
+                                                                <span t-field="line.product_id.name"/>
+                                                            </td>
+
+                                                            <td class="center" style="padding:8px;">
+                                                                <span t-esc="line.product_id.l10n_in_hsn_code or ''"/>
+                                                            </td>
+
+                                                            <td class="right" style="padding:8px;">
+                                                                <span t-field="line.price_unit"
+                                                                    t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                                                            </td>
+
+                                                            <td class="center" style="padding:8px;">
+                                                                <span t-field="line.product_uom_qty"/>
+                                                            </td>
+
+                                                            <td class="right" style="padding:8px;">
+                                                                <span t-field="line.price_subtotal"
+                                                                    t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <t t-set="line_no" t-value="line_no + 1"/>
+                                                    </t>
+
+                            <tr>
+                                <td colspan="5"
+                                    class="right"
+                                    style="padding:10px; font-weight:bold; font-size:16px;">
+                                    TOTAL
+                                </td>
+
+                                <td class="right"
+                                    style="padding:10px; font-weight:bold; font-size:16px;">
+                                    <span t-field="doc.amount_untaxed"
+                                        t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                                                        <!-- NOTE -->
+                                            <div style="
+                                                width:90%;
+                                                margin:12px auto 0;
+                                                font-family:'Times New Roman', serif;
+                                                font-size:15px;
+                                                text-align:left;
+                                            ">
+
+                                                <div style="margin-bottom:4px;">
+                                                    <span style="font-weight:bold;">NOTE</span>
+                                                    : GST 18% EXTRA
+                                                </div>
+
+                                                <div>
+                                                    <span style="font-weight:bold;">Rupees in words</span>
+                                                    :
+                                                    <span style="text-transform:uppercase;">
+                                                        <span t-esc="doc.currency_id.amount_to_text(doc.amount_untaxed)"/>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+</div>
+
+<div style="page-break-after: always;"></div>
+                
+                
+                <!--page 3 start here-->
+ <div class="page fw">
+    <t t-call="laser_quotation_report.fw_page_header"/>
+
+                                <!-- OPTIONAL -->
+                             <!-- OPTIONAL -->
+<!-- <div style="width:90%; margin:15px auto; font-family:'Times New Roman', serif; font-size:15px;"> -->
+<div style="width:85%; margin:15px 0 15px 20px;    font-family:'Times New Roman', serif;font-size:15px;">
+
+    <div style="font-weight:bold; font-size:16px; margin-bottom:6px;">
+        OPTIONAL
+    </div>
+
+    <t t-set="optional_lines" t-value="doc.optional_spec_ids.sorted('sequence')"/>
+    <t t-if="optional_lines">
+        <t t-foreach="optional_lines" t-as="opt">
+            <div style="margin-bottom:3px; margin-left:40px;">
+                <span style="display:inline-block; width:320px;">
+                    <span t-esc="opt.name"/>
+                </span>
+                :
+                <span style="margin-left:5px;">
+                    <span t-esc="opt.value"/>
+                </span>
+            </div>
+        </t>
+    </t>
+
+</div>
+
+
+<!-- CUSTOMER SCOPE -->
+<div style="width:85%; margin:15px 0 15px 20px; font-family:'Times New Roman', serif; font-size:15px;">
+
+    <div style="font-weight:bold; font-size:16px; margin-bottom:6px;">
+        CUSTOMER SCOPE
+    </div>
+
+    <ul style="margin:0; padding-left:40px; line-height:1.8;">
+        <li>Incoming power line and earth bit – 3 Nos</li>
+        <li>Incoming gas line with cylinder setup</li>
+        <li>Incoming air line</li>
+        <li>Sample plates for setting purpose</li>
+        <li>Floor level with concrete minimum 6 INCH</li>
+    </ul>
+
+</div>
+
+                                    <!-- TERMS & CONDITIONS -->
+                                    <div style="margin-top:8px;
+                                                font-size:15px;
+                                                font-weight:bold;
+                                                color:#2a2a9a;
+                                                text-decoration:underline;">
+                                        TERMS &amp; CONDITIONS
+                                    </div>
+                                    <!-- Ex-Works -->
+                                    <div style="margin-left:20px; margin-bottom:6px;">
+                                        <span style="display:inline-block; width:170px; font-weight:bold;">Ex-Works</span>
+                                        <span style="display:inline-block; width:15px; font-weight:bold;">:</span>
+                                        <span style="font-weight:normal;">Coimbatore, Tamilnadu, INDIA.</span>
+                                    </div>
+
+                                    <!-- GST -->
+                                    <div style="margin-left:20px; margin-bottom:10px;">
+                                        <span style="display:inline-block; width:170px; font-weight:bold; vertical-align:top; line-height:1.5;">
+                                            Goods<br/>&amp; Service<br/>Tax (GST)
+                                        </span>
+                                        <span style="display:inline-block; width:15px; font-weight:bold; vertical-align:top;">:</span>
+                                        <span style="display:inline-block; width:65%; font-weight:normal;">
+                                            In Tamilnadu :- CGST 9% + SGST 9% = Total 18%<br/>
+                                            18% Outside Tamilnadu :- IGST 18%<br/>
+                                            GST is applicable on supply of Machine and composite services,
+                                            if not arranged by Buyer (Packing, Insurance, Transportation etc.)
+                                        </span>
+                                    </div>
+
+                                        <!-- Packing -->
+                                        <div style="margin-left:20px; margin-bottom:6px;">
+                                            <span style="display:inline-block; width:170px; font-weight:bold; vertical-align:top;">
+                                                Packing
+                                            </span>
+
+                                            <!-- FIX -->
+                                            <span style="display:inline-block; width:15px; font-weight:bold; vertical-align:top;">
+                                                :
+                                            </span>
+
+                                            <span style="display:inline-block; width:65%; font-weight:normal;">
+                                                Inclusive. Minimum 3 working days will be required for packing from
+                                                the date of final payment realization in FWES account.
+                                            </span>
+                                        </div>
+
+                                            <!-- Freight -->
+                                            <div style="margin-left:20px; margin-bottom:6px;">
+                                                <span style="display:inline-block; width:170px; font-weight:bold; vertical-align:top;">
+                                                    Freight &amp; Insurance
+                                                </span>
+
+                                                <span style="display:inline-block; width:15px; font-weight:bold; vertical-align:top;">
+                                                    :
+                                                </span>
+
+                                                <span style="display:inline-block; width:65%; font-weight:normal; line-height:1.7;">
+                                                    To buyer’s Account. If required FWES can provide the details of
+                                                    recommended transporters and insurance company. FWES shall not be
+                                                    responsible for any transit damage and insurance claim.
+                                                </span>
+                                            </div>
+
+                                            <!-- Delivery -->
+                                            <div style="margin-left:20px; margin-bottom:6px;">
+                                                <span style="display:inline-block; width:170px; font-weight:bold; vertical-align:top;">
+                                                    Delivery Period
+                                                </span>
+
+                                                <span style="display:inline-block; width:15px; font-weight:bold; vertical-align:top;">
+                                                    :
+                                                </span>
+
+                                                <span style="display:inline-block; width:65%; font-weight:normal; line-height:1.7;">
+                                                    6 - 8 weeks from the date of clear techno commercial order along with
+                                                    40% advance. If drawing approval process applicable, then dispatch
+                                                    will be from the date of completion of drawing approval process.
+                                                </span>
+                                            </div>
+
+                                        <!-- Payment -->
+                                        <div style="margin-left:20px; margin-bottom:4px;">
+                                            <span style="display:inline-block; width:170px; font-weight:bold;">Mode of Payment</span>
+                                            <span style="display:inline-block; width:15px; font-weight:bold;">:</span>
+                                            <span style="font-weight:normal;">In favor of “FINE WORTH ENGINEERS.”</span>
+                                        </div>
+                                                <div style="margin-left:205px; margin-bottom:6px; font-weight:normal;">
+                                                      Beneficiary Name : FINE WORTH ENGINEERS
+                                                </div>
+
+                                                <div style="margin-left:205px; margin-bottom:6px; font-weight:normal;">
+                                                    Bank Name : KARUR VYSHYA BANK
+                                                </div>
+
+                                                <div style="margin-left:205px; margin-bottom:10px; font-weight:normal;">
+                                                        Bank Address : Chinniyampalayam, Coimbatore, 
+                                                </div>
+                                                <div style="margin-left:205px; margin-bottom:10px; font-weight:normal;">
+                                                 Tamilnadu – 641062.
+                                         </div>
+        
+ </div>
+ 
+ 
+ 
+ 
+ 
+        <div style="page-break-after: always;">
+</div>
+
+        <div class="page fw">
+                    <t t-call="laser_quotation_report.fw_page_header"/>
+
+                    <!-- <div style="width:88%; margin:0 auto; font-size:14px; line-height:1.45; font-style:italic;"> -->
+                    <div style="width:88%; margin:0 auto; font-size:14px; line-height:1.45; font-family:'Times New Roman', Times, serif; font-weight:400;">
+                        <div style="text-align:center; line-height:1.6; font-family:'Times New Roman', Times, serif;">
+                    <div>
+                    <span style="display:inline-block; width:170px; text-align:right; font-weight:bold;">
+                        Account Number
+                    </span>
+                    <span style="display:inline-block; width:15px; text-align:center;">:</span>
+                    <span style="display:inline-block; width:200px; text-align:left;">
+                        167713500001300
+                    </span>
+        </div>
+
+                                                    <div>
+                                                        <span style="display:inline-block; width:170px; text-align:right; font-weight:bold;">
+                                                            RTGS / IFSC Code
+                                                        </span>
+                                                        <span style="display:inline-block; width:15px; text-align:center;">:</span>
+                                                        <span style="display:inline-block; width:200px; text-align:left;">
+                                                            KVBL0001677
+                                                        </span>
+                                                    </div>
+
+                                                        <div>
+                                                            <span style="display:inline-block; width:170px; text-align:right; font-weight:bold;">
+                                                                Account
+                                                            </span>
+                                                            <span style="display:inline-block; width:15px; text-align:center;">:</span>
+                                                            <span style="display:inline-block; width:200px; text-align:left;">
+                                                                CURRENT ACCOUNT
+                                                            </span>
+                                                        </div>
+    </div>
+
+                                                        <!-- Payment Mode -->
+                                                        <div style="margin-top:10px; margin-left:20px; margin-bottom:8px;">
+                                                            <span style="display:inline-block; width:170px; font-weight:bold; vertical-align:top;">
+                                                                Payment Mode
+                                                            </span>
+                                                            <span style="display:inline-block; width:20px; font-weight:bold; vertical-align:top;">
+                                                                :
+                                                            </span>
+                                                            <span style="display:inline-block; width:65%; line-height:1.7;">
+                                                                Payment will be accepted through NEFT, RTGS, ONLINE BANKING,
+                                                                SWIFT TRANSFER and IMPS mode only.
+                                                                CASH, CHEQUE and DD will not be accepted.
+                                                            </span>
+                                                        </div>
+
+                                                        <!-- Payment Terms -->
+                                                        <div style="margin-left:20px;">
+                                                            <span style="display:inline-block; width:170px; font-weight:bold; vertical-align:top;">
+                                                                Payment Terms
+                                                            </span>
+                                                            <span style="display:inline-block; width:20px; font-weight:bold; vertical-align:top;">
+                                                                :
+                                                            </span>
+                                                            <span style="display:inline-block; width:65%; line-height:1.7;">
+                                                                40% of total order value or 15 lacs, whichever is higher, in advance with P.O.
+                                                                plus 18% GST and balance 60% along with taxes and duties against proforma invoice
+                                                                before dispatch of machine. Dispatch of machine is subject to realization of payment
+                                                                in FWEAS account.
+                                                                <br/><br/>
+                                                                In case of LC, confirmed irrevocable LC at site from any nationalized or recognized
+                                                                bank is acceptable.
+                                                                <br/><br/>
+                                                                In case of LC, machine will be transported through our transporter on to-pay basis
+                                                                and will be handed over on receipt of bank acceptance letter with duly signed and
+                                                                stamped LR copy by our transporter.
+                                                            </span>
+                                                        </div>
+
+
+                                                            <!-- Installation -->
+                                                            <div style="font-size:17px; font-weight:700; margin-top:12px;">
+                                                                Installation, commissioning and Training:
+                                                            </div>
+
+                                                                    <div style="margin-left:18px; margin-top:4px;">
+                                                                <span style="font-weight:200 !important; font-style:normal;">
+                                                                    * Inclusive for 4 days. However our Engineer’s lodging, boarding,
+                                                                    traveling, and conveyance shall be borne by you. Beyond 4 days
+                                                                    chargeable at Rs. 15,000/- per day per engineer.
+                                                                </span>
+                                                            </div>
+                                                            <!-- Validity -->
+                                                            <div style="font-weight:bold; text-decoration:underline; margin-top:10px;">
+                                                                Validity:
+                                                            </div>
+                                                            <div style="margin-left:18px; margin-top:4px;">
+                                                                * 30 days from the date of offer.
+                                                            </div>
+
+                                                            <!-- Testing -->
+                                                            <div style="font-weight:bold; text-decoration:underline; margin-top:10px;">
+                                                                Testing at FWES:
+                                                            </div>
+                                                            <div style="margin-left:18px; margin-top:4px;">
+                                                                * Machine will be tested under rigorous production process for 48 hrs.
+                                                            </div>
+
+                                                            <!-- Cancellation -->
+                                                            <div style="font-weight:bold; text-decoration:underline; margin-top:10px;">
+                                                                Cancellation Terms:
+                                                            </div>
+                                                            <div style="margin-left:18px; margin-top:4px;">
+                                                                * In case of cancellation of order, the advance amount can be used either
+                                                                for future procurement within 6 months or will be forfeited.
+                                                            </div>
+
+                                                            <!-- Warranty -->
+                                                            <div style="font-weight:bold; text-decoration:underline; margin-top:10px;">
+                                                                Warranty:
+                                                            </div>
+
+                                                            <div style="margin-left:18px; margin-top:4px;">
+                                                                * All Products are warranted by FWEAS against materials and workmanship
+                                                                for 24 months from the date of installation or 24 months from the date
+                                                                of machine readiness in customer plant.
+                                                            </div>
+
+                                                            <div style="margin-left:18px; margin-top:4px;">
+                                                                * During warranty, our Engineer’s lodging, boarding, traveling, and
+                                                                conveyance shall be borne by you. Consumables, lens, nozzle, mirror,
+                                                                ceramic part, optics, fiber and any physical damage are not covered in Warranty.
+                                                            </div>
+
+                                                            <div style="margin-left:18px; margin-top:4px;">
+                                                                * Further details of warranty is mentioned in the Warranty Enclosure.
+                                                            </div>
+
+                </div>
+
+                                                            <div style="position:relative; height:180px;">
+                                                                <div style="margin-top:80px; margin-right:40px; text-align:right; font-family:'Times New Roman', Times, serif;">
+                                                                <div><b>Best Regards</b></div>
+                                                                <div><b>For Fine Worth engineers.</b></div>
+                                                                <div style="margin-top:15px; font-weight:bold;">SATHISH</div>
+                                                                <div>Marketing</div>
+                                                            </div>
+            </div>
+                </div>
+
+                   <div style="page-break-after: always;"></div>
+
+
+                   <!--new page-->
+
+                <div class="page fw">
+                    <t t-call="laser_quotation_report.fw_page_header"/>
+
+                    <div style="width:90%; margin:0 auto;">
+                        <div style="text-align:center;font-size:16px;font-weight:bold;color:#2a2a9a;text-decoration:underline;">
+                            WARRANTY ENCLOSURE (WARRANTY &amp; DISCLAIMER)
+                    </div>
+
+                                                        <div style="text-align:center; margin-top:2px;">
+                                                            (FINE WORTH ENGINEERS AND SERVICES., All rights reserved)
+                                                        </div>
+
+                        <div style="margin-top:8px; font-size:16px;">
+                            <p><b>GENERAL WARRANTY:</b></p>
+                            <div class="justify-text" align="justify" style="text-align:justify !important; width:100%; display:block;">
+                                FWEAS also warrants that this product will meet applicable specifications under normal use. FWEAS shall, at its option, repair or replace any product that proves, in the reasonable opinion of FWEAS, to be defective in materials or workmanship during un-expired period of time in the original warranty for the particular defective product. FWEAS reserves the right to issue a credit note for any defective products that have proved defective through normal usage.
+                            </div>
+
+                            <p style="margin-top:8px; font-size:18px;"><b>WARRANTY LIMITATIONS:</b></p>
+                            <div class="justify-text" align="justify" style="text-align:justify !important; width:100%; display:block;">
+                                This warranty excludes products, parts (including fiber connectors) or equipment which have been tampered with, opened, or modified by persons other than FWEAS personnel, misused, neglected, or damaged by accident, used in applications which exceed their specifications or ratings, used outside of environmental specification for the product, used with buyer software or interfacing, improperly installed, maintained or otherwise abused or used other than in accordance with the information and precaution contained in this User's Manual. It is the customer's responsibility to understand and follow operating instructions in this User's Guide and specifications prior to operation; failure to do so may result in voiding this warranty. Accessories and fiber connectors are not covered by this warranty. Buyer must claim under the warranty in writing no later than 31 days after the claimed defect is discovered. This warranty does not extend to any third party, including without limitation buyer's end-users or customers, and does not apply to any parts, equipment or other products not manufactured by FWEAS.
+                            </div>
+
+                            <div class="justify-text" align="justify" style="margin-top:8px; text-align:justify !important; width:100%; display:block;">
+                                This warranty does not cover normal wear and tear, consumables and optics, or component failures caused by (i) accident, (ii) abuse, or (iii) failure to maintain the FWEAS product that contains the affected components in accordance with the technical bulletins and specifications provided by FWEAS. Any labor involved will be provided by Buyer at their expense. The liability of FWEAS under this warranty is limited, at FWEAS's exclusive option and Distributor's sole and exclusive remedy, only to repair or replacement with equivalent items or refund of the purchase price upon return of the subject non-conforming product. Replacement parts may be either new or reconditioned, at FWEAS's option. One side freight for return of parts or components provided by FWEAS under this warranty will be the responsibility of the Buyer. This warranty is conditioned upon (a) FWEAS being notified in writing by Buyer within 2 days after discovery of defects; (b) the return of presumed defective components to FWEAS, transportation charges prepaid by Buyer; and (c) FWEAS's examination of such components disclosing to its satisfaction that such defects were not caused by negligence, misuse, improper maintenance, improper installation, accident, or unauthorized repair or alteration. Accessories or equipment manufactured by others but furnished by FWEAS shall carry the warranty conveyed by the manufacturer to FWEAS, which may be passed on to the Buyer. The original warranty period of any component that has been repaired or replaced by FWEAS shall not thereby be extended. This warranty covers all machinery and electronics equally; however, it does not include wear parts and consumable parts such as seals, valves, optics, other consumables, nozzles, and mirrors or any hoses.
+                            </div>
+                                                        <div style="margin-top:10px;
+                                                                font-size:18px;
+                                                                font-weight:bold;
+                                                                color:#000000;
+                                                                text-decoration:underline;">
+                                                            <strong> DISCLAIMER OF WARRANTIES; LIMITATION OF LIABILITY:</strong>
+                                                        </div> 
+
+
+                                                            <div class="justify-text" align="justify" style="margin-top:8px; text-align:justify !important; width:100%; display:block;">
+                                                                Except for the warranties expressed in this agreement, FWEAS disclaims all other warranties, either expressed or implied,
+                                                                including implied warranties of merchantability or fitness for a particular purpose,
+                                                                other than those warranties implied by and applicable of exclusion, restriction or modification under
+                                                                applicable law. The term of any implied warranties that cannot be disclaimed are limited to the term
+                                                                of this agreement. FWEAS's maximum liability to you is limited to
+                                                                the purchase price you paid for the product. FWEAS is not liable to you if it is unable to perform due to events
+                                                                which cause loss of use, interruption of business, lost profits, lost data or other consequential, punitive or
+                                                                special damages, however caused, whether for breach of warranty, contract,
+                                                                tort (including negligence), strict legal right, but all disputes will be subjected to Coimbatore, Tamil Nadu, INDIA jurisdiction.
+                                                                Note: If need to depute our OEM’s service engineer, then service visit charge as per their offer
+                                                                and terms and condition will be charged. Spares charge will be at actual.
+                                                           </div>  
+                        </div>
+                    </div>
+                </div>
+                
+            </t>
+        </t>
+    </template>
+</odoo>

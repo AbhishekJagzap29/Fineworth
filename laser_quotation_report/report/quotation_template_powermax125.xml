@@ -1,0 +1,828 @@
+<odoo>
+
+    <!-- ✅ HEADER (clean — no black line) -->
+    <template id="fw_powermax125_page_header">
+        <div style="width:100%; margin:0; padding:0; line-height:0; overflow:hidden; position:relative; border:none;">
+            <img src="/laser_quotation_report/static/src/img/header2.png"
+                 style="width:100%; display:block; border:none; outline:none; margin:0; padding:0; box-shadow:none;"/>
+        </div>
+    </template>
+
+
+    <template id="machine_quotation_powermax125_template">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+
+                <style>
+                    .fw2 {
+                        font-size: 13px;
+                        line-height: 1.35;
+                        font-weight: 400;
+                    }
+
+                    /* Remove black line from PDF renderer - target all possible containers */
+                    .page,
+                    article,
+                    header,
+                    main,
+                    section,
+                    .header,
+                    .footer,
+                    .o_report_layout,
+                    .o_report_layout_standard,
+                    div[class*="page"],
+                    div[class*="layout"] {
+                        border: none !important;
+                        border-left: none !important;
+                        outline: none !important;
+                        box-shadow: none !important;
+                        margin-top: 0 !important;
+                        padding-top: 0 !important;
+                    }
+
+                    img {
+                        border: none !important;
+                        outline: none !important;
+                        box-shadow: none !important;
+                    }
+
+                    /* Suppress Odoo's default report header border */
+                    .header {
+                        border-bottom: none !important;
+                    }
+
+                    .fw2 .title {
+                        font-size: 18px;
+                        font-weight: 700;
+                        text-align: center;
+                        margin-top: 20px;   /* 👈 space from header */
+                        margin-bottom: 8px;
+                        color: #008000;     
+                    }
+
+                    .spec-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 6px;
+                        font-size: 16px;
+                    }
+
+                    .spec-table th,
+                    .spec-table td {
+                        border: 1px solid #000;
+                        padding: 10px 12px;
+                        vertical-align: middle;
+                    }
+
+                    .spec-table th {
+                        background-color: #f2f2f2;
+                        text-align: center;
+                        font-weight: 700;
+                    }
+
+                    .spec-table td:nth-child(1) {
+                        text-align: center;
+                        width: 9%;
+                    }
+
+                    .spec-table td:nth-child(2) {
+                        width: 61%;
+                    }
+
+                    .spec-table td:nth-child(3) {
+                        width: 30%;
+                        text-align: center;
+                    }
+
+                    .fw2 .page-no {
+                        text-align: right;
+                        font-size: 12px;
+                        margin-bottom: 4px;
+                    }
+
+                    .fw2 ul {
+                        margin: 4px 0 0 18px;
+                        padding: 0;
+                    }
+                 
+                    /* ===== Premium Heading Style ===== */
+.heading-premium {
+    font-family: 'Times New Roman', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #000;
+    letter-spacing: 1px;
+}
+
+/* ===== Section Label (like PRICE FOR MODEL) ===== */
+.label-premium {
+    font-family: 'Times New Roman', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #000;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+}
+
+/* ===== Value text beside labels ===== */
+.value-text {
+    font-weight: 600;
+    color: #000;
+}
+
+/* ===== Table Header Premium ===== */
+.spec-header th {
+    font-family: 'Times New Roman', serif;
+    color: #000;
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+} 
+  .arrow-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 4px;
+}
+
+.arrow-list li {
+    font-family: 'Times New Roman', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #000000;
+    margin: 3px 0;
+} 
+/* ===== Section Title (like OPTIONAL, Customer to be provided) ===== */
+.section-title {
+    font-family: 'Times New Roman', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #000;
+    margin-top: 14px;
+}
+
+/* ===== Feature Box ===== */
+.feature-box {
+    border: 2px solid #000;
+    padding: 8px 12px;
+    margin-top: 12px;
+    font-family: 'Times New Roman', serif;
+}
+
+/* ===== Feature Heading ===== */
+.feature-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2f5cff;
+    text-decoration: underline;
+    margin-bottom: 4px;
+}
+
+/* ===== Feature List ===== */
+.feature-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 6px;
+}
+
+.feature-list li {
+    padding-left: 18px;
+    position: relative;
+    margin: 4px 0;
+    font-size: 17px;
+}
+
+.feature-list li::before {
+    content: "♦";   /* PDF safe */
+    position: absolute;
+    left: 0;
+}
+
+/* emphasis */
+.feature-bold { font-weight: 700; }
+.feature-italic { font-style: italic; }
+
+/* annexure */
+.annexure {
+    color: #008000;
+    font-weight: 700;
+    font-size: 18px;
+    margin-top: 6px;
+}
+/* ===== Software Features Box ===== */
+.software-box {
+    border: 2px solid #000;
+    padding: 8px 12px;
+    margin-top: 12px;
+    font-family: 'Times New Roman', serif;
+}
+
+/* Heading */
+.software-title {
+    color: #2f63d6;        /* blue */
+    font-size: 22px;
+    font-weight: 700;
+    text-decoration: underline;
+    margin-bottom: 6px;
+}
+
+/* Green list text */
+.software-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.software-list li {
+    color: #000000;        
+    font-size: 18px;
+   margin: 1px 0;      /* 🔽 reduce vertical gap */
+    line-height: 1.15; 
+}
+
+/* dash bullet */
+.software-list li::before {
+    content: "- ";
+    font-weight: 700;
+}
+thead { 
+    display: table-header-group; 
+}
+
+tfoot { 
+    display: table-footer-group; 
+}
+
+
+.spec-table {
+    page-break-inside: auto;
+}
+.spec-table {
+    page-break-inside: auto;
+}
+
+.spec-table tbody tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+}
+
+thead {
+    display: table-header-group;
+}
+                </style>
+
+                <!-- PAGE 1 -->
+                <div class="page fw2">
+                    <div class="page-no">Page 01 of 4</div>
+                    <t t-call="laser_quotation_report.fw_powermax125_page_header"/>
+
+                    <!-- your original content continues unchanged -->
+
+                                        <!-- Title + Ref block -->
+                        <div style="position: relative; margin-top: 10px;">
+
+                            <!-- CENTER TITLE -->
+                            <div style="text-align:center;
+                                        font-size:19px;
+                                        font-weight:700;
+                                        color:#008000;
+                                        text-decoration: underline;
+                                        letter-spacing:0.4px;">
+                                PROPOSAL FOR FINE WORTH CNC FLAME AND PLASMA CUTTING MACHINE
+                            </div>
+
+                            <!-- RIGHT SIDE REF & DATE -->
+                            <div style="position:absolute;
+                                        right:0;
+                                        top:22px;
+                                        text-align:right;
+                                        font-size:14px;">
+                            <div><b>Ref:</b> FCM/1020/F01/P01/1225</div>
+                                <div><b>Date:</b>
+                                  <span t-field="doc.date_order"
+      t-options="{'format': 'dd / MM / yyyy'}"/>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- COMPANY DETAILS -->
+                        <div style="margin-top:24px; font-size:16px; line-height:1.6;">
+                          
+                            <div style="font-family:'Times New Roman', serif; font-size:19px; font-weight:700;">
+                                COMPANY NAME:
+                            </div>
+                            <div style="margin-top:6px; margin-left:20px; font-size:18px;">
+                                <div style="font-weight:700;" t-esc="doc.partner_id.commercial_company_name or doc.partner_id.commercial_partner_id.name or doc.partner_id.name"/>
+                                <div t-esc="doc.partner_id.commercial_partner_id.street or doc.partner_id.street"/>
+                                <div t-esc="doc.partner_id.commercial_partner_id.street2 or doc.partner_id.street2"/>
+                                <div>
+                                    <span t-esc="doc.partner_id.commercial_partner_id.city or doc.partner_id.city"/>
+                                    <t t-if="doc.partner_id.commercial_partner_id.state_id or doc.partner_id.state_id">, <span t-esc="(doc.partner_id.commercial_partner_id.state_id or doc.partner_id.state_id).name"/></t>
+                                </div>
+                            </div>
+
+                            <div style="margin-top:12px; font-weight:700; font-family:'Times New Roman', serif; font-size:19px;">
+                                MOBILE NUM: &#160;<span style="font-weight:700;"
+                                    t-esc="doc.partner_id.commercial_partner_id.mobile or doc.partner_id.commercial_partner_id.phone or doc.partner_id.mobile or doc.partner_id.phone"/>
+                            </div>
+
+                            <div style="margin-top:12px; font-style:italic; font-size:17px;">
+                                Kind Attn:
+                            </div>
+
+                        </div>
+
+                        <!-- SUBJECT & REFERENCE -->
+                        <div style="margin-top:16px; font-size:17px; line-height:1.7;">
+
+                            <div>
+                                <b>Sub:</b>
+                                Offer for FINE silver type Flame and plasma Cutting Machine.
+                            </div>
+
+                            <div style="margin-top:10px;">
+                                <b>Ref:</b>
+                                As per your Discussion with you're based on your discussion.
+                            </div>
+
+                            <div style="margin-top:14px;">
+                                We are pleased to offer flame Cutting Machine as per the details given below.
+                            </div>
+
+            </div>
+                        <t t-set="plasma_page1" t-value="doc.plasma_spec_ids[:13]"/>
+                        <div class="title">PLASMA SPECIFICATION</div>
+                        <table class="spec-table" style="width:100%; border-collapse:collapse;">
+                            <thead>
+                                <tr style="
+                                    font-family:'Times New Roman', serif;
+                                    color:#000000;
+                                    font-weight:700;
+                                    font-size:17px;
+                                    letter-spacing:0.5px;
+                                    text-transform:uppercase;">
+                                    <th>Sr.No</th>
+                                    <th>Descriptions</th>
+                                    <th>Technical specifications</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="plasma_page1" t-as="spec">
+                                    <tr>
+                                        <td t-esc="spec.sequence"/>
+                                        <td t-esc="spec.name"/>
+                                        <td t-esc="spec.value"/>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+            </div>
+
+                <div style="page-break-after: always;"></div>
+
+                <div class="page fw2">
+                    <div class="page-no">Page 2 of 4</div>
+                    <t t-call="laser_quotation_report.fw_powermax125_page_header"/>
+
+                    <t t-set="plasma_page2" t-value="doc.plasma_spec_ids[13:]"/>
+                    <t t-if="plasma_page2">
+                        <div class="title">PLASMA SPECIFICATION</div>
+                        <table class="spec-table" style="width:100%; border-collapse:collapse;">
+                            <thead>
+                                <tr style="
+                                    font-family:'Times New Roman', serif;
+                                    color:#000000;
+                                    font-weight:700;
+                                    font-size:17px;
+                                    letter-spacing:0.5px;
+                                    text-transform:uppercase;">
+                                    <th>Sr.No</th>
+                                    <th>Descriptions</th>
+                                    <th>Technical specifications</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="plasma_page2" t-as="spec">
+                                    <tr>
+                                        <td t-esc="spec.sequence"/>
+                                        <td t-esc="spec.name"/>
+                                        <td t-esc="spec.value"/>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+
+                    <!-- <div style="margin-top:12px;"><b>PRICE FOR MODEL:</b> FWE/13030/F01/P01/2025.</div> -->
+                          <!-- PRICE FOR MODEL BOX -->
+<div style="
+    margin-top:16px;
+    border:2px solid #000;
+    padding:6px 10px;
+    font-family:'Times New Roman', serif;
+    font-weight:700;
+    font-size:18px;">
+    PRICE FOR MODEL: FWE/13030/F01/P01/2025.
+</div>
+
+
+<!-- BASIC PRICE BOX -->
+<div style="
+    margin-top:12px;   /* ⭐ space between boxes */
+    border:2px solid #000;
+    font-family:'Times New Roman', serif;
+">
+<!-- BASIC PRICE -->
+<div style="
+        padding:6px 10px;
+        font-weight:700;
+        font-size:18px;
+        border-bottom:1px solid #000;">
+    Basic Price For Fine worth Profile cutting machine :
+    <span t-field="doc.basic_price"
+          t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+</div>
+
+<!-- RUPEES IN WORDS -->
+<div style="padding:6px 10px;">
+    <div style="font-weight:700; font-size:17px;">
+        Rupees in words:
+    </div>
+
+ <div style="
+    text-align:center;
+    font-weight:700;
+    font-size:20px;
+    letter-spacing:1px;
+    margin-top:4px;
+    text-transform:uppercase;">
+
+    <t t-esc="doc.currency_id.with_context(lang='en_IN').amount_to_text(doc.basic_price)"/>
+
+</div>
+</div>
+
+</div>
+
+   <div class="section-title">
+    Customer to be provided,
+</div>
+
+<ul class="arrow-list">
+    <li>► Incoming gas line.</li>
+    <li>► Incoming power line</li>
+    <li>► Cutting table.</li>
+    <li>► Leg assembly</li>
+</ul>
+
+                                    <div class="section-title">OPTIONAL:</div>
+
+                <ul class="arrow-list">
+                    <li>► Stabilizer: 18,000</li>
+                    <li>► Software (MOST 2D): 40,000</li>
+                    <li>► Compressor 7.5 HP with dryer</li>
+                </ul>
+
+                 <div class="feature-box">
+
+         
+
+    <div class="feature-title">
+        MACHINE SPECIAL FEATURES
+    </div>
+
+    <ul class="feature-list">
+        <li>Transverse guide rails are made of round LM <span class="feature-bold">guide ways</span></li>
+
+        <li>Longitudinal guide rails are precision ground to ensure machine stability.</li>
+
+        <li class="feature-bold feature-italic">
+            Transverse drive, longitudinal drive has rack &amp; pinion arrangements with AC servo motors.
+        </li>
+
+        <li class="feature-italic">
+            Large diameter ground and hardened running wheels ensure long trouble-free operation.
+        </li>
+
+        <li class="feature-bold">CNC controller with accessories.</li>
+        <li class="feature-bold">X, Y Axis only.</li>
+    </ul>
+
+</div>
+
+<div class="annexure">Annexure 1</div>
+                </div>
+
+                <div style="page-break-after: always;"></div>
+
+                <div class="page fw2">
+                    <div class="page-no">Page 3 of 4</div>
+                    <t t-call="laser_quotation_report.fw_powermax125_page_header"/>
+
+                  <!-- CNC SOFTWARE FEATURES BOX -->
+<div class="software-box">
+
+    <div class="software-title">
+        CNC Controller Software Features
+    </div>
+
+    <ul class="software-list">
+        <li>Programming transfer through pen drive.</li>
+
+        <li>Simple statement type programming instructions match with most common computer programming language.</li>
+
+        <li>Can be programmed in both platforms PLC and/or CNC and/or BLC.</li>
+
+        <li>Program execution of PLC &amp; CNC does not interfere with each other but can share some part of memory data.</li>
+
+        <li>Can be used as intelligent I/O expansion via CAN bus or Ethernet port.</li>
+
+        <li>Both kinds of ramps (trapezoidal or sinusoidal) can be generated for motion.</li>
+
+        <li>Interpolated motion between the axes.</li>
+
+        <li>Readily available mathematical functions like: Absolute, Square root, Integer, Cosine, Sine, Arcsine, Arccosine.</li>
+
+        <li>CNC ISO (G &amp; M) code is available.</li>
+
+        <li>Standard canned cycle.</li>
+
+        <li>Linear, circular interpolation motion.</li>
+    </ul>
+
+</div>
+
+                   <!-- CNC CONTROLLER HARDWARE FEATURES -->
+<div style="
+    border:2px solid #000;
+    padding:10px 14px;
+    margin-top:8px;
+    font-family:'Times New Roman', serif;
+">
+
+    <div style="
+        color:#2f5cff;
+        font-size:22px;
+        font-weight:700;
+        font-style:italic;
+        text-decoration:underline;
+        margin-bottom:6px;">
+        CNC Controller Hardware features
+    </div>
+
+    <ul style="
+        list-style:none;
+        padding-left:0;
+        margin:0;
+        color:#0b3d0b;
+        font-size:18px;
+        line-height:1.35;">
+        
+        <li>- 10&quot; color Display with keys.</li>
+        <li>- USB port</li>
+        <li>- 32 bit / 132 MHz processor</li>
+        <li>- 64 MB buffered RAM</li>
+        <li>- 64 MB Flash EPROM</li>
+        <li>- Inbuilt +5V supply for user aim</li>
+        <li>- Software adjusted display contrast</li>
+        <li>- Software adjusted offset for analog output</li>
+    </ul>
+
+</div>
+
+<div style="
+    color:#008000;
+    font-weight:700;
+    font-size:18px;
+    margin-top:4px;">
+    Annexure 2
+</div>
+
+
+<!-- TERMS & CONDITIONS -->
+<div style="
+    margin-top:18px;
+    color:#2f5cff;
+    font-weight:700;
+    font-size:20px;
+    text-decoration:underline;">
+    TERMS &amp; CONDITIONS:
+</div>
+
+<div style="margin-top:6px; text-align:justify;">
+    <b>Warranty:</b>
+    The supplier shall stand warranty for the machine for a period of 12 months
+    from the date of commissioning or 13 months from delivery of machine,
+    whichever is earlier. Any defect noticed during warranty period will be
+    made good by the supplier at no extra cost for the manufacturing defect.
+    A switch, consumables, wear &amp; tear parts etc., is not covered under warranty.
+</div>
+
+<!-- DELIVERY PLACE -->
+<div style="margin-top:12px; font-family:'Times New Roman', serif;">
+
+    <div style="font-weight:700; font-size:18px;">
+        Delivery Place:
+    </div>
+
+    <div style="
+        text-align:center;
+        font-weight:700;
+        font-size:22px;
+        margin-top:2px;">
+        RK STRUCTURALS
+    </div>
+
+</div>
+
+
+<!-- MODE OF PAYMENT -->
+<div style="
+    margin-top:14px;
+    font-family:'Times New Roman', serif;
+    font-size:18px;
+">
+
+    <!-- Row 1 -->
+    <div>
+        <span style="
+            display:inline-block;
+            width:140px;
+            font-style:italic;
+            font-weight:700;
+            line-height:1.2;">
+            Mode of<br/>Payment
+        </span>
+
+        <span style="display:inline-block; width:20px; text-align:center;">:</span>
+
+        <span style="font-style:italic;">
+            In favor of “FINE WORTH ENGINEERS.”
+        </span>
+    </div>
+
+    <!-- Row 2 -->
+    <div style="margin-top:8px;">
+        <span style="display:inline-block; width:160px;"></span>
+        <span style="font-style:italic;">
+            Beneficiary Name : FINE WORTH ENGINEERS
+        </span>
+    </div>
+
+    <!-- Row 3 -->
+    <div style="margin-top:4px;">
+        <span style="display:inline-block; width:160px;"></span>
+        <span style="font-style:italic;">
+            BankName : KARUR VYSHYA BANK
+        </span>
+    </div>
+
+</div>
+                </div>
+
+                <div style="page-break-after: always;"></div>
+
+                <div class="page fw2">
+                      <div class="page-no">Page 4 of 4</div>
+                 <t t-call="laser_quotation_report.fw_powermax125_page_header"/>
+
+                                    <!-- Bank Details -->
+                                    <!-- Centered Bank Details -->
+                               <div style="width:70%; margin:25px auto; font-family:'Times New Roman', serif; line-height:1.9;">
+
+    <div style="margin-bottom:6px;">
+        <span style="display:inline-block; width:220px; font-size:17px; font-weight:700;">
+            Bank Address
+        </span>
+        <span style="font-weight:bold;">:</span>
+        <span style="margin-left:6px;">
+            Chinniyampalayam, Coimbatore, Tamilnadu - 641062
+        </span>
+    </div>
+
+    <div style="margin-bottom:6px;">
+        <span style="display:inline-block; width:220px; font-size:17px; font-weight:700;">
+            Account Number
+        </span>
+        <span style="font-weight:bold;">:</span>
+        <span style="margin-left:6px;">
+            1677135000013000
+        </span>
+    </div>
+
+    <div style="margin-bottom:6px;">
+        <span style="display:inline-block; width:220px; font-size:17px; font-weight:700;">
+            RTGS / IFSC Code
+        </span>
+        <span style="font-weight:bold;">:</span>
+        <span style="margin-left:6px;">
+            KVBL0001677
+        </span>
+    </div>
+
+    <div>
+        <span style="display:inline-block; width:220px; font-size:17px; font-weight:700;">
+            Account Type
+        </span>
+        <span style="font-weight:bold;">:</span>
+        <span style="margin-left:6px;">
+            CURRENT ACCOUNT
+        </span>
+    </div>
+
+</div>
+
+                                <!-- Terms & Conditions -->
+                                 <div style="margin-top:25px; line-height:1.8; font-size:14px;">
+
+    <div style="margin-bottom:12px;">
+        <span style="display:inline-block; width:240px;font-family:'Times New Roman'; font-weight:bold; font-size:18px;">
+            Sales Tax
+        </span>
+        <span style="font-weight:bold; font-size:18px;">:</span>
+        <span style="margin-left:8px;">GST 18%</span>
+    </div>
+
+    <div style="margin-bottom:12px;">
+        <span style="display:inline-block; width:240px; font-family:'Times New Roman';font-weight:bold; font-size:18px;">
+            Transportation &amp; Insurance
+        </span>
+        <span style="font-weight:bold; font-size:18px;">:</span>
+        <span style="margin-left:8px;">
+            Freight &amp; Insurance charges will be extra as applicable at the time of dispatch.
+        </span>
+    </div>
+
+    <div style="margin-bottom:12px;">
+        <span style="display:inline-block; width:240px;font-family:'Times New Roman'; font-weight:bold; font-size:18px;">
+            Validity
+        </span>
+        <span style="font-weight:bold; font-size:18px;">:</span>
+        <span style="margin-left:8px;">
+            Quoted prices are valid for 15 days from the date of offer and thereafter subject to re-confirmation.
+        </span>
+    </div>
+
+    <div style="margin-bottom:12px;">
+        <span style="display:inline-block; width:240px;font-family:'Times New Roman'; font-weight:bold; font-size:18px;">
+            Payment
+        </span>
+        <span style="font-weight:bold; font-size:18px;">:</span>
+        <span style="margin-left:8px;">
+            50% advance along with the Purchase Order, remaining 50% along with full taxes before dispatch.
+        </span>
+    </div>
+
+    <div style="margin-bottom:12px;">
+        <span style="display:inline-block; width:240px;font-family:'Times New Roman'; font-weight:bold; font-size:18px;">
+            Delivery
+        </span>
+        <span style="font-weight:bold; font-size:18px;">:</span>
+        <span style="margin-left:8px;">
+            Approx. 30 days from the date of receipt of technically and commercially clear order.
+        </span>
+    </div>
+
+    <div style="margin-bottom:12px;">
+        <span style="display:inline-block; width:240px;font-family:'Times New Roman'; font-weight:bold; font-size:18px;">
+            Erection &amp; Installation
+        </span>
+        <span style="font-weight:bold; font-size:18px;">:</span>
+        <span style="margin-left:8px;">At actual cost.</span>
+    </div>
+
+</div>
+
+                                                                                    <!-- Signature -->
+                                                                            <div style="
+                                                    margin-top:140px;
+                                                    width:100%;
+                                                    text-align:right;
+                                                    font-family:'Times New Roman', serif;
+                                                    line-height:1.8;
+                                                ">
+
+                                                    <div style="font-size:16px;">
+                                                        Best Regards,
+                                                    </div>
+
+                                                    <div style="font-size:16px; font-weight:600;">
+                                                        For Fine Worth Engineers
+                                                    </div>
+
+                                                    <div style="margin-top:40px; font-size:18px; font-weight:bold;">
+                                                        V. SATHISH
+                                                    </div>
+
+                                                    <div style="font-size:15px;">
+                                                        Marketing
+                                                    </div>
+
+                                                </div>
+
+                </div>
+                
+            </t>
+        </t>
+    </template>
+</odoo>
