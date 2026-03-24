@@ -7,6 +7,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/sale_order_view.xml',
+        'data/mail_template_data.xml',
         'report/quotation_template.xml',
         'report/quotation_template_powermax125.xml',
         'report/report_action.xml',

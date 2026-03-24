@@ -306,6 +306,21 @@ class SaleOrder(models.Model):
 
         return report.report_action(self)
 
+    def _find_mail_template(self):
+        self.ensure_one()
+        if self.env.context.get('proforma') or self.state != 'sale':
+            if self.quotation_type == "laser":
+                return self.env.ref(
+                    "laser_quotation_report.email_template_edi_sale_laser",
+                    raise_if_not_found=False,
+                )
+            if self.quotation_type == "plasma":
+                return self.env.ref(
+                    "laser_quotation_report.email_template_edi_sale_plasma",
+                    raise_if_not_found=False,
+                )
+        return super()._find_mail_template()
+
 
 class SaleOrderOptionalSpec(models.Model):
     _name = "sale.order.optional.spec"

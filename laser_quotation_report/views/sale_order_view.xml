@@ -36,6 +36,7 @@
 
             <!-- Editable Technical Specification tab appended to the notebook -->
             <xpath expr="//sheet/notebook/page[.//field[@name='order_line']]" position="attributes">
+                <attribute name="autofocus">autofocus</attribute>
                 <attribute name="invisible">quotation_type != 'laser'</attribute>
             </xpath>
 

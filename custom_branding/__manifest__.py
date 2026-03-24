@@ -4,10 +4,12 @@
     'author': 'Dreamwarez',
     'website': 'https://dreamwarez.com',
     'license': 'LGPL-3',
-    'depends': ['web'],
+    'depends': ['web', 'mail'],
     'data': ['static/src/xml/custom_template.xml',
              'views/custom_favicon.xml',
              'views/login_title.xml',
+             'views/mail_notification_branding.xml',
+             'views/mail_template.xml',
              ],
     
     'assets': {
