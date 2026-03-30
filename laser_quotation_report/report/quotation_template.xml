@@ -283,11 +283,12 @@
                                     width:100%; margin-top:20px;   margin-bottom:20px;   border-collapse:collapse;font-size:18px;line-height:1.5;">
                             <tr>
                                 <th style="width:7%; padding:10px;">Sr. No.</th>
-                                <th style="width:43%; padding:10px;">Description</th>
+                                <th style="width:35%; padding:10px;">Description</th>
                                 <th style="width:12%; padding:10px;">HSN Code</th>
-                                <th style="width:14%; padding:10px;">Rate (INR)</th>
+                                <th style="width:12%; padding:10px;">Rate (INR)</th>
                                 <th style="width:8%; padding:10px;">Qty</th>
-                                <th style="width:16%; padding:10px;">Amount (INR)</th>
+                                <th style="width:12%; padding:10px;">Taxes</th>
+                                <th style="width:14%; padding:10px;">Amount (INR)</th>
                             </tr>
 
                                                                         <t t-set="offer_lines" t-value="doc.order_line.filtered(lambda l: not l.display_type)"/>
@@ -317,6 +318,10 @@
                                                                 <span t-field="line.product_uom_qty"/>
                                                             </td>
 
+                                                            <td class="center" style="padding:8px;">
+                                                                <span t-esc="', '.join(line.tax_id.mapped('name')) if line.tax_id else '-'"/>
+                                                            </td>
+
                                                             <td class="right" style="padding:8px;">
                                                                 <span t-field="line.price_subtotal"
                                                                     t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
@@ -328,15 +333,43 @@
                                                     </t>
 
                             <tr>
-                                <td colspan="5"
+                                <td colspan="6"
                                     class="right"
                                     style="padding:10px; font-weight:bold; font-size:16px;">
-                                    TOTAL
+                                    SUBTOTAL
                                 </td>
 
                                 <td class="right"
                                     style="padding:10px; font-weight:bold; font-size:16px;">
                                     <span t-field="doc.amount_untaxed"
+                                        t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="6"
+                                    class="right"
+                                    style="padding:10px; font-weight:bold; font-size:16px;">
+                                    TAX
+                                </td>
+
+                                <td class="right"
+                                    style="padding:10px; font-weight:bold; font-size:16px;">
+                                    <span t-field="doc.amount_tax"
+                                        t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="6"
+                                    class="right"
+                                    style="padding:10px; font-weight:bold; font-size:16px;">
+                                    GRAND TOTAL
+                                </td>
+
+                                <td class="right"
+                                    style="padding:10px; font-weight:bold; font-size:16px;">
+                                    <span t-field="doc.amount_total"
                                         t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
                                 </td>
                             </tr>
@@ -353,15 +386,25 @@
                                             ">
 
                                                 <div style="margin-bottom:4px;">
-                                                    <span style="font-weight:bold;">NOTE</span>
-                                                    : GST 18% EXTRA
+                                                    <span style="font-weight:bold;">TOTAL AMOUNT</span>
+                                                    :
+                                                    <span>
+                                                        <t t-set="tax_names" t-value="', '.join(doc.order_line.filtered(lambda l: not l.display_type and l.tax_id).mapped('tax_id').mapped('name'))"/>
+                                                        
+                                                        <t t-if="tax_names">
+                                                            (INCLUSIVE OF <t t-esc="tax_names"/>)
+                                                        </t>
+                                                        <t t-else="">
+                                                            (NO TAXES)
+                                                        </t>
+                                                    </span>
                                                 </div>
 
                                                 <div>
                                                     <span style="font-weight:bold;">Rupees in words</span>
                                                     :
                                                     <span style="text-transform:uppercase;">
-                                                        <span t-esc="doc.currency_id.amount_to_text(doc.amount_untaxed)"/>
+                                                        <span t-esc="doc.currency_id.amount_to_text(doc.amount_total)"/>
                                                     </span>
                                                 </div>
 
@@ -595,13 +638,7 @@
                                                                 plus 18% GST and balance 60% along with taxes and duties against proforma invoice
                                                                 before dispatch of machine. Dispatch of machine is subject to realization of payment
                                                                 in FWEAS account.
-                                                                <br/><br/>
-                                                                In case of LC, confirmed irrevocable LC at site from any nationalized or recognized
-                                                                bank is acceptable.
-                                                                <br/><br/>
-                                                                In case of LC, machine will be transported through our transporter on to-pay basis
-                                                                and will be handed over on receipt of bank acceptance letter with duly signed and
-                                                                stamped LR copy by our transporter.
+                                                                <br/>
                                                             </span>
                                                         </div>
 

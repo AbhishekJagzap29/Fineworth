@@ -64,13 +64,13 @@
                         width: 100%;
                         border-collapse: collapse;
                         margin-top: 6px;
-                        font-size: 16px;
+                        font-size: 14px;
                     }
 
                     .spec-table th,
                     .spec-table td {
                         border: 1px solid #000;
-                        padding: 10px 12px;
+                        padding: 7px 9px;
                         vertical-align: middle;
                     }
 
@@ -350,7 +350,7 @@ thead {
                             </div>
 
             </div>
-                        <t t-set="plasma_page1" t-value="doc.plasma_spec_ids[:13]"/>
+                        <t t-set="plasma_page1" t-value="doc.plasma_spec_ids[:15]"/>
                         <div class="title">PLASMA SPECIFICATION</div>
                         <table class="spec-table" style="width:100%; border-collapse:collapse;">
                             <thead>
@@ -384,7 +384,7 @@ thead {
                     <div class="page-no">Page 2 of 4</div>
                     <t t-call="laser_quotation_report.fw_powermax125_page_header"/>
 
-                    <t t-set="plasma_page2" t-value="doc.plasma_spec_ids[13:]"/>
+                    <t t-set="plasma_page2" t-value="doc.plasma_spec_ids[15:]"/>
                     <t t-if="plasma_page2">
                         <div class="title">PLASMA SPECIFICATION</div>
                         <table class="spec-table" style="width:100%; border-collapse:collapse;">

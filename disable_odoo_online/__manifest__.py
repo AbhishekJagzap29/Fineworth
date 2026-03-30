@@ -5,7 +5,7 @@
     "website": "",
     "license": "AGPL-3",
     "category": "Hidden",
-    "depends": ["mail"],
+    "depends": ["mail", "account", "sale"],
     "data": ["views/ir_ui_menu.xml"],
     "assets": {
         "web.assets_backend": [
