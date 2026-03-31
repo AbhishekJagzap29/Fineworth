@@ -335,12 +335,12 @@
                             <tr>
                                 <td colspan="6"
                                     class="right"
-                                    style="padding:10px; font-weight:bold; font-size:16px;">
+                                    style="padding:6px 10px; font-weight:bold; font-size:15px;">
                                     SUBTOTAL
                                 </td>
 
                                 <td class="right"
-                                    style="padding:10px; font-weight:bold; font-size:16px;">
+                                    style="padding:6px 10px; font-weight:bold; font-size:15px;">
                                     <span t-field="doc.amount_untaxed"
                                         t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
                                 </td>
@@ -349,12 +349,12 @@
                             <tr>
                                 <td colspan="6"
                                     class="right"
-                                    style="padding:10px; font-weight:bold; font-size:16px;">
+                                    style="padding:6px 10px; font-weight:bold; font-size:15px;">
                                     TAX
                                 </td>
 
                                 <td class="right"
-                                    style="padding:10px; font-weight:bold; font-size:16px;">
+                                    style="padding:6px 10px; font-weight:bold; font-size:15px;">
                                     <span t-field="doc.amount_tax"
                                         t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
                                 </td>

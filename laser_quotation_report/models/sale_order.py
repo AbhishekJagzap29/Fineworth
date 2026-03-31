@@ -78,6 +78,13 @@ class SaleOrderTechSpec(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
+            if vals.get("order_id") and not vals.get("sequence"):
+                last_sequence = self.search(
+                    [("order_id", "=", vals["order_id"])],
+                    order="sequence desc, id desc",
+                    limit=1,
+                ).sequence
+                vals["sequence"] = last_sequence + 1 if last_sequence else 1
             if not vals.get("name"):
                 seq = vals.get("sequence") or 1
                 vals["name"] = self._default_name_from_sequence(seq)
@@ -85,10 +92,9 @@ class SaleOrderTechSpec(models.Model):
 
     def write(self, vals):
         vals = vals.copy()
-        # Protect immutable columns during normal client writes
+        # Keep sequence managed by the system, but allow users to edit the description.
         if not self.env.context.get("allow_protected_fields"):
             vals.pop("sequence", None)
-            vals.pop("name", None)
         return super().write(vals)
 
 
@@ -115,6 +121,13 @@ class SaleOrderPlasmaSpec(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
+            if vals.get("order_id") and not vals.get("sequence"):
+                last_sequence = self.search(
+                    [("order_id", "=", vals["order_id"])],
+                    order="sequence desc, id desc",
+                    limit=1,
+                ).sequence
+                vals["sequence"] = last_sequence + 1 if last_sequence else 1
             if not vals.get("name"):
                 seq = vals.get("sequence") or 1
                 vals["name"] = self._default_name_from_sequence(seq)
@@ -122,9 +135,9 @@ class SaleOrderPlasmaSpec(models.Model):
 
     def write(self, vals):
         vals = vals.copy()
+        # Keep sequence managed by the system, but allow users to edit the description.
         if not self.env.context.get("allow_protected_fields"):
             vals.pop("sequence", None)
-            vals.pop("name", None)
         return super().write(vals)
 
 
@@ -237,21 +250,15 @@ class SaleOrder(models.Model):
         return res
 
     def _normalize_spec_lines(self):
-        """Force immutable columns (sequence, description) back to canonical defaults."""
+        """Keep specification line numbering tidy after add/remove operations."""
         for order in self:
-            # Technical specs: resequence and reset description labels
+            # Technical specs: resequence only, preserving user-entered descriptions.
             for idx, line in enumerate(order.tech_spec_ids.sorted("sequence")):
-                update_vals = {"sequence": idx + 1}
-                if idx < len(TECH_SPEC_DEFAULTS):
-                    update_vals["name"] = TECH_SPEC_DEFAULTS[idx][0]
-                line.with_context(allow_protected_fields=True).write(update_vals)
+                line.with_context(allow_protected_fields=True).write({"sequence": idx + 1})
 
-            # Plasma specs: resequence and reset description labels
+            # Plasma specs: resequence only, preserving user-entered descriptions.
             for idx, line in enumerate(order.plasma_spec_ids.sorted("sequence")):
-                update_vals = {"sequence": idx + 1}
-                if idx < len(PLASMA_SPEC_DEFAULTS):
-                    update_vals["name"] = PLASMA_SPEC_DEFAULTS[idx][0]
-                line.with_context(allow_protected_fields=True).write(update_vals)
+                line.with_context(allow_protected_fields=True).write({"sequence": idx + 1})
 
             # Optional items: resequence and reset description labels
             for idx, line in enumerate(order.optional_spec_ids.sorted("sequence")):

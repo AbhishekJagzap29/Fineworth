@@ -510,7 +510,6 @@ thead {
 
 </div>
 
-<div class="annexure">Annexure 1</div>
                 </div>
 
                 <div style="page-break-after: always;"></div>
@@ -518,6 +517,7 @@ thead {
                 <div class="page fw2">
                     <div class="page-no">Page 3 of 4</div>
                     <t t-call="laser_quotation_report.fw_powermax125_page_header"/>
+                        <div class="annexure">Annexure 1</div>
 
                   <!-- CNC SOFTWARE FEATURES BOX -->
 <div class="software-box">

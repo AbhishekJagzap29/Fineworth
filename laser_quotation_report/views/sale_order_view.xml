@@ -78,16 +78,16 @@
                       invisible="quotation_type != 'laser'">
                     <group>
                         <field name="tech_spec_ids" context="{'default_order_id': active_id}">
-                            <tree editable="bottom" create="false" delete="false">
+                            <tree editable="bottom">
                                 <field name="sequence" readonly="1"/>
-                                <field name="name" readonly="1"/>
+                                <field name="name"/>
                                 <field name="value"/>
                             </tree>
                             <form string="Technical Specification Line">
                                 <group>
                                     <field name="order_id" invisible="1" readonly="1"/>
                                     <field name="sequence" readonly="1"/>
-                                    <field name="name" readonly="1"/>
+                                    <field name="name"/>
                                     <field name="value"/>
                                 </group>
                             </form>
@@ -101,14 +101,14 @@
                         <field name="plasma_spec_ids" context="{'default_order_id': active_id}">
                             <tree editable="bottom">
                                 <field name="sequence" readonly="1"/>
-                                <field name="name" readonly="1"/>
+                                <field name="name"/>
                                 <field name="value"/>
                             </tree>
                             <form string="Plasma Specification Line">
                                 <group>
                                     <field name="order_id" invisible="1" readonly="1"/>
                                     <field name="sequence" readonly="1"/>
-                                    <field name="name" readonly="1"/>
+                                    <field name="name"/>
                                     <field name="value"/>
                                 </group>
                             </form>
