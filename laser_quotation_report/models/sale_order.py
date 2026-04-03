@@ -159,6 +159,9 @@ class SaleOrder(models.Model):
         default=2150000.0,
         help="Base price for the Fine Worth profile cutting machine shown on the quotation.",
     )
+    advance_percent = fields.Float(string="Advance %", default=40.0)
+    gst_percent = fields.Float(string="GST %", default=18.0)
+    balance_percent = fields.Float(string="Balance %", default=60.0)
     model_name = fields.Char(
             string="Machine Model",
             default="FINELASER3015"

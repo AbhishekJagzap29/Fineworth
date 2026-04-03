@@ -27,6 +27,12 @@
 
             <!-- Basic Price field directly under GST Treatment -->
             <xpath expr="//sheet//field[@name='l10n_in_gst_treatment']" position="after">
+                <field name="advance_percent"
+                       invisible="quotation_type != 'laser'"/>
+                <field name="gst_percent"
+                       invisible="quotation_type != 'laser'"/>
+                <field name="balance_percent"
+                       invisible="quotation_type != 'laser'"/>
                 <field name="basic_price" widget="monetary"
                        invisible="quotation_type != 'plasma'"
                        string="Basic Price"

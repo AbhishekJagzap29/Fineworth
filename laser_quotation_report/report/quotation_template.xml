@@ -634,8 +634,9 @@
                                                                 :
                                                             </span>
                                                             <span style="display:inline-block; width:65%; line-height:1.7;">
-                                                                40% of total order value or 15 lacs, whichever is higher, in advance with P.O.
-                                                                plus 18% GST and balance 60% along with taxes and duties against proforma invoice
+                                                                <span t-esc="doc.advance_percent"/>% of total order value or 15 lacs, whichever is higher,
+                                                                in advance with P.O. plus <span t-esc="doc.gst_percent"/>% GST and balance
+                                                                <span t-esc="doc.balance_percent"/>% along with taxes and duties against proforma invoice
                                                                 before dispatch of machine. Dispatch of machine is subject to realization of payment
                                                                 in FWEAS account.
                                                                 <br/>
