@@ -323,7 +323,7 @@
                                                             </td>
 
                                                             <td class="right" style="padding:8px;">
-                                                                <span t-field="line.price_subtotal"
+                                                                <span t-field="line.price_total"
                                                                     t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
                                                             </td>
 
@@ -389,14 +389,9 @@
                                                     <span style="font-weight:bold;">TOTAL AMOUNT</span>
                                                     :
                                                     <span>
-                                                        <t t-set="tax_names" t-value="', '.join(doc.order_line.filtered(lambda l: not l.display_type and l.tax_id).mapped('tax_id').mapped('name'))"/>
-                                                        
-                                                        <t t-if="tax_names">
-                                                            (INCLUSIVE OF <t t-esc="tax_names"/>)
-                                                        </t>
-                                                        <t t-else="">
-                                                            (NO TAXES)
-                                                        </t>
+                                                        <span t-field="doc.amount_total"
+                                                            t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                                                        <span> (Including GST)</span>
                                                     </span>
                                                 </div>
 
@@ -404,7 +399,7 @@
                                                     <span style="font-weight:bold;">Rupees in words</span>
                                                     :
                                                     <span style="text-transform:uppercase;">
-                                                        <span t-esc="doc.currency_id.amount_to_text(doc.amount_total)"/>
+                                                        <span t-esc="doc.currency_id.with_context(lang='en_IN').amount_to_text(doc.amount_total)"/>
                                                     </span>
                                                 </div>
 

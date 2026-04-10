@@ -66,9 +66,24 @@ class SaleOrderTechSpec(models.Model):
         ondelete="cascade",
         required=True,
     )
-    sequence = fields.Integer(string="Sr. No.", default=1)
+    sequence = fields.Integer(string="Sr. No.", default=lambda self: self._default_sequence())
     name = fields.Char(string="Description", required=True)
     value = fields.Char(string="Technical Specification")
+
+    @api.model
+    def _default_sequence(self):
+        """Return the next sequence number based on the active_id context."""
+        if self.env.context.get("default_sequence"):
+            return self.env.context["default_sequence"]
+        order_id = self.env.context.get("default_order_id")
+        if order_id:
+            last = self.search(
+                [("order_id", "=", order_id)],
+                order="sequence desc, id desc",
+                limit=1,
+            )
+            return (last.sequence + 1) if last else 1
+        return 1
 
     def _default_name_from_sequence(self, seq):
         if 1 <= seq <= len(TECH_SPEC_DEFAULTS):
@@ -109,9 +124,24 @@ class SaleOrderPlasmaSpec(models.Model):
         ondelete="cascade",
         required=True,
     )
-    sequence = fields.Integer(string="Sr. No.", default=1)
+    sequence = fields.Integer(string="Sr. No.", default=lambda self: self._default_sequence())
     name = fields.Char(string="Description", required=True)
     value = fields.Char(string="Technical Specification")
+
+    @api.model
+    def _default_sequence(self):
+        """Return the next sequence number based on the active_id context."""
+        if self.env.context.get("default_sequence"):
+            return self.env.context["default_sequence"]
+        order_id = self.env.context.get("default_order_id")
+        if order_id:
+            last = self.search(
+                [("order_id", "=", order_id)],
+                order="sequence desc, id desc",
+                limit=1,
+            )
+            return (last.sequence + 1) if last else 1
+        return 1
 
     def _default_name_from_sequence(self, seq):
         if 1 <= seq <= len(PLASMA_SPEC_DEFAULTS):
@@ -162,6 +192,11 @@ class SaleOrder(models.Model):
     advance_percent = fields.Float(string="Advance %", default=40.0)
     gst_percent = fields.Float(string="GST %", default=18.0)
     balance_percent = fields.Float(string="Balance %", default=60.0)
+    payment_term_name = fields.Char(
+        string="Payment Terms",
+        related="payment_term_id.name",
+        readonly=True,
+    )
     model_name = fields.Char(
             string="Machine Model",
             default="FINELASER3015"
@@ -252,6 +287,20 @@ class SaleOrder(models.Model):
         self._normalize_spec_lines()
         return res
 
+    @api.onchange("tech_spec_ids", "tech_spec_ids.name", "tech_spec_ids.value")
+    def _onchange_tech_spec_ids(self):
+        for order in self:
+            order._resequence_lines(order.tech_spec_ids)
+
+    @api.onchange("plasma_spec_ids", "plasma_spec_ids.name", "plasma_spec_ids.value")
+    def _onchange_plasma_spec_ids(self):
+        for order in self:
+            order._resequence_lines(order.plasma_spec_ids)
+
+    def _resequence_lines(self, lines):
+        for idx, line in enumerate(lines, start=1):
+            line.sequence = idx
+
     def _normalize_spec_lines(self):
         """Keep specification line numbering tidy after add/remove operations."""
         for order in self:
@@ -270,37 +319,36 @@ class SaleOrder(models.Model):
                     update_vals["name"] = OPTIONAL_SPEC_DEFAULTS[idx][0]
                 line.with_context(allow_protected_fields=True).write(update_vals)
 
-    def fields_view_get(self, view_id=None, view_type="form", toolbar=False, submenu=False):
-        """Hide the standard Optional Products tab if it exists in the form view.
-
-        Some deployments add a notebook page for optional_product_ids; instead of a fragile
-        xpath (which may fail if the page is absent), we adjust the view dynamically.
-        """
-        res = super().fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
+    @api.model
+    def get_view(self, view_id=None, view_type="form", **options):
+        """Hide the standard Optional Products tab in the sale order form."""
+        res = super().get_view(view_id=view_id, view_type=view_type, **options)
         if view_type != "form":
             return res
+        res["arch"] = self._hide_standard_optional_products_page(res.get("arch"))
+        return res
 
-        arch = res.get("arch")
+    @api.model
+    def _hide_standard_optional_products_page(self, arch):
         if not arch:
-            return res
+            return arch
 
         try:
             doc = etree.fromstring(arch)
         except Exception:
-            return res
+            return arch
 
         targets = doc.xpath("//page[@name='optional_products'] | //page[.//field[@name='optional_product_ids']]")
         if not targets:
             targets = doc.xpath("//page[contains(translate(@string, 'OPTIONAL', 'optional'), 'optional')]")
 
-        if targets:
-            for node in targets:
-                node.set("invisible", "1")
-                modifiers = json.loads(node.get("modifiers", "{}") or "{}")
-                modifiers["invisible"] = True
-                node.set("modifiers", json.dumps(modifiers))
-            res["arch"] = etree.tostring(doc, encoding="unicode")
-        return res
+        for node in targets:
+            node.set("invisible", "1")
+            modifiers = json.loads(node.get("modifiers", "{}") or "{}")
+            modifiers["invisible"] = True
+            node.set("modifiers", json.dumps(modifiers))
+
+        return etree.tostring(doc, encoding="unicode")
 
     def action_print_selected_quotation(self):
         self.ensure_one()

@@ -21,12 +21,21 @@
             
 </xpath>
 
+            <xpath expr="//sheet//field[@name='payment_term_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
             <xpath expr="//sheet//field[@name='partner_id']" position="before">
                 <field name="quotation_type"/>
             </xpath>
 
             <!-- Basic Price field directly under GST Treatment -->
             <xpath expr="//sheet//field[@name='l10n_in_gst_treatment']" position="after">
+                <field name="payment_term_name"
+                       invisible="quotation_type != 'laser'"
+                       readonly="1"
+                       class="oe_inline"
+                       style="color: #212529; border: 0; background: transparent; box-shadow: none; padding-left: 0; pointer-events: none;"/>
                 <field name="advance_percent"
                        invisible="quotation_type != 'laser'"/>
                 <field name="gst_percent"
@@ -42,8 +51,12 @@
 
             <!-- Editable Technical Specification tab appended to the notebook -->
             <xpath expr="//sheet/notebook/page[.//field[@name='order_line']]" position="attributes">
-                <attribute name="autofocus">autofocus</attribute>
                 <attribute name="invisible">quotation_type != 'laser'</attribute>
+                <attribute name="autofocus">autofocus</attribute>
+            </xpath>
+
+            <xpath expr="//sheet/notebook/page[@name='other_information']" position="attributes">
+                <attribute name="invisible">quotation_type == 'laser'</attribute>
             </xpath>
 
             <xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="after">
@@ -62,12 +75,12 @@
                 <attribute name="string">Rate (INR)</attribute>
             </xpath>
 
-            <xpath expr="//field[@name='order_line']/tree//field[@name='price_subtotal']" position="attributes">
-                <attribute name="string">Amount (INR)</attribute>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='price_subtotal']" position="replace">
+                <field name="price_total" string="Amount (INR)"/>
             </xpath>
 
-            <xpath expr="//field[@name='order_line']/form//field[@name='price_subtotal']" position="attributes">
-                <attribute name="string">Amount (INR)</attribute>
+            <xpath expr="//field[@name='order_line']/form//field[@name='price_subtotal']" position="replace">
+                <field name="price_total" string="Amount (INR)" readonly="1"/>
             </xpath>
 
             <xpath expr="//header/button[@name='action_preview_sale_order']" position="after">
@@ -83,7 +96,7 @@
                       string="Technical Specification"
                       invisible="quotation_type != 'laser'">
                     <group>
-                        <field name="tech_spec_ids" context="{'default_order_id': active_id}">
+                        <field name="tech_spec_ids" context="{'default_order_id': id, 'default_sequence': 16}">
                             <tree editable="bottom">
                                 <field name="sequence" readonly="1"/>
                                 <field name="name"/>
@@ -102,9 +115,10 @@
                 </page>
                 <page name="plasma_spec"
                       string="Technical Specification"
+                      autofocus="autofocus"
                       invisible="quotation_type != 'plasma'">
                     <group>
-                        <field name="plasma_spec_ids" context="{'default_order_id': active_id}">
+                        <field name="plasma_spec_ids" context="{'default_order_id': id, 'default_sequence': 20}">
                             <tree editable="bottom">
                                 <field name="sequence" readonly="1"/>
                                 <field name="name"/>
