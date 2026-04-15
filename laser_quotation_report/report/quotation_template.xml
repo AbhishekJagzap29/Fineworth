@@ -71,8 +71,18 @@
         <div class="page fw">
 
     <t t-call="laser_quotation_report.fw_page_header"/>
-     <hr class="line"/>
+     
                         <!-- TO -->
+                        <!-- DATE & QUOTATION -->
+                    <div style="margin-top:6px; text-align: right;">
+                        <!-- <div><b>Date</b> <span t-field="doc.date_order" t-options="{'widget':'date'}"/></div> -->
+                        <div>
+                    <b>Date</b>
+                    <span t-esc="doc.date_order.strftime('%d / %m / %Y')"/>
+                    </div>
+                        <div><b>Quotation no:</b> <span t-field="doc.name"/></div>
+                    </div>
+                    <hr class="line"/>
                    <!-- TO -->
                         <div class="label-text">TO</div>
 
@@ -91,15 +101,7 @@
 
     <hr class="line"/>
 
-    <!-- DATE & QUOTATION -->
-    <div style="margin-top:6px;">
-        <!-- <div><b>Date</b> <span t-field="doc.date_order" t-options="{'widget':'date'}"/></div> -->
-        <div>
-    <b>Date</b>
-    <span t-esc="doc.date_order.strftime('%d / %m / %Y')"/>
-</div>
-        <div><b>Quotation no:</b> <span t-field="doc.name"/></div>
-    </div>
+    
 
     <br/>
 
@@ -419,7 +421,7 @@
 <!-- <div style="width:90%; margin:15px auto; font-family:'Times New Roman', serif; font-size:15px;"> -->
 <div style="width:85%; margin:15px 0 15px 20px;    font-family:'Times New Roman', serif;font-size:15px;">
 
-    <div style="font-weight:bold; font-size:16px; margin-bottom:6px;">
+    <!-- <div style="font-weight:bold; font-size:16px; margin-bottom:6px;">
         OPTIONAL
     </div>
 
@@ -436,7 +438,7 @@
                 </span>
             </div>
         </t>
-    </t>
+    </t> -->
 
 </div>
 

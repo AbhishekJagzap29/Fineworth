@@ -464,26 +464,27 @@ thead {
 
 </div>
 
-   <div class="section-title">
-    Customer to be provided,
-</div>
 
-<ul class="arrow-list">
-    <li>► Incoming gas line.</li>
-    <li>► Incoming power line</li>
-    <li>► Cutting table.</li>
-    <li>► Leg assembly</li>
-</ul>
-
-                                    <div class="section-title">OPTIONAL:</div>
+                <div class="section-title">OPTIONAL:</div>
 
                 <ul class="arrow-list">
                     <li>► Stabilizer: 18,000</li>
                     <li>► Software (MOST 2D): 40,000</li>
                     <li>► Compressor 7.5 HP with dryer</li>
                 </ul>
+                
+                 
+                    <div class="section-title">
+                        Customer to be provided,
+                    </div>
 
-                 <div class="feature-box">
+                    <ul class="arrow-list">
+                        <li>► Incoming gas line.</li>
+                        <li>► Incoming power line</li>
+                        <li>► Cutting table.</li>
+                        <li>► Leg assembly</li>
+                    </ul>
+                     <div class="feature-box">
 
          
 
