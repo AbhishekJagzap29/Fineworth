@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_sale_order_tech_spec_user,sale.order.tech.spec user,model_sale_order_tech_spec,base.group_user,1,1,1,1
 access_sale_order_plasma_spec_user,sale.order.plasma.spec user,model_sale_order_plasma_spec,base.group_user,1,1,1,1
 access_sale_order_optional_spec_user,sale.order.optional.spec user,model_sale_order_optional_spec,base.group_user,1,1,1,1
+access_sale_order_plasma_optional_spec_user,sale.order.plasma.optional.spec user,model_sale_order_plasma_optional_spec,base.group_user,1,1,1,1

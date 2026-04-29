@@ -53,6 +53,13 @@ OPTIONAL_SPEC_DEFAULTS = [
     ("UPS FOR MACHINE", "5,50,000.00"),
     ("COMPRESSOR 20 HP WITH DRYER WITH TANK", "4,80,000.00"),
 ]
+OPTIONAL_SPEC_NAMES = [name for name, value in OPTIONAL_SPEC_DEFAULTS]
+
+PLASMA_OPTIONAL_SPEC_DEFAULTS = [
+    ("Stabilizer", "18,000"),
+    ("Software (MOST 2D)", "40,000"),
+    ("Compressor 7.5 HP with dryer", ""),
+]
 
 
 class SaleOrderTechSpec(models.Model):
@@ -189,6 +196,23 @@ class SaleOrder(models.Model):
         default=2150000.0,
         help="Base price for the Fine Worth profile cutting machine shown on the quotation.",
     )
+    apply_plasma_gst = fields.Boolean(
+        string="Add GST 18%",
+        default=False,
+        help="Enable to add a fixed 18% GST on the plasma quotation basic price.",
+    )
+    plasma_gst_amount = fields.Monetary(
+        string="GST Amount",
+        currency_field="currency_id",
+        compute="_compute_plasma_amounts",
+        store=True,
+    )
+    plasma_final_amount = fields.Monetary(
+        string="Final Amount",
+        currency_field="currency_id",
+        compute="_compute_plasma_amounts",
+        store=True,
+    )
     advance_percent = fields.Float(string="Advance %", default=40.0)
     gst_percent = fields.Float(string="GST %", default=18.0)
     balance_percent = fields.Float(string="Balance %", default=60.0)
@@ -231,6 +255,14 @@ class SaleOrder(models.Model):
         copy=True,
         default=lambda self: self._default_optional_specs(),
     )
+
+    plasma_optional_spec_ids = fields.One2many(
+        comodel_name="sale.order.plasma.optional.spec",
+        inverse_name="order_id",
+        string="Plasma Optional Items",
+        copy=True,
+        default=lambda self: self._default_plasma_optional_specs(),
+    )
     
     
 
@@ -259,6 +291,21 @@ class SaleOrder(models.Model):
         ]
 
     @api.model
+    def _default_plasma_optional_specs(self):
+        """Pre-fill the plasma optional items table with the standard add-ons."""
+        return [
+            (0, 0, {"sequence": idx + 1, "name": name, "value": value})
+            for idx, (name, value) in enumerate(PLASMA_OPTIONAL_SPEC_DEFAULTS)
+        ]
+
+    @api.depends("basic_price", "apply_plasma_gst")
+    def _compute_plasma_amounts(self):
+        for order in self:
+            gst_amount = (order.basic_price * 0.18) if order.apply_plasma_gst else 0.0
+            order.plasma_gst_amount = gst_amount
+            order.plasma_final_amount = order.basic_price + gst_amount
+
+    @api.model
     def default_get(self, fields_list):
         res = super().default_get(fields_list)
         if "tech_spec_ids" in fields_list and not res.get("tech_spec_ids"):
@@ -267,6 +314,8 @@ class SaleOrder(models.Model):
             res["plasma_spec_ids"] = self._default_plasma_specs()
         if "optional_spec_ids" in fields_list and not res.get("optional_spec_ids"):
             res["optional_spec_ids"] = self._default_optional_specs()
+        if "plasma_optional_spec_ids" in fields_list and not res.get("plasma_optional_spec_ids"):
+            res["plasma_optional_spec_ids"] = self._default_plasma_optional_specs()
         return res
 
     @api.model_create_multi
@@ -278,6 +327,8 @@ class SaleOrder(models.Model):
                 vals["plasma_spec_ids"] = self._default_plasma_specs()
             if not vals.get("optional_spec_ids"):
                 vals["optional_spec_ids"] = self._default_optional_specs()
+            if not vals.get("plasma_optional_spec_ids"):
+                vals["plasma_optional_spec_ids"] = self._default_plasma_optional_specs()
         orders = super().create(vals_list)
         orders._normalize_spec_lines()
         return orders
@@ -296,6 +347,17 @@ class SaleOrder(models.Model):
     def _onchange_plasma_spec_ids(self):
         for order in self:
             order._resequence_lines(order.plasma_spec_ids)
+
+    @api.onchange("plasma_optional_spec_ids", "plasma_optional_spec_ids.name", "plasma_optional_spec_ids.value")
+    def _onchange_plasma_optional_spec_ids(self):
+        for order in self:
+            order._resequence_lines(order.plasma_optional_spec_ids)
+
+    @api.onchange("quotation_type")
+    def _onchange_quotation_type_set_defaults(self):
+        for order in self:
+            if order.quotation_type == "plasma" and not order.plasma_optional_spec_ids:
+                order.plasma_optional_spec_ids = order._default_plasma_optional_specs()
 
     def _resequence_lines(self, lines):
         for idx, line in enumerate(lines, start=1):
@@ -318,6 +380,49 @@ class SaleOrder(models.Model):
                 if idx < len(OPTIONAL_SPEC_DEFAULTS):
                     update_vals["name"] = OPTIONAL_SPEC_DEFAULTS[idx][0]
                 line.with_context(allow_protected_fields=True).write(update_vals)
+
+            # Plasma optional items: resequence only, preserving user-entered labels.
+            for idx, line in enumerate(order.plasma_optional_spec_ids.sorted("sequence")):
+                line.with_context(allow_protected_fields=True).write({"sequence": idx + 1})
+
+    @api.model
+    def _normalize_optional_product_name(self, name):
+        return " ".join((name or "").upper().split())
+
+    def _get_selected_laser_optional_product_names(self):
+        self.ensure_one()
+        optional_names = {
+            self._normalize_optional_product_name(name)
+            for name in OPTIONAL_SPEC_NAMES
+        }
+        selected_names = set()
+
+        for line in self.order_line.filtered(lambda order_line: not order_line.display_type):
+            candidate_names = [
+                line.product_id.name,
+                line.product_id.display_name,
+                line.name,
+            ]
+            for candidate_name in candidate_names:
+                normalized_candidate = self._normalize_optional_product_name(candidate_name)
+                if not normalized_candidate:
+                    continue
+                for optional_name in optional_names:
+                    if (
+                        normalized_candidate == optional_name
+                        or optional_name in normalized_candidate
+                        or normalized_candidate in optional_name
+                    ):
+                        selected_names.add(optional_name)
+
+        return selected_names
+
+    def get_laser_report_optional_lines(self):
+        self.ensure_one()
+        selected_names = self._get_selected_laser_optional_product_names()
+        return self.optional_spec_ids.sorted("sequence").filtered(
+            lambda line: self._normalize_optional_product_name(line.name) not in selected_names
+        )
 
     @api.model
     def get_view(self, view_id=None, view_type="form", **options):
@@ -413,6 +518,41 @@ class SaleOrderOptionalSpec(models.Model):
         if not self.env.context.get("allow_protected_fields"):
             vals.pop("sequence", None)
             vals.pop("name", None)
+        return super().write(vals)
+
+
+class SaleOrderPlasmaOptionalSpec(models.Model):
+    _name = "sale.order.plasma.optional.spec"
+    _description = "Sale Order Plasma Optional Items"
+    _order = "sequence, id"
+
+    order_id = fields.Many2one(
+        comodel_name="sale.order",
+        string="Sale Order",
+        ondelete="cascade",
+        required=True,
+    )
+    sequence = fields.Integer(string="Sr. No.", default=1)
+    name = fields.Char(string="Description", required=True)
+    value = fields.Char(string="Amount")
+
+    def _default_name_from_sequence(self, seq):
+        if 1 <= seq <= len(PLASMA_OPTIONAL_SPEC_DEFAULTS):
+            return PLASMA_OPTIONAL_SPEC_DEFAULTS[seq - 1][0]
+        return f"Item {seq}"
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if not vals.get("name"):
+                seq = vals.get("sequence") or 1
+                vals["name"] = self._default_name_from_sequence(seq)
+        return super().create(vals_list)
+
+    def write(self, vals):
+        vals = vals.copy()
+        if not self.env.context.get("allow_protected_fields"):
+            vals.pop("sequence", None)
         return super().write(vals)
 
 

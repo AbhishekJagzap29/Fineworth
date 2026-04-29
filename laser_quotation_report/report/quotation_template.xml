@@ -419,28 +419,28 @@
                                 <!-- OPTIONAL -->
                              <!-- OPTIONAL -->
 <!-- <div style="width:90%; margin:15px auto; font-family:'Times New Roman', serif; font-size:15px;"> -->
+<t t-set="optional_lines" t-value="doc.get_laser_report_optional_lines()"/>
+<t t-if="optional_lines">
 <div style="width:85%; margin:15px 0 15px 20px;    font-family:'Times New Roman', serif;font-size:15px;">
 
-    <!-- <div style="font-weight:bold; font-size:16px; margin-bottom:6px;">
+    <div style="font-weight:bold; font-size:16px; margin-bottom:6px;">
         OPTIONAL
     </div>
 
-    <t t-set="optional_lines" t-value="doc.optional_spec_ids.sorted('sequence')"/>
-    <t t-if="optional_lines">
-        <t t-foreach="optional_lines" t-as="opt">
-            <div style="margin-bottom:3px; margin-left:40px;">
-                <span style="display:inline-block; width:320px;">
-                    <span t-esc="opt.name"/>
-                </span>
-                :
-                <span style="margin-left:5px;">
-                    <span t-esc="opt.value"/>
-                </span>
-            </div>
-        </t>
-    </t> -->
+    <t t-foreach="optional_lines" t-as="opt">
+        <div style="margin-bottom:3px; margin-left:40px;">
+            <span style="display:inline-block; width:320px;">
+                <span t-esc="opt.name"/>
+            </span>
+            :
+            <span style="margin-left:5px;">
+                <span t-esc="opt.value"/>
+            </span>
+        </div>
+    </t>
 
 </div>
+</t>
 
 
 <!-- CUSTOMER SCOPE -->

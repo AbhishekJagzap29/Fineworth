@@ -46,6 +46,14 @@
                        invisible="quotation_type != 'plasma'"
                        string="Basic Price"
                        help="Base price for the profile cutting machine shown on the quotation PDF."/>
+                <field name="apply_plasma_gst"
+                       invisible="quotation_type != 'plasma'"/>
+                <field name="plasma_gst_amount" widget="monetary"
+                       invisible="quotation_type != 'plasma'"
+                       readonly="1"/>
+                <field name="plasma_final_amount" widget="monetary"
+                       invisible="quotation_type != 'plasma'"
+                       readonly="1"/>
             </xpath>
 
 
@@ -150,6 +158,27 @@
                                     <field name="order_id" invisible="1" readonly="1"/>
                                     <field name="sequence" readonly="1"/>
                                     <field name="name" readonly="1"/>
+                                    <field name="value"/>
+                                </group>
+                            </form>
+                        </field>
+                    </group>
+                </page>
+                <page name="plasma_optional_items"
+                      string="Optional"
+                      invisible="quotation_type != 'plasma'">
+                    <group>
+                        <field name="plasma_optional_spec_ids" context="{'default_order_id': id, 'default_sequence': 4}">
+                            <tree editable="bottom">
+                                <field name="sequence" readonly="1"/>
+                                <field name="name"/>
+                                <field name="value"/>
+                            </tree>
+                            <form string="Plasma Optional Item">
+                                <group>
+                                    <field name="order_id" invisible="1" readonly="1"/>
+                                    <field name="sequence" readonly="1"/>
+                                    <field name="name"/>
                                     <field name="value"/>
                                 </group>
                             </form>

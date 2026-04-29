@@ -443,6 +443,29 @@ thead {
           t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
 </div>
 
+<t t-if="doc.apply_plasma_gst">
+<div style="
+        padding:6px 10px;
+        font-weight:700;
+        font-size:18px;
+        border-bottom:1px solid #000;">
+    GST 18% :
+    <span t-field="doc.plasma_gst_amount"
+          t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+</div>
+</t>
+
+<div style="
+    padding:6px 10px;
+    font-weight:700;
+    font-size:18px;
+    border-bottom:1px solid #000;">
+    Final Amount :
+
+    <span t-field="doc.plasma_final_amount"
+          t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"
+          style="color:#000 !important;"/>
+</div>
 <!-- RUPEES IN WORDS -->
 <div style="padding:6px 10px;">
     <div style="font-weight:700; font-size:17px;">
@@ -457,7 +480,7 @@ thead {
     margin-top:4px;
     text-transform:uppercase;">
 
-    <t t-esc="doc.currency_id.with_context(lang='en_IN').amount_to_text(doc.basic_price)"/>
+    <t t-esc="doc.currency_id.with_context(lang='en_IN').amount_to_text(doc.plasma_final_amount)"/>
 
 </div>
 </div>
@@ -468,9 +491,16 @@ thead {
                 <div class="section-title">OPTIONAL:</div>
 
                 <ul class="arrow-list">
-                    <li>► Stabilizer: 18,000</li>
-                    <li>► Software (MOST 2D): 40,000</li>
-                    <li>► Compressor 7.5 HP with dryer</li>
+                    <t t-foreach="doc.plasma_optional_spec_ids.sorted('sequence')" t-as="optional">
+                        <li>
+                            <span>&#9658; </span>
+                            <span t-esc="optional.name"/>
+                            <t t-if="optional.value">
+                                <span>: </span>
+                                <span t-esc="optional.value"/>
+                            </t>
+                        </li>
+                    </t>
                 </ul>
                 
                  
@@ -794,13 +824,9 @@ thead {
 
 </div>
 
-                                                                                    <!-- Signature -->
-                                                                            <div style="
-                                                    margin-top:140px;
-                                                    width:100%;
-                                                    text-align:right;
-                                                    font-family:'Times New Roman', serif;
-                                                    line-height:1.8;
+                                                <!-- Signature -->
+                                                <div style="
+                                                    margin-top:140px;width:100%; text-align:right; font-family:'Times New Roman', serif;line-height:1.8;
                                                 ">
 
                                                     <div style="font-size:16px;">

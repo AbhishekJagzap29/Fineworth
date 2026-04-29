@@ -12,5 +12,7 @@ def post_init_hook(cr, registry):
             order.write({"plasma_spec_ids": order._default_plasma_specs()})
         if not getattr(order, "optional_spec_ids", False) or not order.optional_spec_ids:
             order.write({"optional_spec_ids": order._default_optional_specs()})
+        if not getattr(order, "plasma_optional_spec_ids", False) or not order.plasma_optional_spec_ids:
+            order.write({"plasma_optional_spec_ids": order._default_plasma_optional_specs()})
         if not order.basic_price:
             order.basic_price = 2150000.0
