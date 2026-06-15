@@ -1,0 +1,13 @@
+<odoo noupdate="1">
+    <record id="plasma_tax_option_gst_18" model="sale.order.plasma.tax.option">
+        <field name="name">GST 18%</field>
+        <field name="rate">18.0</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="plasma_tax_option_igst_18" model="sale.order.plasma.tax.option">
+        <field name="name">IGST 18%</field>
+        <field name="rate">18.0</field>
+        <field name="sequence">20</field>
+    </record>
+</odoo>

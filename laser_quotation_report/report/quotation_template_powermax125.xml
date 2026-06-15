@@ -1,6 +1,6 @@
 <odoo>
 
-    <!-- ✅ HEADER (clean — no black line) -->
+    <!-- HEADER (clean - no black line) -->
     <template id="fw_powermax125_page_header">
         <div style="width:100%; margin:0; padding:0; line-height:0; overflow:hidden; position:relative; border:none;">
             <img src="/laser_quotation_report/static/src/img/header2.png"
@@ -15,7 +15,7 @@
 
                 <style>
                     .fw2 {
-                        font-size: 13px;
+                        font-size: 14px;
                         line-height: 1.35;
                         font-weight: 400;
                     }
@@ -55,7 +55,7 @@
                         font-size: 18px;
                         font-weight: 700;
                         text-align: center;
-                        margin-top: 20px;   /* 👈 space from header */
+                        margin-top: 20px;   /* space from header */
                         margin-bottom: 8px;
                         color: #008000;     
                     }
@@ -135,7 +135,7 @@
     font-family: 'Times New Roman', serif;
     color: #000;
     font-weight: 700;
-    font-size: 17px;
+    font-size: 14px;
     letter-spacing: 0.5px;
     text-transform: uppercase;
 } 
@@ -147,7 +147,7 @@
 
 .arrow-list li {
     font-family: 'Times New Roman', serif;
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 700;
     color: #000000;
     margin: 3px 0;
@@ -171,7 +171,7 @@
 
 /* ===== Feature Heading ===== */
 .feature-title {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     color: #2f5cff;
     text-decoration: underline;
@@ -189,7 +189,7 @@
     padding-left: 18px;
     position: relative;
     margin: 4px 0;
-    font-size: 17px;
+    font-size: 14px;
 }
 
 .feature-list li::before {
@@ -235,8 +235,8 @@
 
 .software-list li {
     color: #000000;        
-    font-size: 18px;
-   margin: 1px 0;      /* 🔽 reduce vertical gap */
+    font-size: 14px;
+   margin: 1px 0;      /* reduce vertical gap */
     line-height: 1.15; 
 }
 
@@ -283,7 +283,7 @@ thead {
 
                             <!-- CENTER TITLE -->
                             <div style="text-align:center;
-                                        font-size:19px;
+                                        font-size:18px;
                                         font-weight:700;
                                         color:#008000;
                                         text-decoration: underline;
@@ -306,12 +306,12 @@ thead {
 
                         </div>
                         <!-- COMPANY DETAILS -->
-                        <div style="margin-top:24px; font-size:16px; line-height:1.6;">
+                        <div style="margin-top:24px; font-size:14px; line-height:1.6;">
                           
-                            <div style="font-family:'Times New Roman', serif; font-size:19px; font-weight:700;">
+                            <div style="font-family:'Times New Roman', serif; font-size:18px; font-weight:700;">
                                 COMPANY NAME:
                             </div>
-                            <div style="margin-top:6px; margin-left:20px; font-size:18px;">
+                            <div style="margin-top:6px; margin-left:20px; font-size:14px;">
                                 <div style="font-weight:700;" t-esc="doc.partner_id.commercial_company_name or doc.partner_id.commercial_partner_id.name or doc.partner_id.name"/>
                                 <div t-esc="doc.partner_id.commercial_partner_id.street or doc.partner_id.street"/>
                                 <div t-esc="doc.partner_id.commercial_partner_id.street2 or doc.partner_id.street2"/>
@@ -321,19 +321,19 @@ thead {
                                 </div>
                             </div>
 
-                            <div style="margin-top:12px; font-weight:700; font-family:'Times New Roman', serif; font-size:19px;">
+                            <div style="margin-top:12px; font-weight:700; font-family:'Times New Roman', serif; font-size:14px;">
                                 MOBILE NUM: &#160;<span style="font-weight:700;"
                                     t-esc="doc.partner_id.commercial_partner_id.mobile or doc.partner_id.commercial_partner_id.phone or doc.partner_id.mobile or doc.partner_id.phone"/>
                             </div>
 
-                            <div style="margin-top:12px; font-style:italic; font-size:17px;">
+                            <div style="margin-top:12px; font-style:italic; font-size:14px;">
                                 Kind Attn:
                             </div>
 
                         </div>
 
                         <!-- SUBJECT & REFERENCE -->
-                        <div style="margin-top:16px; font-size:17px; line-height:1.7;">
+                        <div style="margin-top:16px; font-size:14px; line-height:1.7;">
 
                             <div>
                                 <b>Sub:</b>
@@ -358,7 +358,7 @@ thead {
                                     font-family:'Times New Roman', serif;
                                     color:#000000;
                                     font-weight:700;
-                                    font-size:17px;
+                                    font-size:14px;
                                     letter-spacing:0.5px;
                                     text-transform:uppercase;">
                                     <th>Sr.No</th>
@@ -393,7 +393,7 @@ thead {
                                     font-family:'Times New Roman', serif;
                                     color:#000000;
                                     font-weight:700;
-                                    font-size:17px;
+                                    font-size:14px;
                                     letter-spacing:0.5px;
                                     text-transform:uppercase;">
                                     <th>Sr.No</th>
@@ -443,13 +443,13 @@ thead {
           t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
 </div>
 
-<t t-if="doc.apply_plasma_gst">
+<t t-if="doc.plasma_tax_option_id or doc.apply_plasma_gst">
 <div style="
         padding:6px 10px;
         font-weight:700;
         font-size:18px;
         border-bottom:1px solid #000;">
-    GST 18% :
+    <span t-esc="doc.plasma_tax_option_id.name or 'GST 18%'"/> :
     <span t-field="doc.plasma_gst_amount"
           t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
 </div>
@@ -468,14 +468,14 @@ thead {
 </div>
 <!-- RUPEES IN WORDS -->
 <div style="padding:6px 10px;">
-    <div style="font-weight:700; font-size:17px;">
+    <div style="font-weight:700; font-size:14px;">
         Rupees in words:
     </div>
 
  <div style="
     text-align:center;
     font-weight:700;
-    font-size:20px;
+    font-size:18px;
     letter-spacing:1px;
     margin-top:4px;
     text-transform:uppercase;">
@@ -624,7 +624,10 @@ thead {
 <div style="
     color:#008000;
     font-weight:700;
-    font-size:18px;
+    font-family:'Times New Roman', serif;
+    font-size:26px;
+    line-height:1.1;
+    text-decoration:underline;
     margin-top:4px;">
     Annexure 2
 </div>
@@ -635,12 +638,19 @@ thead {
     margin-top:18px;
     color:#2f5cff;
     font-weight:700;
-    font-size:20px;
+    font-family:'Times New Roman', serif;
+    font-size:28px;
+    line-height:1.1;
     text-decoration:underline;">
     TERMS &amp; CONDITIONS:
 </div>
 
-<div style="margin-top:6px; text-align:justify;">
+<div style="
+    margin-top:4px;
+    font-family:'Times New Roman', serif;
+    font-size:15px;
+    line-height:1.18;
+    text-align:justify;">
     <b>Warranty:</b>
     The supplier shall stand warranty for the machine for a period of 12 months
     from the date of commissioning or 13 months from delivery of machine,
@@ -650,18 +660,25 @@ thead {
 </div>
 
 <!-- DELIVERY PLACE -->
-<div style="margin-top:12px; font-family:'Times New Roman', serif;">
-
-    <div style="font-weight:700; font-size:18px;">
-        Delivery Place:
-    </div>
-
+            <div style="margin-top:34px; font-family:'Times New Roman', serif;">
     <div style="
-        text-align:center;
         font-weight:700;
-        font-size:22px;
-        margin-top:2px;">
-        RK STRUCTURALS
+        font-size:15px;
+        line-height:1.15;
+    ">
+        <span style="
+            display:block;
+            font-weight:700;
+        ">Delivery Place:</span>
+        <span style="display:block; margin-left:120px; margin-top:2px; font-size:15px;">
+        <!-- <span t-esc="(doc.partner_shipping_id or doc.partner_id).name"/> -->
+        <t t-if="(doc.partner_shipping_id or doc.partner_id).street"> <span t-esc="(doc.partner_shipping_id or doc.partner_id).street"/></t>
+        <t t-if="(doc.partner_shipping_id or doc.partner_id).street2">, <span t-esc="(doc.partner_shipping_id or doc.partner_id).street2"/></t>
+        <t t-if="(doc.partner_shipping_id or doc.partner_id).city">, <span t-esc="(doc.partner_shipping_id or doc.partner_id).city"/></t>
+        <t t-if="(doc.partner_shipping_id or doc.partner_id).state_id">, <span t-esc="(doc.partner_shipping_id or doc.partner_id).state_id.name"/></t>
+        <t t-if="(doc.partner_shipping_id or doc.partner_id).zip"> - <span t-esc="(doc.partner_shipping_id or doc.partner_id).zip"/></t>
+        <t t-if="(doc.partner_shipping_id or doc.partner_id).country_id">, <span t-esc="(doc.partner_shipping_id or doc.partner_id).country_id.name"/></t>
+        </span>
     </div>
 
 </div>
@@ -671,7 +688,7 @@ thead {
 <div style="
     margin-top:14px;
     font-family:'Times New Roman', serif;
-    font-size:18px;
+    font-size:14px;
 ">
 
     <!-- Row 1 -->
@@ -722,7 +739,7 @@ thead {
                                <div style="width:70%; margin:25px auto; font-family:'Times New Roman', serif; line-height:1.9;">
 
     <div style="margin-bottom:6px;">
-        <span style="display:inline-block; width:220px; font-size:17px; font-weight:700;">
+        <span style="display:inline-block; width:220px; font-size:14px; font-weight:700;">
             Bank Address
         </span>
         <span style="font-weight:bold;">:</span>
@@ -732,7 +749,7 @@ thead {
     </div>
 
     <div style="margin-bottom:6px;">
-        <span style="display:inline-block; width:220px; font-size:17px; font-weight:700;">
+        <span style="display:inline-block; width:220px; font-size:14px; font-weight:700;">
             Account Number
         </span>
         <span style="font-weight:bold;">:</span>
@@ -742,7 +759,7 @@ thead {
     </div>
 
     <div style="margin-bottom:6px;">
-        <span style="display:inline-block; width:220px; font-size:17px; font-weight:700;">
+        <span style="display:inline-block; width:220px; font-size:14px; font-weight:700;">
             RTGS / IFSC Code
         </span>
         <span style="font-weight:bold;">:</span>
@@ -752,7 +769,7 @@ thead {
     </div>
 
     <div>
-        <span style="display:inline-block; width:220px; font-size:17px; font-weight:700;">
+        <span style="display:inline-block; width:220px; font-size:14px; font-weight:700;">
             Account Type
         </span>
         <span style="font-weight:bold;">:</span>
@@ -767,58 +784,58 @@ thead {
                                  <div style="margin-top:25px; line-height:1.8; font-size:14px;">
 
     <div style="margin-bottom:12px;">
-        <span style="display:inline-block; width:240px;font-family:'Times New Roman'; font-weight:bold; font-size:18px;">
+        <span style="display:inline-block; width:240px;font-family:'Times New Roman'; font-weight:bold; font-size:14px;">
             Sales Tax
         </span>
-        <span style="font-weight:bold; font-size:18px;">:</span>
-        <span style="margin-left:8px;">GST 18%</span>
+        <span style="font-weight:bold; font-size:14px;">:</span>
+        <span style="margin-left:8px;" t-esc="doc.plasma_tax_option_id.name or 'GST 18%'"/>
     </div>
 
     <div style="margin-bottom:12px;">
-        <span style="display:inline-block; width:240px; font-family:'Times New Roman';font-weight:bold; font-size:18px;">
+        <span style="display:inline-block; width:240px; font-family:'Times New Roman';font-weight:bold; font-size:14px;">
             Transportation &amp; Insurance
         </span>
-        <span style="font-weight:bold; font-size:18px;">:</span>
+        <span style="font-weight:bold; font-size:14px;">:</span>
         <span style="margin-left:8px;">
             Freight &amp; Insurance charges will be extra as applicable at the time of dispatch.
         </span>
     </div>
 
     <div style="margin-bottom:12px;">
-        <span style="display:inline-block; width:240px;font-family:'Times New Roman'; font-weight:bold; font-size:18px;">
+        <span style="display:inline-block; width:240px;font-family:'Times New Roman'; font-weight:bold; font-size:14px;">
             Validity
         </span>
-        <span style="font-weight:bold; font-size:18px;">:</span>
+        <span style="font-weight:bold; font-size:14px;">:</span>
         <span style="margin-left:8px;">
             Quoted prices are valid for 15 days from the date of offer and thereafter subject to re-confirmation.
         </span>
     </div>
 
     <div style="margin-bottom:12px;">
-        <span style="display:inline-block; width:240px;font-family:'Times New Roman'; font-weight:bold; font-size:18px;">
+        <span style="display:inline-block; width:240px;font-family:'Times New Roman'; font-weight:bold; font-size:14px;">
             Payment
         </span>
-        <span style="font-weight:bold; font-size:18px;">:</span>
+        <span style="font-weight:bold; font-size:14px;">:</span>
         <span style="margin-left:8px;">
             50% advance along with the Purchase Order, remaining 50% along with full taxes before dispatch.
         </span>
     </div>
 
     <div style="margin-bottom:12px;">
-        <span style="display:inline-block; width:240px;font-family:'Times New Roman'; font-weight:bold; font-size:18px;">
+        <span style="display:inline-block; width:240px;font-family:'Times New Roman'; font-weight:bold; font-size:14px;">
             Delivery
         </span>
-        <span style="font-weight:bold; font-size:18px;">:</span>
+        <span style="font-weight:bold; font-size:14px;">:</span>
         <span style="margin-left:8px;">
             Approx. 30 days from the date of receipt of technically and commercially clear order.
         </span>
     </div>
 
     <div style="margin-bottom:12px;">
-        <span style="display:inline-block; width:240px;font-family:'Times New Roman'; font-weight:bold; font-size:18px;">
+        <span style="display:inline-block; width:240px;font-family:'Times New Roman'; font-weight:bold; font-size:14px;">
             Erection &amp; Installation
         </span>
-        <span style="font-weight:bold; font-size:18px;">:</span>
+        <span style="font-weight:bold; font-size:14px;">:</span>
         <span style="margin-left:8px;">At actual cost.</span>
     </div>
 
@@ -829,11 +846,11 @@ thead {
                                                     margin-top:140px;width:100%; text-align:right; font-family:'Times New Roman', serif;line-height:1.8;
                                                 ">
 
-                                                    <div style="font-size:16px;">
+                                                    <div style="font-size:14px;">
                                                         Best Regards,
                                                     </div>
 
-                                                    <div style="font-size:16px; font-weight:600;">
+                                                    <div style="font-size:14px; font-weight:600;">
                                                         For Fine Worth Engineers
                                                     </div>
 
@@ -841,7 +858,7 @@ thead {
                                                         V. SATHISH
                                                     </div>
 
-                                                    <div style="font-size:15px;">
+                                                    <div style="font-size:14px;">
                                                         Marketing
                                                     </div>
 

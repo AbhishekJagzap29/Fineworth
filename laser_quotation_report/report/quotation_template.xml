@@ -65,6 +65,39 @@
                             font-weight: bold;
                             color: #0b2fa6;
                         }
+
+                        .common-text {
+                            font-family: "Times New Roman", serif;
+                            font-size: 15px;
+                        }
+
+                        .quote-row {
+                            margin-left: 20px;
+                            margin-bottom: 8px;
+                        }
+
+                        .quote-label {
+                            display: inline-block;
+                            width: 170px;
+                            font-weight: bold;
+                            vertical-align: top;
+                        }
+
+                        .quote-colon {
+                            display: inline-block;
+                            width: 15px;
+                            font-weight: bold;
+                            vertical-align: top;
+                            text-align: center;
+                        }
+
+                        .quote-value {
+                            display: inline-block;
+                            width: 65%;
+                            font-weight: normal;
+                            vertical-align: top;
+                            line-height: 1.7;
+                        }
                         </style>
 
            <!-- PAGE 1 -->
@@ -140,7 +173,7 @@
 
                                                             <div style="line-height:1.8; font-weight:normal;">
 
-                                                                <b>Fine Worth Engineers and Services</b><br/>
+                                                                <b>Fine Worth Engineers</b><br/>
 
                                                                 <span style="margin-left:20px;">No.690, Kulathur,</span><br/>
                                                                 <span style="margin-left:20px;">Irugur Road,</span><br/>
@@ -169,7 +202,10 @@
                                                                 </span><br/>
 
                                                                 Web:
-                                                                <span style="color:#007bff;">www.fineworth.com</span>
+                                                                <span style="color:#007bff;">www.fineworth.com</span><br/>
+
+                                                                phone:
+                                                                <span style="color:#007bff;">+91 9944443062, 7397714888</span><br/>
 
                                                             </div>
 
@@ -423,7 +459,7 @@
 <t t-if="optional_lines">
 <div style="width:85%; margin:15px 0 15px 20px;    font-family:'Times New Roman', serif;font-size:15px;">
 
-    <div style="font-weight:bold; font-size:16px; margin-bottom:6px;">
+    <div style="font-weight:bold; font-size:16px; margin-bottom:8px;">
         OPTIONAL
     </div>
 
@@ -446,7 +482,7 @@
 <!-- CUSTOMER SCOPE -->
 <div style="width:85%; margin:15px 0 15px 20px; font-family:'Times New Roman', serif; font-size:15px;">
 
-    <div style="font-weight:bold; font-size:16px; margin-bottom:6px;">
+    <div style="font-weight:bold; font-size:16px; margin-bottom:8px;">
         CUSTOMER SCOPE
     </div>
 
@@ -462,26 +498,27 @@
 
                                     <!-- TERMS & CONDITIONS -->
                                     <div style="margin-top:8px;
-                                                font-size:15px;
+                                                font-size:16px;
+                                                margin-bottom:12px; 
                                                 font-weight:bold;
                                                 color:#2a2a9a;
                                                 text-decoration:underline;">
                                         TERMS &amp; CONDITIONS
                                     </div>
                                     <!-- Ex-Works -->
-                                    <div style="margin-left:20px; margin-bottom:6px;">
-                                        <span style="display:inline-block; width:170px; font-weight:bold;">Ex-Works</span>
-                                        <span style="display:inline-block; width:15px; font-weight:bold;">:</span>
-                                        <span style="font-weight:normal;">Coimbatore, Tamilnadu, INDIA.</span>
+                                    <div class="quote-row common-text">
+                                        <span class="quote-label">Ex-Works</span>
+                                        <span class="quote-colon">:</span>
+                                        <span class="quote-value">Coimbatore, Tamilnadu, INDIA.</span>
                                     </div>
 
                                     <!-- GST -->
-                                    <div style="margin-left:20px; margin-bottom:10px;">
-                                        <span style="display:inline-block; width:170px; font-weight:bold; vertical-align:top; line-height:1.5;">
+                                    <div class="quote-row common-text">
+                                        <span class="quote-label" style="line-height:1.5;">
                                             Goods<br/>&amp; Service<br/>Tax (GST)
                                         </span>
-                                        <span style="display:inline-block; width:15px; font-weight:bold; vertical-align:top;">:</span>
-                                        <span style="display:inline-block; width:65%; font-weight:normal;">
+                                        <span class="quote-colon">:</span>
+                                        <span class="quote-value">
                                             In Tamilnadu :- CGST 9% + SGST 9% = Total 18%<br/>
                                             18% Outside Tamilnadu :- IGST 18%<br/>
                                             GST is applicable on supply of Machine and composite services,
@@ -490,33 +527,33 @@
                                     </div>
 
                                         <!-- Packing -->
-                                        <div style="margin-left:20px; margin-bottom:6px;">
-                                            <span style="display:inline-block; width:170px; font-weight:bold; vertical-align:top;">
+                                        <div class="quote-row common-text">
+                                            <span class="quote-label">
                                                 Packing
                                             </span>
 
                                             <!-- FIX -->
-                                            <span style="display:inline-block; width:15px; font-weight:bold; vertical-align:top;">
+                                            <span class="quote-colon">
                                                 :
                                             </span>
 
-                                            <span style="display:inline-block; width:65%; font-weight:normal;">
+                                            <span class="quote-value">
                                                 Inclusive. Minimum 3 working days will be required for packing from
                                                 the date of final payment realization in FWES account.
                                             </span>
                                         </div>
 
                                             <!-- Freight -->
-                                            <div style="margin-left:20px; margin-bottom:6px;">
-                                                <span style="display:inline-block; width:170px; font-weight:bold; vertical-align:top;">
+                                            <div class="quote-row common-text">
+                                                <span class="quote-label">
                                                     Freight &amp; Insurance
                                                 </span>
 
-                                                <span style="display:inline-block; width:15px; font-weight:bold; vertical-align:top;">
+                                                <span class="quote-colon">
                                                     :
                                                 </span>
 
-                                                <span style="display:inline-block; width:65%; font-weight:normal; line-height:1.7;">
+                                                <span class="quote-value">
                                                     To buyer’s Account. If required FWES can provide the details of
                                                     recommended transporters and insurance company. FWES shall not be
                                                     responsible for any transit damage and insurance claim.
@@ -524,16 +561,16 @@
                                             </div>
 
                                             <!-- Delivery -->
-                                            <div style="margin-left:20px; margin-bottom:6px;">
-                                                <span style="display:inline-block; width:170px; font-weight:bold; vertical-align:top;">
+                                            <div class="quote-row common-text">
+                                                <span class="quote-label">
                                                     Delivery Period
                                                 </span>
 
-                                                <span style="display:inline-block; width:15px; font-weight:bold; vertical-align:top;">
+                                                <span class="quote-colon">
                                                     :
                                                 </span>
 
-                                                <span style="display:inline-block; width:65%; font-weight:normal; line-height:1.7;">
+                                                <span class="quote-value">
                                                     6 - 8 weeks from the date of clear techno commercial order along with
                                                     40% advance. If drawing approval process applicable, then dispatch
                                                     will be from the date of completion of drawing approval process.
@@ -541,23 +578,23 @@
                                             </div>
 
                                         <!-- Payment -->
-                                        <div style="margin-left:20px; margin-bottom:4px;">
-                                            <span style="display:inline-block; width:170px; font-weight:bold;">Mode of Payment</span>
-                                            <span style="display:inline-block; width:15px; font-weight:bold;">:</span>
-                                            <span style="font-weight:normal;">In favor of “FINE WORTH ENGINEERS.”</span>
+                                        <div class="quote-row common-text">
+                                            <span class="quote-label">Mode of Payment</span>
+                                            <span class="quote-colon">:</span>
+                                            <span class="quote-value">In favor of “FINE WORTH ENGINEERS.”</span>
                                         </div>
-                                                <div style="margin-left:205px; margin-bottom:6px; font-weight:normal;">
+                                                <div class="common-text" style="margin-left:205px; margin-bottom:8px; font-weight:normal;">
                                                       Beneficiary Name : FINE WORTH ENGINEERS
                                                 </div>
 
-                                                <div style="margin-left:205px; margin-bottom:6px; font-weight:normal;">
+                                                <div class="common-text" style="margin-left:205px; margin-bottom:8px; font-weight:normal;">
                                                     Bank Name : KARUR VYSHYA BANK
                                                 </div>
 
-                                                <div style="margin-left:205px; margin-bottom:10px; font-weight:normal;">
+                                                <div class="common-text" style="margin-left:205px; margin-bottom:8px; font-weight:normal;">
                                                         Bank Address : Chinniyampalayam, Coimbatore, 
                                                 </div>
-                                                <div style="margin-left:205px; margin-bottom:10px; font-weight:normal;">
+                                                <div class="common-text" style="margin-left:205px; margin-bottom:8px; font-weight:normal;">
                                                  Tamilnadu – 641062.
                                          </div>
         
@@ -574,48 +611,48 @@
                     <t t-call="laser_quotation_report.fw_page_header"/>
 
                     <!-- <div style="width:88%; margin:0 auto; font-size:14px; line-height:1.45; font-style:italic;"> -->
-                    <div style="width:88%; margin:0 auto; font-size:14px; line-height:1.45; font-family:'Times New Roman', Times, serif; font-weight:400;">
+                    <div class="common-text" style="width:88%; margin:0 auto; line-height:1.45; font-weight:400;">
                         <div style="text-align:center; line-height:1.6; font-family:'Times New Roman', Times, serif;">
-                    <div>
-                    <span style="display:inline-block; width:170px; text-align:right; font-weight:bold;">
+                    <div style="margin-bottom:8px;">
+                    <span style="display:inline-block; width:170px; text-align:right; font-weight:bold; vertical-align:top;">
                         Account Number
                     </span>
-                    <span style="display:inline-block; width:15px; text-align:center;">:</span>
-                    <span style="display:inline-block; width:200px; text-align:left;">
+                    <span class="quote-colon">:</span>
+                    <span style="display:inline-block; width:200px; text-align:left; vertical-align:top;">
                         167713500001300
                     </span>
         </div>
 
-                                                    <div>
-                                                        <span style="display:inline-block; width:170px; text-align:right; font-weight:bold;">
+                                                    <div style="margin-bottom:8px;">
+                                                        <span style="display:inline-block; width:170px; text-align:right; font-weight:bold; vertical-align:top;">
                                                             RTGS / IFSC Code
                                                         </span>
-                                                        <span style="display:inline-block; width:15px; text-align:center;">:</span>
-                                                        <span style="display:inline-block; width:200px; text-align:left;">
+                                                        <span class="quote-colon">:</span>
+                                                        <span style="display:inline-block; width:200px; text-align:left; vertical-align:top;">
                                                             KVBL0001677
                                                         </span>
                                                     </div>
 
-                                                        <div>
-                                                            <span style="display:inline-block; width:170px; text-align:right; font-weight:bold;">
+                                                        <div style="margin-bottom:8px;">
+                                                            <span style="display:inline-block; width:170px; text-align:right; font-weight:bold; vertical-align:top;">
                                                                 Account
                                                             </span>
-                                                            <span style="display:inline-block; width:15px; text-align:center;">:</span>
-                                                            <span style="display:inline-block; width:200px; text-align:left;">
+                                                            <span class="quote-colon">:</span>
+                                                            <span style="display:inline-block; width:200px; text-align:left; vertical-align:top;">
                                                                 CURRENT ACCOUNT
                                                             </span>
                                                         </div>
     </div>
 
                                                         <!-- Payment Mode -->
-                                                        <div style="margin-top:10px; margin-left:20px; margin-bottom:8px;">
-                                                            <span style="display:inline-block; width:170px; font-weight:bold; vertical-align:top;">
+                                                        <div class="quote-row" style="margin-top:10px;">
+                                                            <span class="quote-label">
                                                                 Payment Mode
                                                             </span>
-                                                            <span style="display:inline-block; width:20px; font-weight:bold; vertical-align:top;">
+                                                            <span class="quote-colon">
                                                                 :
                                                             </span>
-                                                            <span style="display:inline-block; width:65%; line-height:1.7;">
+                                                            <span class="quote-value">
                                                                 Payment will be accepted through NEFT, RTGS, ONLINE BANKING,
                                                                 SWIFT TRANSFER and IMPS mode only.
                                                                 CASH, CHEQUE and DD will not be accepted.
@@ -623,30 +660,23 @@
                                                         </div>
 
                                                         <!-- Payment Terms -->
-                                                        <div style="margin-left:20px;">
-                                                            <span style="display:inline-block; width:170px; font-weight:bold; vertical-align:top;">
+                                                        <div class="quote-row">
+                                                            <span class="quote-label">
                                                                 Payment Terms
                                                             </span>
-                                                            <span style="display:inline-block; width:20px; font-weight:bold; vertical-align:top;">
+                                                            <span class="quote-colon">
                                                                 :
                                                             </span>
-                                                            <span style="display:inline-block; width:65%; line-height:1.7;">
-                                                                <span t-esc="doc.advance_percent"/>% of total order value or 15 lacs, whichever is higher,
-                                                                in advance with P.O. plus <span t-esc="doc.gst_percent"/>% GST and balance
-                                                                <span t-esc="doc.balance_percent"/>% along with taxes and duties against proforma invoice
-                                                                before dispatch of machine. Dispatch of machine is subject to realization of payment
-                                                                in FWEAS account.
-                                                                <br/>
-                                                            </span>
+                                                            <span class="quote-value" style="white-space:pre-line;" t-esc="doc.laser_payment_terms"/>
                                                         </div>
 
 
                                                             <!-- Installation -->
-                                                            <div style="font-size:17px; font-weight:700; margin-top:12px;">
+                                                            <div style="font-size:16px; font-weight:700; margin-top:12px;">
                                                                 Installation, commissioning and Training:
                                                             </div>
 
-                                                                    <div style="margin-left:18px; margin-top:4px;">
+                                                                    <div class="common-text" style="margin-left:18px; margin-top:4px;">
                                                                 <span style="font-weight:200 !important; font-style:normal;">
                                                                     * Inclusive for 4 days. However our Engineer’s lodging, boarding,
                                                                     traveling, and conveyance shall be borne by you. Beyond 4 days
@@ -654,48 +684,48 @@
                                                                 </span>
                                                             </div>
                                                             <!-- Validity -->
-                                                            <div style="font-weight:bold; text-decoration:underline; margin-top:10px;">
+                                                            <div style="font-size:16px; font-weight:bold; text-decoration:underline; margin-top:10px;">
                                                                 Validity:
                                                             </div>
-                                                            <div style="margin-left:18px; margin-top:4px;">
+                                                            <div class="common-text" style="margin-left:18px; margin-top:4px;">
                                                                 * 30 days from the date of offer.
                                                             </div>
 
                                                             <!-- Testing -->
-                                                            <div style="font-weight:bold; text-decoration:underline; margin-top:10px;">
+                                                            <div style="font-size:16px; font-weight:bold; text-decoration:underline; margin-top:10px;">
                                                                 Testing at FWES:
                                                             </div>
-                                                            <div style="margin-left:18px; margin-top:4px;">
+                                                            <div class="common-text" style="margin-left:18px; margin-top:4px;">
                                                                 * Machine will be tested under rigorous production process for 48 hrs.
                                                             </div>
 
                                                             <!-- Cancellation -->
-                                                            <div style="font-weight:bold; text-decoration:underline; margin-top:10px;">
+                                                            <div style="font-size:16px; font-weight:bold; text-decoration:underline; margin-top:10px;">
                                                                 Cancellation Terms:
                                                             </div>
-                                                            <div style="margin-left:18px; margin-top:4px;">
+                                                            <div class="common-text" style="margin-left:18px; margin-top:4px;">
                                                                 * In case of cancellation of order, the advance amount can be used either
                                                                 for future procurement within 6 months or will be forfeited.
                                                             </div>
 
                                                             <!-- Warranty -->
-                                                            <div style="font-weight:bold; text-decoration:underline; margin-top:10px;">
+                                                            <div style="font-size:16px; font-weight:bold; text-decoration:underline; margin-top:10px;">
                                                                 Warranty:
                                                             </div>
 
-                                                            <div style="margin-left:18px; margin-top:4px;">
+                                                            <div class="common-text" style="margin-left:18px; margin-top:4px;">
                                                                 * All Products are warranted by FWEAS against materials and workmanship
                                                                 for 24 months from the date of installation or 24 months from the date
                                                                 of machine readiness in customer plant.
                                                             </div>
 
-                                                            <div style="margin-left:18px; margin-top:4px;">
+                                                            <div class="common-text" style="margin-left:18px; margin-top:4px;">
                                                                 * During warranty, our Engineer’s lodging, boarding, traveling, and
                                                                 conveyance shall be borne by you. Consumables, lens, nozzle, mirror,
                                                                 ceramic part, optics, fiber and any physical damage are not covered in Warranty.
                                                             </div>
 
-                                                            <div style="margin-left:18px; margin-top:4px;">
+                                                            <div class="common-text" style="margin-left:18px; margin-top:4px;">
                                                                 * Further details of warranty is mentioned in the Warranty Enclosure.
                                                             </div>
 
@@ -705,7 +735,7 @@
                                                                 <div style="margin-top:80px; margin-right:40px; text-align:right; font-family:'Times New Roman', Times, serif;">
                                                                 <div><b>Best Regards</b></div>
                                                                 <div><b>For Fine Worth engineers.</b></div>
-                                                                <div style="margin-top:15px; font-weight:bold;">SATHISH</div>
+                                                                <div style="margin-top:15px; font-weight:bold;">L.SARADHA</div>
                                                                 <div>Marketing</div>
                                                             </div>
             </div>
@@ -724,9 +754,9 @@
                             WARRANTY ENCLOSURE (WARRANTY &amp; DISCLAIMER)
                     </div>
 
-                                                        <div style="text-align:center; margin-top:2px;">
-                                                            (FINE WORTH ENGINEERS AND SERVICES., All rights reserved)
-                                                        </div>
+                                                        <!-- <div style="text-align:center; margin-top:2px;">
+                                                            (FINE WORTH ENGINEERS., All rights reserved)
+                                                        </div> -->
 
                         <div style="margin-top:8px; font-size:16px;">
                             <p><b>GENERAL WARRANTY:</b></p>

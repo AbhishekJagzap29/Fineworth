@@ -178,6 +178,16 @@ class SaleOrderPlasmaSpec(models.Model):
         return super().write(vals)
 
 
+class SaleOrderPlasmaTaxOption(models.Model):
+    _name = "sale.order.plasma.tax.option"
+    _description = "Plasma Quotation Tax Option"
+    _order = "sequence, id"
+
+    name = fields.Char(string="Tax Name", required=True)
+    rate = fields.Float(string="Tax Rate (%)", required=True, default=18.0)
+    sequence = fields.Integer(default=10)
+
+
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
@@ -201,6 +211,11 @@ class SaleOrder(models.Model):
         default=False,
         help="Enable to add a fixed 18% GST on the plasma quotation basic price.",
     )
+    plasma_tax_option_id = fields.Many2one(
+        comodel_name="sale.order.plasma.tax.option",
+        string="Taxes",
+        help="Select the tax label to print on the plasma quotation.",
+    )
     plasma_gst_amount = fields.Monetary(
         string="GST Amount",
         currency_field="currency_id",
@@ -216,6 +231,17 @@ class SaleOrder(models.Model):
     advance_percent = fields.Float(string="Advance %", default=40.0)
     gst_percent = fields.Float(string="GST %", default=18.0)
     balance_percent = fields.Float(string="Balance %", default=60.0)
+    laser_payment_terms = fields.Text(
+        string="Payment Terms",
+        default=(
+            "40% of total order value or 15 lacs, whichever is higher, "
+            "in advance with P.O. plus 18% GST and balance 60% along with "
+            "taxes and duties against proforma invoice before dispatch of "
+            "machine. Dispatch of machine is subject to realization of payment "
+            "in FWEAS account."
+        ),
+        help="Full payment terms printed on the laser quotation.",
+    )
     payment_term_name = fields.Char(
         string="Payment Terms",
         related="payment_term_id.name",
@@ -298,10 +324,13 @@ class SaleOrder(models.Model):
             for idx, (name, value) in enumerate(PLASMA_OPTIONAL_SPEC_DEFAULTS)
         ]
 
-    @api.depends("basic_price", "apply_plasma_gst")
+    @api.depends("basic_price", "apply_plasma_gst", "plasma_tax_option_id", "plasma_tax_option_id.rate")
     def _compute_plasma_amounts(self):
         for order in self:
-            gst_amount = (order.basic_price * 0.18) if order.apply_plasma_gst else 0.0
+            tax_rate = order.plasma_tax_option_id.rate or 0.0
+            if not tax_rate and order.apply_plasma_gst:
+                tax_rate = 18.0
+            gst_amount = order.basic_price * (tax_rate / 100.0)
             order.plasma_gst_amount = gst_amount
             order.plasma_final_amount = order.basic_price + gst_amount
 
@@ -374,12 +403,9 @@ class SaleOrder(models.Model):
             for idx, line in enumerate(order.plasma_spec_ids.sorted("sequence")):
                 line.with_context(allow_protected_fields=True).write({"sequence": idx + 1})
 
-            # Optional items: resequence and reset description labels
+            # Optional items: resequence only, preserving remaining rows after deletions.
             for idx, line in enumerate(order.optional_spec_ids.sorted("sequence")):
-                update_vals = {"sequence": idx + 1}
-                if idx < len(OPTIONAL_SPEC_DEFAULTS):
-                    update_vals["name"] = OPTIONAL_SPEC_DEFAULTS[idx][0]
-                line.with_context(allow_protected_fields=True).write(update_vals)
+                line.with_context(allow_protected_fields=True).write({"sequence": idx + 1})
 
             # Plasma optional items: resequence only, preserving user-entered labels.
             for idx, line in enumerate(order.plasma_optional_spec_ids.sorted("sequence")):
@@ -505,12 +531,21 @@ class SaleOrderOptionalSpec(models.Model):
             return OPTIONAL_SPEC_DEFAULTS[seq - 1][0]
         return f"Item {seq}"
 
+    def _default_name_from_value(self, value):
+        for default_name, default_value in OPTIONAL_SPEC_DEFAULTS:
+            if value == default_value:
+                return default_name
+        return False
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
             if not vals.get("name"):
                 seq = vals.get("sequence") or 1
-                vals["name"] = self._default_name_from_sequence(seq)
+                vals["name"] = (
+                    self._default_name_from_value(vals.get("value"))
+                    or self._default_name_from_sequence(seq)
+                )
         return super().create(vals_list)
 
     def write(self, vals):

@@ -6,6 +6,7 @@
     'depends': ['sale'],
     'data': [
         'security/ir.model.access.csv',
+        'data/plasma_tax_option_data.xml',
         'views/sale_order_view.xml',
         'data/mail_template_data.xml',
         'report/quotation_template.xml',

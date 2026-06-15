@@ -31,23 +31,16 @@
 
             <!-- Basic Price field directly under GST Treatment -->
             <xpath expr="//sheet//field[@name='l10n_in_gst_treatment']" position="after">
-                <field name="payment_term_name"
+                <field name="laser_payment_terms"
                        invisible="quotation_type != 'laser'"
-                       readonly="1"
-                       class="oe_inline"
-                       style="color: #212529; border: 0; background: transparent; box-shadow: none; padding-left: 0; pointer-events: none;"/>
-                <field name="advance_percent"
-                       invisible="quotation_type != 'laser'"/>
-                <field name="gst_percent"
-                       invisible="quotation_type != 'laser'"/>
-                <field name="balance_percent"
-                       invisible="quotation_type != 'laser'"/>
+                       placeholder="Enter the full payment terms to print on the laser quotation."/>
                 <field name="basic_price" widget="monetary"
                        invisible="quotation_type != 'plasma'"
                        string="Basic Price"
                        help="Base price for the profile cutting machine shown on the quotation PDF."/>
-                <field name="apply_plasma_gst"
-                       invisible="quotation_type != 'plasma'"/>
+                <field name="plasma_tax_option_id"
+                       invisible="quotation_type != 'plasma'"
+                       options="{'no_create': True, 'no_open': True}"/>
                 <field name="plasma_gst_amount" widget="monetary"
                        invisible="quotation_type != 'plasma'"
                        readonly="1"/>
@@ -144,20 +137,20 @@
                     </group>
                 </page>
                 <page name="optional_items"
-                      string="Optional"
+                      string="Optional Products"
                       invisible="quotation_type != 'laser'">
                     <group>
                         <field name="optional_spec_ids" context="{'default_order_id': active_id}">
-                            <tree editable="bottom" create="false" delete="false">
+                            <tree editable="bottom" create="false" delete="true">
                                 <field name="sequence" readonly="1"/>
-                                <field name="name" readonly="1"/>
+                                <field name="name" readonly="1" force_save="1"/>
                                 <field name="value"/>
                             </tree>
                             <form string="Optional Item">
                                 <group>
                                     <field name="order_id" invisible="1" readonly="1"/>
                                     <field name="sequence" readonly="1"/>
-                                    <field name="name" readonly="1"/>
+                                    <field name="name" readonly="1" force_save="1"/>
                                     <field name="value"/>
                                 </group>
                             </form>
@@ -165,11 +158,11 @@
                     </group>
                 </page>
                 <page name="plasma_optional_items"
-                      string="Optional"
+                      string="Optional Products"
                       invisible="quotation_type != 'plasma'">
                     <group>
                         <field name="plasma_optional_spec_ids" context="{'default_order_id': id, 'default_sequence': 4}">
-                            <tree editable="bottom">
+                            <tree editable="bottom" create="false">
                                 <field name="sequence" readonly="1"/>
                                 <field name="name"/>
                                 <field name="value"/>
