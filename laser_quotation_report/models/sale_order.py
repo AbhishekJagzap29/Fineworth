@@ -200,6 +200,11 @@ class SaleOrder(models.Model):
         required=True,
     )
     laser_power = fields.Integer(string="Laser Power (Watts)")
+    price_for_model = fields.Char(
+        string="Price For Model",
+        default="FWE/13030/F01/P01/2025.",
+        help="Model code printed on the plasma quotation.",
+    )
     basic_price = fields.Monetary(
         string="Basic Price",
         currency_field="currency_id",
@@ -241,6 +246,11 @@ class SaleOrder(models.Model):
             "in FWEAS account."
         ),
         help="Full payment terms printed on the laser quotation.",
+    )
+    plasma_payment_terms = fields.Text(
+        string="Payment Terms (Plasma)",
+        default="50% advance along with the Purchase Order, remaining 50% along with full taxes before dispatch.",
+        help="Full payment terms printed on the plasma quotation.",
     )
     payment_term_name = fields.Char(
         string="Payment Terms",

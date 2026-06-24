@@ -29,11 +29,19 @@
                 <field name="quotation_type"/>
             </xpath>
 
+            <xpath expr="//field[@name='pricelist_id']/.." position="after">
+                <label for="price_for_model" string="Price For Model" invisible="quotation_type != 'plasma'"/>
+                <field name="price_for_model" nolabel="1" invisible="quotation_type != 'plasma'" placeholder="FWE/13030/F01/P01/2025."/>
+            </xpath>
+
             <!-- Basic Price field directly under GST Treatment -->
             <xpath expr="//sheet//field[@name='l10n_in_gst_treatment']" position="after">
                 <field name="laser_payment_terms"
                        invisible="quotation_type != 'laser'"
                        placeholder="Enter the full payment terms to print on the laser quotation."/>
+                <field name="plasma_payment_terms"
+                       invisible="quotation_type != 'plasma'"
+                       placeholder="Enter the full payment terms to print on the plasma quotation."/>
                 <field name="basic_price" widget="monetary"
                        invisible="quotation_type != 'plasma'"
                        string="Basic Price"
