@@ -205,6 +205,11 @@ class SaleOrder(models.Model):
         default="FWE/13030/F01/P01/2025.",
         help="Model code printed on the plasma quotation.",
     )
+    plasma_ref_no = fields.Char(
+        string="Reference No (Plasma)",
+        default="FCM/1020/F01/P01/1225",
+        help="Reference number printed on the plasma quotation.",
+    )
     basic_price = fields.Monetary(
         string="Basic Price",
         currency_field="currency_id",

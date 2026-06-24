@@ -307,7 +307,7 @@
                                         top:22px;
                                         text-align:right;
                                         font-size:14px;">
-                            <div><b>Ref:</b> FCM/1020/F01/P01/1225</div>
+                            <div><b>Ref:</b> <span t-field="doc.plasma_ref_no"/></div>
                                 <div><b>Date:</b>
                                   <span t-field="doc.date_order"
       t-options="{'format': 'dd / MM / yyyy'}"/>
@@ -780,6 +780,10 @@
         <span style="margin-left:6px;">
             CURRENT ACCOUNT
         </span>
+    </div>
+
+</div>
+
                                          <!-- Terms & Conditions -->
                                  <div style="margin-top:25px; line-height:1.5; font-size:14px;">
                                      <div style="margin-bottom:12px;">

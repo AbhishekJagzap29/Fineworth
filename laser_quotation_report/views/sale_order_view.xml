@@ -32,6 +32,8 @@
             <xpath expr="//field[@name='pricelist_id']/.." position="after">
                 <label for="price_for_model" string="Price For Model" invisible="quotation_type != 'plasma'"/>
                 <field name="price_for_model" nolabel="1" invisible="quotation_type != 'plasma'" placeholder="FWE/13030/F01/P01/2025."/>
+                <label for="plasma_ref_no" string="Reference No (Plasma)" invisible="quotation_type != 'plasma'"/>
+                <field name="plasma_ref_no" nolabel="1" invisible="quotation_type != 'plasma'" placeholder="FCM/1020/F01/P01/1225"/>
             </xpath>
 
             <!-- Basic Price field directly under GST Treatment -->
