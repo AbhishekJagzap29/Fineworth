@@ -1,8 +1,9 @@
 <odoo>
     <template id="fw_page_header">
+        <!-- <div style="width:100%; margin-bottom:5px;"> -->
         <div style="width:100%; margin-bottom:10px;">
             <img src="/laser_quotation_report/static/src/img/header.png"
-                style="width:100%;"/>
+                 style="width:100%; "/>
         </div>
     </template>
 
@@ -140,11 +141,11 @@
                             }
 
                             /* Background section colors */
-                            .bg-specs {
-                                background-color: #f9fafb;
-                                padding: 20px;
-                                border-radius: 8px;
-                            }
+                           .bg-specs {
+                                        background-color:#f9fafb;
+                                        padding:20px 20px 8px 20px;
+                                        border-radius:8px;
+                                    }
 
                             .bg-pricing {
                                 background-color: #eff6ff;
@@ -198,13 +199,15 @@
                         <div><span style="font-weight:600;">Quotation no:</span> <span t-field="doc.name"/></div>
                     </div>
 
+
+
                     <!-- Prepared For / TO Section -->
-                    <div style="margin-top: 15px; margin-bottom: 15px;">
-                        <div class="label-text" style="font-size: 13px; text-transform: uppercase; color: var(--secondary); margin-bottom: 4px;">TO:</div>
+                    <div style="margin-top: 15px; margin-bottom: 5px;">
+                        <div class="label-text" style="font-size: 13px; text-transform: uppercase; color: var(--secondary); margin-bottom: 4px;">TO :</div>
                         <div class="blue-text" style="padding-left: 0; font-size: 16px;">
                             <span t-esc="doc.partner_id.name"/>
                         </div>
-                        <div style="font-size: 14px; color: var(--secondary); margin-top: 2px;">
+                        <div style="font-size: 16px; color: var(--secondary); margin-top: 2px;">
                             <span t-esc="doc.partner_id.city"/>
                         </div>
                         <div style="margin-top: 6px; font-size: 14px;">
@@ -213,27 +216,22 @@
                         </div>
                     </div>
 
-                    <hr style="border: 0; border-top: 1px solid var(--border); margin: 15px 0;"/>
 
-                    <div style="font-size: 14px; margin-bottom: 15px;">
-                        <span style="font-weight: 600; color: var(--secondary);">KIND ATTN Mr :</span>
-                        <span style="font-size: 15px; font-weight: 600; margin-left: 5px;"><t t-esc="doc.partner_id.name"/></span>
-                    </div>
 
                     <!-- TITLE & TAGLINE -->
-                    <div class="main-title">
+                    <div class="main-title" style="margin-top: 5px;">
                         <t t-esc="doc.offer_title or 'Offer for CNC Fiber Laser Cutting Machine 6000 WATTS'"/>
                     </div>
 
-                    <div style="font-size: 15px; text-align: center; color: var(--secondary); font-style: italic; margin-top: 6px; margin-bottom: 20px;">
+                    <div style="font-size: 15px; text-align: center; color: var(--secondary); font-style: italic; margin-top: 6px; margin-bottom: 8px;">
                         FINE 2D Cutting Technology for processing Sheet metal With A headtech LASER Controller
                     </div>
 
-                    <div style="text-align: center; font-size: 18px; font-weight: 600; color: var(--primary); margin-top: 10px;">
+                    <div style="text-align: center; font-size: 18px; font-weight: 600; color: var(--primary); margin-top: 4px;">
                         Model: <span t-esc="doc.model_name"/>
                     </div>
 
-                    <div style="text-align: center; font-size: 20px; font-weight: 600; letter-spacing: 2px; color: var(--primary); margin-top: 4px; margin-bottom: 25px;">
+                    <div style="text-align: center; font-size: 20px; font-weight: 600; letter-spacing: 2px; color: var(--primary); margin-top: 4px; margin-bottom: 10px;">
                         MADE IN INDIA
                     </div>
 
@@ -272,13 +270,43 @@
                     </table>
 
                     <!-- CONTACT BOX -->
-                    <div style="background: #eff6ff; padding: 12px; border: 1px solid #bfdbfe; border-radius: 8px; text-align: center; margin: 25px auto 0; width: 60%;">
+                    <div style="background: #eff6ff; padding: 10px; border: 1px solid #bfdbfe; border-radius: 8px; text-align: center; margin: 10px auto 0; width: 60%;">
                         <div style="font-weight: 600; font-size: 15px; color: var(--primary);">L. SARADHA</div>
                         <div style="font-size: 14px; color: var(--secondary); margin-top: 4px;">MOB: 8870048444, 9944443062</div>
                     </div>
+
+                    <!-- FIRST 5 TECHNICAL SPECIFICATIONS -->
+                    <t t-set="spec_lines" t-value="doc.tech_spec_ids.sorted('sequence')"/>
+                    <div class="bg-specs" style="margin-top:8px;">
+                        <div class="section-heading" style="margin-top:0; margin-bottom:6px;">TECHNICAL SPECIFICATIONS</div>
+                        <table class="modern-table" style="margin-top:10px; margin-bottom:0;">
+                            <thead>
+                                <tr>
+                                    <th style="width:10%;">Sr.No</th>
+                                    <th style="width:55%;">Descriptions</th>
+                                    <th style="width:35%;">Technical Specifications</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="spec_lines[:11]" t-as="spec">
+                                    <tr>
+                                        <td style="text-align: center; padding: 6px;">
+                                            <span t-esc="spec.sequence"/>
+                                        </td>
+                                        <td style="padding: 6px;">
+                                            <span t-esc="spec.name"/>
+                                        </td>
+                                        <td style="padding: 6px;">
+                                            <span t-esc="spec.value"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
             </div>
 
-           <!-- FORCE NEXT PAGE -->
+           <!-- NEXT PAGE -->
 
         <div style="page-break-after: always;">
             </div>                                <!-- PAGE 2 -->
@@ -299,7 +327,7 @@
                                 <tbody>
                                    <t t-set="spec_lines" t-value="doc.tech_spec_ids.sorted('sequence')"/>
                                         <t t-if="spec_lines">
-                                            <t t-foreach="spec_lines" t-as="spec">
+                                            <t t-foreach="spec_lines[11:]" t-as="spec">
                                                 <tr>
                                                     <td style="text-align: center; padding: 6px;">
                                                         <span t-esc="spec.sequence"/>
@@ -405,88 +433,57 @@
                                     <span style="text-transform: uppercase;">
                                         <span t-esc="doc.currency_id.with_context(lang='en_IN').amount_to_text(doc.amount_total)"/>
                                     </span>
-                                </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <t t-set="optional_lines" t-value="doc.get_laser_report_optional_lines()"/>
+                        <t t-if="optional_lines">
+                            <!-- <div class="bg-white" style="margin-top: 12px; padding: 15px 15px 0px 15px;"> -->
+                                <div class="bg-white" style="margin-top: 12px; padding: 15px;">
+                                <div class="section-heading" style="margin-top: 0; font-size: 16px;">OPTIONAL DETAILS</div>
+                                <t t-foreach="optional_lines" t-as="opt">
+                                    <div style="margin-bottom: 3px; font-size: 14px;">
+                                        <span style="display:inline-block; width:320px; font-weight: 600;">
+                                            <span t-esc="opt.name"/>
+                                        </span>
+                                        :
+                                        <span style="margin-left:5px;">
+                                            <span t-esc="opt.value"/>
+                                        </span>
+                                    </div>
+                                </t>
+                            </div>
+                        </t>
+
+                        <!-- CUSTOMER SCOPE -->
+                        <div class="bg-white" style="margin-top: 0px; padding: 0px 15px 15px 15px;">
+                            <div class="section-heading" style="margin-top: 0; font-size: 16px;">CUSTOMER SCOPE</div>
+                            <ul style="margin: 0; padding-left: 20px; line-height: 1.8; list-style-type: none; font-size: 14px;">
+                                <li>✓ Incoming power line and earth bit – 3 Nos</li>
+                                <li>✓ Incoming gas line with cylinder setup</li>
+                                <li>✓ Incoming air line</li>
+                                <li>✓ Sample plates for setting purpose</li>
+                                <li>✓ Floor level with concrete minimum 6 INCH</li>
+                            </ul>
                         </div>
                     </div>
 
 <div style="page-break-after: always;"></div>
                 
- <div class="page fw" style="background: #ffffff; padding: 20px;">
-    <t t-call="laser_quotation_report.fw_page_header"/>
 
-<t t-set="optional_lines" t-value="doc.get_laser_report_optional_lines()"/>
-<t t-if="optional_lines">
-<div class="bg-white" style="margin-bottom: 20px; padding: 15px;">
-    <div class="section-heading" style="margin-top: 0; font-size: 16px;">OPTIONAL DETAILS</div>
-    <t t-foreach="optional_lines" t-as="opt">
-        <div style="margin-bottom: 3px; font-size: 14px;">
-            <span style="display:inline-block; width:320px; font-weight: 600;">
-                <span t-esc="opt.name"/>
-            </span>
-            :
-            <span style="margin-left:5px;">
-                <span t-esc="opt.value"/>
-            </span>
-        </div>
-    </t>
-</div>
-</t>
 
-<!-- CUSTOMER SCOPE -->
-<div class="bg-white" style="margin-bottom: 20px; padding: 15px;">
-    <div class="section-heading" style="margin-top: 0; font-size: 16px;">CUSTOMER SCOPE</div>
-    <ul style="margin: 0; padding-left: 20px; line-height: 1.8; list-style-type: none; font-size: 14px;">
-        <li>✓ Incoming power line and earth bit – 3 Nos</li>
-        <li>✓ Incoming gas line with cylinder setup</li>
-        <li>✓ Incoming air line</li>
-        <li>✓ Sample plates for setting purpose</li>
-        <li>✓ Floor level with concrete minimum 6 INCH</li>
-    </ul>
-</div>
 
-<!-- TERMS & CONDITIONS -->
-<div class="bg-white" style="padding: 20px;">
-    <div class="section-heading" style="margin-top: 0; font-size: 18px; text-decoration: none; border-bottom: 2px solid var(--primary); padding-bottom: 6px; margin-bottom: 15px;">
-        TERMS &amp; CONDITIONS
-    </div>
-
-    <div style="font-size: 14px; line-height: 1.6;">
-        <div style="margin-bottom: 12px; text-align: justify;">
-            <span style="font-weight: 600; color: var(--primary);">✓ Ex-Works :</span> Coimbatore, Tamilnadu, INDIA.
-        </div>
-        <div style="margin-bottom: 12px; text-align: justify;">
-            <span style="font-weight: 600; color: var(--primary);">✓ GST :</span> In Tamilnadu :- CGST 9% + SGST 9% = Total 18%<br/>
-            18% Outside Tamilnadu :- IGST 18%<br/>
-            GST is applicable on supply of Machine and composite services, if not arranged by Buyer (Packing, Insurance, Transportation etc.)
-        </div>
-        <div style="margin-bottom: 12px; text-align: justify;">
-            <span style="font-weight: 600; color: var(--primary);">✓ Packing :</span> Inclusive. Minimum 3 working days will be required for packing from the date of final payment realization in FWES account.
-        </div>
-        <div style="margin-bottom: 12px; text-align: justify;">
-            <span style="font-weight: 600; color: var(--primary);">✓ Freight &amp; Insurance :</span> To buyer’s Account. If required FWES can provide the details of recommended transporters and insurance company. FWES shall not be responsible for any transit damage and insurance claim.
-        </div>
-        <div style="margin-bottom: 12px; text-align: justify;">
-            <span style="font-weight: 600; color: var(--primary);">✓ Delivery Period :</span> 6 - 8 weeks from the date of clear techno commercial order along with 40% advance. If drawing approval process applicable, then dispatch will be from the date of completion of drawing approval process.
-        </div>
-        <div style="margin-bottom: 12px; text-align: justify;">
-            <span style="font-weight: 600; color: var(--primary);">✓ Payment Mode :</span> In favor of “FINE WORTH ENGINEERS.”
-        </div>
-    </div>
-</div>
- </div>
- 
- <div style="page-break-after: always;"></div>
 
  <div class="page fw" style="background: #ffffff; padding: 20px;">
     <t t-call="laser_quotation_report.fw_page_header"/>
 
     <!-- BANK DETAILS -->
-    <div class="bg-white" style="padding: 15px; margin-bottom: 15px; border-radius: 8px;">
-        <div class="section-heading" style="margin-top: 0; font-size: 15px; border-bottom: 1px solid var(--border); padding-bottom: 4px; color: var(--primary);">
+    <div class="bg-white" style="padding: 15px 15px 5px 15px; margin-bottom: 5px; border-radius: 8px;">
+        <div class="section-heading" style="margin-top: 0; font-size: 15px; border-bottom: 1px solid var(--border); padding-bottom: 4px; color: var(--primary); margin-bottom: 4px;">
             BANK ACCOUNT DETAILS FOR RTGS / NEFT / IMPS
         </div>
-        <div style="font-size: 14px; line-height: 1.6; margin-top: 10px;">
+        <div style="font-size: 14px; line-height: 1.6; margin-top: 4px;">
             <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">Beneficiary Name</span> : FINE WORTH ENGINEERS</div>
             <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">Bank Name</span> : KARUR VYSHYA BANK</div>
             <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">Bank Address</span> : Chinniyampalayam, Coimbatore, Tamilnadu – 641062.</div>
@@ -497,7 +494,11 @@
     </div>
 
     <!-- ADDITIONAL TERMS -->
-    <div class="bg-white" style="padding: 15px; border-radius: 8px;">
+    <div class="bg-white" style="padding: 5px 15px 15px 15px; border-radius: 8px;">
+       
+        <div class="section-heading" style="margin-top: 0; font-size: 18px; text-decoration: none; border-bottom: 2px solid var(--primary); padding-bottom: 6px; margin-bottom: 15px;">
+        TERMS &amp; CONDITIONS
+    </div>
         <div style="font-size: 14px; line-height: 1.6;">
             <div style="margin-bottom: 12px; text-align: justify;">
                 <span style="font-weight: 600; color: var(--primary);">✓ Payment Mode :</span> Payment will be accepted through NEFT, RTGS, ONLINE BANKING, SWIFT TRANSFER and IMPS mode only. CASH, CHEQUE and DD will not be accepted.
@@ -520,6 +521,20 @@
             <div style="margin-bottom: 12px; text-align: justify;">
                 <span style="font-weight: 600; color: var(--primary);">✓ Warranty :</span> All Products are warranted by FWEAS against materials and workmanship for 24 months from the date of installation or 24 months from the date of machine readiness in customer plant. During warranty, our Engineer’s lodging, boarding, traveling, and conveyance shall be borne by you. Consumables, lens, nozzle, mirror, ceramic part, optics, fiber and any physical damage are not covered. Further details are in the Warranty Enclosure.
             </div>
+             <div style="margin-bottom: 12px; text-align: justify;">
+            <span style="font-weight: 600; color: var(--primary);">✓ GST :</span> In Tamilnadu :- CGST 9% + SGST 9% = Total 18%<br/>
+            18% Outside Tamilnadu :- IGST 18%<br/>
+            GST is applicable on supply of Machine and composite services, if not arranged by Buyer (Packing, Insurance, Transportation etc.)
+        </div>
+        <div style="margin-bottom: 12px; text-align: justify;">
+            <span style="font-weight: 600; color: var(--primary);">✓ Packing :</span> Inclusive. Minimum 3 working days will be required for packing from the date of final payment realization in FWES account.
+        </div>
+        <div style="margin-bottom: 12px; text-align: justify;">
+            <span style="font-weight: 600; color: var(--primary);">✓ Freight &amp; Insurance :</span> To buyer’s Account. If required FWES can provide the details of recommended transporters and insurance company. FWES shall not be responsible for any transit damage and insurance claim.
+        </div>
+        <div style="margin-bottom: 12px; text-align: justify;">
+            <span style="font-weight: 600; color: var(--primary);">✓ Delivery Period :</span> 6 - 8 weeks from the date of clear techno commercial order along with 40% advance. If drawing approval process applicable, then dispatch will be from the date of completion of drawing approval process.
+        </div>
         </div>
     </div>
 
@@ -565,9 +580,9 @@
                             <div class="justify-text" style="color: #374151; font-size: 14px; line-height: 1.6; margin-top: 12px; font-style: italic;">
                                 <strong>Note:</strong> If need to depute our OEM’s service engineer, then service visit charge as per their offer and terms and condition will be charged. Spares charge will be at actual.
                             </div>
-                        </div>
                     </div>
                 </div>
+            </div>
                 
             </t>
         </t>
