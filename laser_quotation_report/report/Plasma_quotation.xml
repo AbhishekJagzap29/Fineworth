@@ -1,7 +1,7 @@
 <odoo>
     <template id="fw_powermax125_page_header">
         <div style="width:100%; margin:0; padding:0; line-height:0; overflow:hidden; position:relative; border:none;">
-            <img src="/laser_quotation_report/static/src/img/header2.png"
+            <img src="/laser_quotation_report/static/src/img/header.png"
                  style="width:100%; display:block; border:none; outline:none; margin:0; padding:0; box-shadow:none;"/>
         </div>
     </template>
