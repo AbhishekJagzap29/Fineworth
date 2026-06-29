@@ -13,9 +13,16 @@
 
                 <style>
                     .fw2 {
+                        font-family: "Times New Roman", serif;
                         font-size: 14px;
                         line-height: 1.5;
                         font-weight: 400;
+                    }
+
+                    /* Force Times New Roman everywhere */
+                    .page,
+                    .page * {
+                        font-family: "Times New Roman", serif !important;
                     }
 
                     /* Suppress Odoo's default report header border and add padding */
@@ -57,9 +64,9 @@
                         font-size: 18px;
                         font-weight: 600;
                         text-align: center;
-                        margin-top: 20px;   /* space from header */
+                        margin-top: 20px;   
                         margin-bottom: 8px;
-                        color: #14532d;     
+                        color: #1f3c88;     
                     }
 
                     .spec-table {
@@ -217,7 +224,7 @@
 
                     /* annexure */
                     .annexure {
-                        color: #14532d;
+                        color: #1f3c88;
                         font-weight: 600;
                         font-size: 18px;
                         margin-top: 12px;
@@ -287,7 +294,6 @@
 
                 <!-- PAGE 1 -->
                 <div class="page fw2">
-                    <div class="page-no">Page 01 of 4</div>
                     <t t-call="laser_quotation_report.fw_powermax125_page_header"/>
                         <div style="position: relative; margin-top: 10px;">
 
@@ -295,7 +301,7 @@
                             <div style="text-align:center;
                                         font-size:18px;
                                         font-weight:600;
-                                        color:#14532d;
+                                        color:#1f3c88;
                                         text-decoration: underline;
                                         letter-spacing:0.4px;">
                                 PROPOSAL FOR FINE WORTH CNC FLAME AND PLASMA CUTTING MACHINE
@@ -383,10 +389,8 @@
                             </tbody>
                         </table>
             </div>
-                <div style="page-break-after: always;"></div>
 
                 <div class="page fw2">
-                    <div class="page-no">Page 2 of 4</div>
                     <t t-call="laser_quotation_report.fw_powermax125_page_header"/>
 
                     <t t-set="plasma_page2" t-value="doc.plasma_spec_ids[15:]"/>
@@ -470,22 +474,24 @@
     </t>
 </div>
 <!-- RUPEES IN WORDS -->
-<div style="padding:6px 10px;">
-    <div style="font-weight:500; font-size:14px; color: #4b5563;">
-        Rupees in words:
-    </div>
-
- <div style="
-    text-align:center;
+<!-- RUPEES IN WORDS -->
+<div style="
+    padding:6px 10px;
+    border-top:1px solid #555;
     font-weight:600;
-    font-size:18px;
-    letter-spacing:1px;
-    margin-top:4px;
-    text-transform:uppercase;">
+    font-size:18px;">
 
-    <t t-esc="doc.currency_id.with_context(lang='en_IN').amount_to_text(doc.plasma_final_amount)"/>
+    RUPEES IN WORDS :
 
-</div>
+    <span style="
+        color:#000;
+        text-transform:uppercase;
+        letter-spacing:1px;">
+
+        <t t-esc="doc.currency_id.with_context(lang='en_IN').amount_to_text(doc.plasma_final_amount)"/>
+
+    </span>
+
 </div>
 
 </div>
@@ -546,10 +552,7 @@
 
                 </div>
 
-                <div style="page-break-after: always;"></div>
-
                 <div class="page fw2">
-                    <div class="page-no">Page 3 of 4</div>
                     <t t-call="laser_quotation_report.fw_powermax125_page_header"/>
                         <div class="annexure">Annexure 1</div>
 
@@ -626,10 +629,10 @@
 </div>
 
 <div style="
-    color:#14532d;
+    color:#1f3c88;
     font-weight:600;
     font-family:'Times New Roman', serif;
-    font-size:22px;
+    font-size:18px;
     line-height:1.1;
     text-decoration:underline;
     margin-top:28px;">
@@ -732,10 +735,7 @@
 </div>
                 </div>
 
-                <div style="page-break-after: always;"></div>
-
                 <div class="page fw2">
-                      <div class="page-no">Page 4 of 4</div>
                  <t t-call="laser_quotation_report.fw_powermax125_page_header"/>
 
                                     <!-- Bank Details -->

@@ -263,7 +263,7 @@
                                     <strong>Email:</strong> <span style="color:var(--primary);">fineworth2010@gmail.com</span><br/>
                                     <span style="color:var(--primary); margin-left:45px;">info@fineworth.com</span><br/>
                                     <strong>Web:</strong> <span style="color:var(--primary);">www.fineworth.com</span><br/>
-                                    <strong>Phone:</strong> <span style="color:var(--primary);">+91 9944443062, 7397714888</span>
+                                    <strong>Phone:</strong> <span style="color:var(--primary);">+91 9944443062, 8870048444</span>
                                 </div>
                             </td>
                         </tr>
@@ -272,7 +272,7 @@
                     <!-- CONTACT BOX -->
                     <div style="background: #eff6ff; padding: 10px; border: 1px solid #bfdbfe; border-radius: 8px; text-align: center; margin: 10px auto 0; width: 60%;">
                         <div style="font-weight: 600; font-size: 15px; color: var(--primary);">L. SARADHA</div>
-                        <div style="font-size: 14px; color: var(--secondary); margin-top: 4px;">MOB: 8870048444, 9944443062</div>
+                        <div style="font-size: 14px; color: var(--secondary); margin-top: 4px;">MOB: 9944443062,8870048444</div>
                     </div>
 
                     <!-- FIRST 5 TECHNICAL SPECIFICATIONS -->
@@ -308,8 +308,7 @@
 
            <!-- NEXT PAGE -->
 
-        <div style="page-break-after: always;">
-            </div>                                <!-- PAGE 2 -->
+                                                <!-- PAGE 2 -->
                     <div class="page fw" style="background: #ffffff; padding: 20px;">
                         <t t-call="laser_quotation_report.fw_page_header"/>
 
@@ -469,12 +468,6 @@
                         </div>
                     </div>
 
-<div style="page-break-after: always;"></div>
-                
-
-
-
-
  <div class="page fw" style="background: #ffffff; padding: 20px;">
     <t t-call="laser_quotation_report.fw_page_header"/>
 
@@ -487,8 +480,8 @@
             <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">Beneficiary Name</span> : FINE WORTH ENGINEERS</div>
             <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">Bank Name</span> : KARUR VYSHYA BANK</div>
             <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">Bank Address</span> : Chinniyampalayam, Coimbatore, Tamilnadu – 641062.</div>
-            <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">Account Number</span> : <span style="font-weight: 600; color: var(--primary);">167713500001300</span></div>
-            <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">RTGS / IFSC Code</span> : <span style="font-weight: 600; color: var(--primary);">KVBL0001677</span></div>
+            <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">Account Number</span> : <span style="font-weight: normal; color: var(--primary);">167713500001300</span></div>
+            <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">RTGS / IFSC Code</span> : <span style="font-weight: normal; color: var(--primary);">KVBL0001677</span></div>
             <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">Account Type</span> : CURRENT ACCOUNT</div>
         </div>
     </div>
@@ -546,8 +539,6 @@
         <div style="color: var(--secondary);">Marketing</div>
     </div>
  </div>
-
-                   <div style="page-break-after: always;"></div>
 
                 <div class="page fw" style="background: #ffffff; padding: 20px;">
                     <t t-call="laser_quotation_report.fw_page_header"/>
