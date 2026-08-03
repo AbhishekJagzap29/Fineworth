@@ -200,13 +200,17 @@ class SaleOrder(models.Model):
         required=True,
     )
     laser_power = fields.Integer(string="Laser Power (Watts)")
+    laser_ref_no = fields.Char(
+        string="Reference No",
+        help="Reference number printed on the laser quotation.",
+    )
     price_for_model = fields.Char(
         string="Price For Model",
         default="FWE/13030/F01/P01/2025.",
         help="Model code printed on the plasma quotation.",
     )
     plasma_ref_no = fields.Char(
-        string="Reference No (Plasma)",
+        string="Reference No",
         default="FCM/1020/F01/P01/1225",
         help="Reference number printed on the plasma quotation.",
     )

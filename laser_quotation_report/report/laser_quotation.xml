@@ -195,6 +195,9 @@
      
                     <!-- DATE & QUOTATION DETAILS -->
                     <div style="text-align:right; font-size:14px; margin-top:6px; margin-bottom:12px;">
+                        <t t-if="doc.laser_ref_no">
+                            <div><span style="font-weight:600;">Ref:</span> <span t-field="doc.laser_ref_no"/></div>
+                        </t>
                         <div><span style="font-weight:600;">Date:</span> <span t-esc="doc.date_order.strftime('%d / %m / %Y')"/></div>
                         <div><span style="font-weight:600;">Quotation no:</span> <span t-field="doc.name"/></div>
                     </div>

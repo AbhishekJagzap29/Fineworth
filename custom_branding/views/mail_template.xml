@@ -2,15 +2,10 @@
 <odoo>
 
     <template id="external_layout_remove_odoo"
-              inherit_id="report.external_layout">
-
-        <!-- Replace company name in header -->
-        <xpath expr="//t[@t-esc='company.name']" position="replace">
-            <h2>Dreamwarez</h2>
-        </xpath>
+              inherit_id="web.external_layout_standard">
 
         <!-- Remove footer branding completely -->
-        <xpath expr="//div[contains(@class,'footer')]" position="replace">
+        <xpath expr="//div[contains(@t-attf-class,'footer')]" position="replace">
             <div class="footer"/>
         </xpath>
 
