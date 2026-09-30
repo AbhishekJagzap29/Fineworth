@@ -333,7 +333,9 @@
                                 <div>
                                     <span t-esc="doc.partner_id.commercial_partner_id.city or doc.partner_id.city"/>
                                     <t t-if="doc.partner_id.commercial_partner_id.state_id or doc.partner_id.state_id">, <span t-esc="(doc.partner_id.commercial_partner_id.state_id or doc.partner_id.state_id).name"/></t>
+                                    <t t-if="doc.partner_id.commercial_partner_id.zip or doc.partner_id.zip"> - <span t-esc="doc.partner_id.commercial_partner_id.zip or doc.partner_id.zip"/></t>
                                 </div>
+                                <div t-if="doc.partner_id.commercial_partner_id.country_id or doc.partner_id.country_id" t-esc="(doc.partner_id.commercial_partner_id.country_id or doc.partner_id.country_id).name"/>
                             </div>
 
                             <div style="margin-top:12px; font-weight:600; font-family:'Times New Roman', serif; font-size:14px;">

@@ -195,11 +195,12 @@
      
                     <!-- DATE & QUOTATION DETAILS -->
                     <div style="text-align:right; font-size:14px; margin-top:6px; margin-bottom:12px;">
+                        
+                        <div><span style="font-weight:600;">Quotation no:</span> <span t-field="doc.name"/></div>
                         <t t-if="doc.laser_ref_no">
-                            <div><span style="font-weight:600;">Ref:</span> <span t-field="doc.laser_ref_no"/></div>
+                            <div><span style="font-weight:600;">Ref No:</span> <span t-field="doc.laser_ref_no"/></div>
                         </t>
                         <div><span style="font-weight:600;">Date:</span> <span t-esc="doc.date_order.strftime('%d / %m / %Y')"/></div>
-                        <div><span style="font-weight:600;">Quotation no:</span> <span t-field="doc.name"/></div>
                     </div>
 
 
@@ -210,8 +211,21 @@
                         <div class="blue-text" style="padding-left: 0; font-size: 16px;">
                             <span t-esc="doc.partner_id.name"/>
                         </div>
-                        <div style="font-size: 16px; color: var(--secondary); margin-top: 2px;">
-                            <span t-esc="doc.partner_id.city"/>
+                        <div style="font-size: 14px; color: var(--secondary); margin-top: 2px; line-height: 1.4;">
+                            <t t-if="doc.partner_id.street">
+                                <div t-esc="doc.partner_id.street"/>
+                            </t>
+                            <t t-if="doc.partner_id.street2">
+                                <div t-esc="doc.partner_id.street2"/>
+                            </t>
+                            <div>
+                                <span t-if="doc.partner_id.city" t-esc="doc.partner_id.city"/>
+                                <t t-if="doc.partner_id.state_id">, <span t-esc="doc.partner_id.state_id.name"/></t>
+                                <t t-if="doc.partner_id.zip"> - <span t-esc="doc.partner_id.zip"/></t>
+                            </div>
+                            <t t-if="doc.partner_id.country_id">
+                                <div t-esc="doc.partner_id.country_id.name"/>
+                            </t>
                         </div>
                         <div style="margin-top: 6px; font-size: 14px;">
                             <span class="label-text" style="font-size: 14px;">MOB NUM :</span>
@@ -291,7 +305,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <t t-foreach="spec_lines[:11]" t-as="spec">
+                                <t t-foreach="spec_lines[:9]" t-as="spec">
                                     <tr>
                                         <td style="text-align: center; padding: 6px;">
                                             <span t-esc="spec.sequence"/>
@@ -329,7 +343,7 @@
                                 <tbody>
                                    <t t-set="spec_lines" t-value="doc.tech_spec_ids.sorted('sequence')"/>
                                         <t t-if="spec_lines">
-                                            <t t-foreach="spec_lines[11:]" t-as="spec">
+                                            <t t-foreach="spec_lines[9:]" t-as="spec">
                                                 <tr>
                                                     <td style="text-align: center; padding: 6px;">
                                                         <span t-esc="spec.sequence"/>
@@ -483,7 +497,7 @@
             <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">Beneficiary Name</span> : FINE WORTH ENGINEERS</div>
             <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">Bank Name</span> : KARUR VYSHYA BANK</div>
             <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">Bank Address</span> : Chinniyampalayam, Coimbatore, Tamilnadu – 641062.</div>
-            <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">Account Number</span> : <span style="font-weight: normal; color: var(--primary);">167713500001300</span></div>
+            <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">Account Number</span> : <span style="font-weight: normal; color: var(--primary);">1677135000013000</span></div>
             <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">RTGS / IFSC Code</span> : <span style="font-weight: normal; color: var(--primary);">KVBL0001677</span></div>
             <div style="margin-bottom: 6px;"><span style="font-weight: 600; display: inline-block; width: 150px;">Account Type</span> : CURRENT ACCOUNT</div>
         </div>

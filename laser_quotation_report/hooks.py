@@ -16,3 +16,5 @@ def post_init_hook(cr, registry):
             order.write({"plasma_optional_spec_ids": order._default_plasma_optional_specs()})
         if not order.basic_price:
             order.basic_price = 2150000.0
+        order._compute_quotation_ref_no()
+        order._compute_quotation_name()

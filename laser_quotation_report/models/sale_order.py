@@ -10,10 +10,10 @@ TECH_SPEC_DEFAULTS = [
     ("Effective Cutting length Y axis", "6500 mm"),
     ("Laser power sources", "6000 watts"),
     ("Laser power sources name", "Raycus"),
-    ("Laser torch head", "WSX"),
+    ("Laser torch head", "Raytools"),
     ("Controller type", "Computer numeric control"),
     ("Controller name", "Aheadtech Raytools software"),
-    ("AC servo digital drive package", "YASAKA"),
+    ("AC servo digital drive package", "FLEXON"),
     ("Planetary gearbox", "REDOVAC"),
     ("Drag chain for axis", "Kableschepp"),
     ("Professional valve assembly", "SMC"),
@@ -39,7 +39,7 @@ PLASMA_SPEC_DEFAULTS = [
     ("Maximum piercing capacity for plasma cutting torch S.S", "20 mm"),
     ("Minimum cutting thickness for plasma cutting torch S.S", "1 mm"),
     ("Controller type", "Computer numeric control"),
-    ("Controller name", "YASAKA"),
+    ("Controller name", "FLEXON"),
     ("Controller model", "Power P 10\" Display"),
     ("Display size", "10 Inch Color"),
     ("Drag chain for axis", "kableslapp"),
@@ -214,6 +214,18 @@ class SaleOrder(models.Model):
         default="FCM/1020/F01/P01/1225",
         help="Reference number printed on the plasma quotation.",
     )
+    quotation_ref_no = fields.Char(
+        string="Ref Number",
+        compute="_compute_quotation_ref_no",
+        store=True,
+        help="Reference number displayed in sales list views based on quotation type.",
+    )
+    quotation_name = fields.Char(
+        string="Quotation Name",
+        compute="_compute_quotation_name",
+        store=True,
+        help="Quotation name displayed below quotation type (Laser Cutting / Plasma Cutting).",
+    )
     basic_price = fields.Monetary(
         string="Basic Price",
         currency_field="currency_id",
@@ -342,6 +354,26 @@ class SaleOrder(models.Model):
             (0, 0, {"sequence": idx + 1, "name": name, "value": value})
             for idx, (name, value) in enumerate(PLASMA_OPTIONAL_SPEC_DEFAULTS)
         ]
+
+    @api.depends("quotation_type", "laser_ref_no", "plasma_ref_no", "name")
+    def _compute_quotation_ref_no(self):
+        for order in self:
+            if order.quotation_type == "laser" and order.laser_ref_no:
+                order.quotation_ref_no = order.laser_ref_no
+            elif order.quotation_type == "plasma" and order.plasma_ref_no:
+                order.quotation_ref_no = order.plasma_ref_no
+            else:
+                order.quotation_ref_no = order.laser_ref_no or order.plasma_ref_no or order.name or ""
+
+    @api.depends("quotation_type")
+    def _compute_quotation_name(self):
+        for order in self:
+            if order.quotation_type == "laser":
+                order.quotation_name = "Laser Cutting"
+            elif order.quotation_type == "plasma":
+                order.quotation_name = "Plasma Cutting"
+            else:
+                order.quotation_name = ""
 
     @api.depends("basic_price", "apply_plasma_gst", "plasma_tax_option_id", "plasma_tax_option_id.rate")
     def _compute_plasma_amounts(self):
