@@ -339,8 +339,18 @@
                             </div>
 
                             <div style="margin-top:12px; font-weight:600; font-family:'Times New Roman', serif; font-size:14px;">
-                                MOBILE NUM: &#160;<span style="font-weight:600;"
+                                MOBILE NUM : &#160;<span style="font-weight:400;"
                                     t-esc="doc.partner_id.commercial_partner_id.mobile or doc.partner_id.commercial_partner_id.phone or doc.partner_id.mobile or doc.partner_id.phone"/>
+                            </div>
+
+                            <div t-if="doc.partner_id.email or doc.partner_id.commercial_partner_id.email" style="margin-top:4px; font-weight:600; font-family:'Times New Roman', serif; font-size:14px;">
+                                EMAIL ID : &#160;<span style="font-weight:400;"
+                                    t-esc="doc.partner_id.email or doc.partner_id.commercial_partner_id.email"/>
+                            </div>
+
+                            <div t-if="doc.partner_id.vat or doc.partner_id.commercial_partner_id.vat" style="margin-top:4px; font-weight:600; font-family:'Times New Roman', serif; font-size:14px;">
+                                GST NUMBER : &#160;<span style="font-weight:400;"
+                                    t-esc="doc.partner_id.vat or doc.partner_id.commercial_partner_id.vat"/>
                             </div>
 
                             <div style="margin-top:12px; font-style:italic; font-size:14px;">
@@ -366,7 +376,7 @@
                             </div>
 
             </div>
-                        <t t-set="plasma_page1" t-value="doc.plasma_spec_ids[:15]"/>
+                        <t t-set="plasma_page1" t-value="doc.plasma_spec_ids[:14]"/>
                         <div class="title">PLASMA SPECIFICATION</div>
                         <table class="spec-table" style="width:100%; border-collapse:collapse;">
                             <thead>
@@ -395,7 +405,7 @@
                 <div class="page fw2">
                     <t t-call="laser_quotation_report.fw_powermax125_page_header"/>
 
-                    <t t-set="plasma_page2" t-value="doc.plasma_spec_ids[15:]"/>
+                    <t t-set="plasma_page2" t-value="doc.plasma_spec_ids[14:]"/>
                     <t t-if="plasma_page2">
                         <div class="title">PLASMA SPECIFICATION</div>
                         <table class="spec-table" style="width:100%; border-collapse:collapse;">
@@ -693,6 +703,11 @@
 </div>
 
 
+                </div>
+
+                <div class="page fw2">
+                 <t t-call="laser_quotation_report.fw_powermax125_page_header"/>
+
 <!-- MODE OF PAYMENT -->
 <div style="
     margin-top:28px;
@@ -735,10 +750,6 @@
     </div>
 
 </div>
-                </div>
-
-                <div class="page fw2">
-                 <t t-call="laser_quotation_report.fw_powermax125_page_header"/>
 
                                     <!-- Bank Details -->
                                     <!-- Centered Bank Details -->

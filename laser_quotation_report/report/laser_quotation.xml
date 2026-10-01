@@ -193,44 +193,55 @@
 
     <t t-call="laser_quotation_report.fw_page_header"/>
      
-                    <!-- DATE & QUOTATION DETAILS -->
-                    <div style="text-align:right; font-size:14px; margin-top:6px; margin-bottom:12px;">
+                    <!-- DATE & QUOTATION DETAILS & TO SECTION -->
+                    <div style="margin-top: 0px; margin-bottom: 5px;">
                         
-                        <div><span style="font-weight:600;">Quotation no:</span> <span t-field="doc.name"/></div>
-                        <t t-if="doc.laser_ref_no">
-                            <div><span style="font-weight:600;">Ref No:</span> <span t-field="doc.laser_ref_no"/></div>
-                        </t>
-                        <div><span style="font-weight:600;">Date:</span> <span t-esc="doc.date_order.strftime('%d / %m / %Y')"/></div>
-                    </div>
-
-
-
-                    <!-- Prepared For / TO Section -->
-                    <div style="margin-top: 15px; margin-bottom: 5px;">
-                        <div class="label-text" style="font-size: 13px; text-transform: uppercase; color: var(--secondary); margin-bottom: 4px;">TO :</div>
-                        <div class="blue-text" style="padding-left: 0; font-size: 16px;">
-                            <span t-esc="doc.partner_id.name"/>
+                        <!-- DATE & QUOTATION DETAILS (RIGHT ALIGNED) -->
+                        <div style="float: right; text-align: right; font-size: 14px; margin-top: 0px;">
+                            <div><span style="font-weight:600;">Quotation no:</span> <span t-field="doc.name"/></div>
+                            <t t-if="doc.laser_ref_no">
+                                <div><span style="font-weight:600;">Ref No:</span> <span t-field="doc.laser_ref_no"/></div>
+                            </t>
+                            <div><span style="font-weight:600;">Date:</span> <span t-esc="doc.date_order.strftime('%d / %m / %Y')"/></div>
                         </div>
-                        <div style="font-size: 14px; color: var(--secondary); margin-top: 2px; line-height: 1.4;">
-                            <t t-if="doc.partner_id.street">
-                                <div t-esc="doc.partner_id.street"/>
-                            </t>
-                            <t t-if="doc.partner_id.street2">
-                                <div t-esc="doc.partner_id.street2"/>
-                            </t>
-                            <div>
-                                <span t-if="doc.partner_id.city" t-esc="doc.partner_id.city"/>
-                                <t t-if="doc.partner_id.state_id">, <span t-esc="doc.partner_id.state_id.name"/></t>
-                                <t t-if="doc.partner_id.zip"> - <span t-esc="doc.partner_id.zip"/></t>
+
+                        <!-- Prepared For / TO Section (LEFT ALIGNED) -->
+                        <div>
+                            <div class="label-text" style="font-size: 13px; text-transform: uppercase; color: var(--secondary); margin-bottom: 2px;">TO :</div>
+                            <div class="blue-text" style="padding-left: 0; font-size: 16px;">
+                                <span t-esc="doc.partner_id.name"/>
                             </div>
-                            <t t-if="doc.partner_id.country_id">
-                                <div t-esc="doc.partner_id.country_id.name"/>
-                            </t>
+                            <div style="font-size: 14px; color: var(--secondary); margin-top: 2px; line-height: 1.4;">
+                                <t t-if="doc.partner_id.street">
+                                    <div t-esc="doc.partner_id.street"/>
+                                </t>
+                                <t t-if="doc.partner_id.street2">
+                                    <div t-esc="doc.partner_id.street2"/>
+                                </t>
+                                <div>
+                                    <span t-if="doc.partner_id.city" t-esc="doc.partner_id.city"/>
+                                    <t t-if="doc.partner_id.state_id">, <span t-esc="doc.partner_id.state_id.name"/></t>
+                                    <t t-if="doc.partner_id.zip"> - <span t-esc="doc.partner_id.zip"/></t>
+                                </div>
+                                <t t-if="doc.partner_id.country_id">
+                                    <div t-esc="doc.partner_id.country_id.name"/>
+                                </t>
+                            </div>
+                            <div style="margin-top: 4px; font-size: 14px;">
+                                <span class="label-text" style="font-size: 14px;">MOB NUM :</span>
+                                <span class="blue-inline" style="font-size: 14px; font-weight: 400;" t-esc="doc.partner_id.mobile or doc.partner_id.phone or doc.partner_id.commercial_partner_id.mobile or doc.partner_id.commercial_partner_id.phone"/>
+                            </div>
+                            <div t-if="doc.partner_id.email or doc.partner_id.commercial_partner_id.email" style="margin-top: 2px; font-size: 14px;">
+                                <span class="label-text" style="font-size: 14px;">EMAIL ID :</span>
+                                <span class="blue-inline" style="font-size: 14px; font-weight: 400;" t-esc="doc.partner_id.email or doc.partner_id.commercial_partner_id.email"/>
+                            </div>
+                            <div t-if="doc.partner_id.vat or doc.partner_id.commercial_partner_id.vat" style="margin-top: 2px; font-size: 14px;">
+                                <span class="label-text" style="font-size: 14px;">GST NUMBER :</span>
+                                <span class="blue-inline" style="font-size: 14px; font-weight: 400;" t-esc="doc.partner_id.vat or doc.partner_id.commercial_partner_id.vat"/>
+                            </div>
                         </div>
-                        <div style="margin-top: 6px; font-size: 14px;">
-                            <span class="label-text" style="font-size: 14px;">MOB NUM :</span>
-                            <span class="blue-inline" style="font-size: 14px;" t-esc="doc.partner_id.mobile or doc.partner_id.phone"/>
-                        </div>
+
+                        <div style="clear: both;"/>
                     </div>
 
 
