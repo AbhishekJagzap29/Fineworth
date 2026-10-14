@@ -79,10 +79,8 @@ class SaleOrderTechSpec(models.Model):
 
     @api.model
     def _default_sequence(self):
-        """Return the next sequence number based on the active_id context."""
-        if self.env.context.get("default_sequence"):
-            return self.env.context["default_sequence"]
-        order_id = self.env.context.get("default_order_id")
+        """Return the next sequence number based on existing records or context."""
+        order_id = self.env.context.get("default_order_id") or self.env.context.get("active_id")
         if order_id:
             last = self.search(
                 [("order_id", "=", order_id)],
@@ -137,10 +135,8 @@ class SaleOrderPlasmaSpec(models.Model):
 
     @api.model
     def _default_sequence(self):
-        """Return the next sequence number based on the active_id context."""
-        if self.env.context.get("default_sequence"):
-            return self.env.context["default_sequence"]
-        order_id = self.env.context.get("default_order_id")
+        """Return the next sequence number based on existing records or context."""
+        order_id = self.env.context.get("default_order_id") or self.env.context.get("active_id")
         if order_id:
             last = self.search(
                 [("order_id", "=", order_id)],
@@ -418,17 +414,22 @@ class SaleOrder(models.Model):
         self._normalize_spec_lines()
         return res
 
-    @api.onchange("tech_spec_ids", "tech_spec_ids.name", "tech_spec_ids.value")
+    @api.onchange("tech_spec_ids")
     def _onchange_tech_spec_ids(self):
         for order in self:
             order._resequence_lines(order.tech_spec_ids)
 
-    @api.onchange("plasma_spec_ids", "plasma_spec_ids.name", "plasma_spec_ids.value")
+    @api.onchange("plasma_spec_ids")
     def _onchange_plasma_spec_ids(self):
         for order in self:
             order._resequence_lines(order.plasma_spec_ids)
 
-    @api.onchange("plasma_optional_spec_ids", "plasma_optional_spec_ids.name", "plasma_optional_spec_ids.value")
+    @api.onchange("optional_spec_ids")
+    def _onchange_optional_spec_ids(self):
+        for order in self:
+            order._resequence_lines(order.optional_spec_ids)
+
+    @api.onchange("plasma_optional_spec_ids")
     def _onchange_plasma_optional_spec_ids(self):
         for order in self:
             order._resequence_lines(order.plasma_optional_spec_ids)
@@ -469,9 +470,14 @@ class SaleOrder(models.Model):
     def _get_selected_laser_optional_product_names(self):
         self.ensure_one()
         optional_names = {
+            self._normalize_optional_product_name(line.name)
+            for line in self.optional_spec_ids
+            if line.name
+        }
+        optional_names.update(
             self._normalize_optional_product_name(name)
             for name in OPTIONAL_SPEC_NAMES
-        }
+        )
         selected_names = set()
 
         for line in self.order_line.filtered(lambda order_line: not order_line.display_type):
@@ -573,9 +579,22 @@ class SaleOrderOptionalSpec(models.Model):
         ondelete="cascade",
         required=True,
     )
-    sequence = fields.Integer(string="Sr. No.", default=1)
+    sequence = fields.Integer(string="Sr. No.", default=lambda self: self._default_sequence())
     name = fields.Char(string="Description", required=True)
     value = fields.Char(string="Amount")
+
+    @api.model
+    def _default_sequence(self):
+        """Return the next sequence number based on existing records or context."""
+        order_id = self.env.context.get("default_order_id") or self.env.context.get("active_id")
+        if order_id:
+            last = self.search(
+                [("order_id", "=", order_id)],
+                order="sequence desc, id desc",
+                limit=1,
+            )
+            return (last.sequence + 1) if last else 1
+        return 1
 
     def _default_name_from_sequence(self, seq):
         if 1 <= seq <= len(OPTIONAL_SPEC_DEFAULTS):
@@ -591,6 +610,13 @@ class SaleOrderOptionalSpec(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
+            if vals.get("order_id") and not vals.get("sequence"):
+                last_sequence = self.search(
+                    [("order_id", "=", vals["order_id"])],
+                    order="sequence desc, id desc",
+                    limit=1,
+                ).sequence
+                vals["sequence"] = last_sequence + 1 if last_sequence else 1
             if not vals.get("name"):
                 seq = vals.get("sequence") or 1
                 vals["name"] = (
@@ -603,7 +629,6 @@ class SaleOrderOptionalSpec(models.Model):
         vals = vals.copy()
         if not self.env.context.get("allow_protected_fields"):
             vals.pop("sequence", None)
-            vals.pop("name", None)
         return super().write(vals)
 
 
@@ -618,9 +643,22 @@ class SaleOrderPlasmaOptionalSpec(models.Model):
         ondelete="cascade",
         required=True,
     )
-    sequence = fields.Integer(string="Sr. No.", default=1)
+    sequence = fields.Integer(string="Sr. No.", default=lambda self: self._default_sequence())
     name = fields.Char(string="Description", required=True)
     value = fields.Char(string="Amount")
+
+    @api.model
+    def _default_sequence(self):
+        """Return the next sequence number based on existing records or context."""
+        order_id = self.env.context.get("default_order_id") or self.env.context.get("active_id")
+        if order_id:
+            last = self.search(
+                [("order_id", "=", order_id)],
+                order="sequence desc, id desc",
+                limit=1,
+            )
+            return (last.sequence + 1) if last else 1
+        return 1
 
     def _default_name_from_sequence(self, seq):
         if 1 <= seq <= len(PLASMA_OPTIONAL_SPEC_DEFAULTS):
@@ -630,6 +668,13 @@ class SaleOrderPlasmaOptionalSpec(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
+            if vals.get("order_id") and not vals.get("sequence"):
+                last_sequence = self.search(
+                    [("order_id", "=", vals["order_id"])],
+                    order="sequence desc, id desc",
+                    limit=1,
+                ).sequence
+                vals["sequence"] = last_sequence + 1 if last_sequence else 1
             if not vals.get("name"):
                 seq = vals.get("sequence") or 1
                 vals["name"] = self._default_name_from_sequence(seq)

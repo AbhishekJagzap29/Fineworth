@@ -376,7 +376,8 @@
                             </div>
 
             </div>
-                        <t t-set="plasma_page1" t-value="doc.plasma_spec_ids[:14]"/>
+                        <t t-set="plasma_specs" t-value="doc.plasma_spec_ids.sorted('sequence')"/>
+                        <t t-set="plasma_page1" t-value="plasma_specs[:14]"/>
                         <div class="title">PLASMA SPECIFICATION</div>
                         <table class="spec-table" style="width:100%; border-collapse:collapse;">
                             <thead>
@@ -405,7 +406,7 @@
                 <div class="page fw2">
                     <t t-call="laser_quotation_report.fw_powermax125_page_header"/>
 
-                    <t t-set="plasma_page2" t-value="doc.plasma_spec_ids[14:]"/>
+                    <t t-set="plasma_page2" t-value="plasma_specs[14:]"/>
                     <t t-if="plasma_page2">
                         <div class="title">PLASMA SPECIFICATION</div>
                         <table class="spec-table" style="width:100%; border-collapse:collapse;">

@@ -88,6 +88,10 @@
                 <attribute name="string">Rate (INR)</attribute>
             </xpath>
 
+            <xpath expr="//field[@name='order_line']/tree//field[@name='tax_id']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+
             <xpath expr="//field[@name='order_line']/form//field[@name='price_unit']" position="attributes">
                 <attribute name="string">Rate (INR)</attribute>
             </xpath>
@@ -113,9 +117,10 @@
                       string="Technical Specification"
                       invisible="quotation_type != 'laser'">
                     <group>
-                        <field name="tech_spec_ids" context="{'default_order_id': id, 'default_sequence': 16}">
+                        <field name="tech_spec_ids" context="{'default_order_id': id}">
                             <tree editable="bottom">
-                                <field name="sequence" readonly="1"/>
+                                <field name="sequence" widget="handle"/>
+                                <field name="sequence" string="Sr. No." readonly="1"/>
                                 <field name="name"/>
                                 <field name="value"/>
                             </tree>
@@ -135,9 +140,10 @@
                       autofocus="autofocus"
                       invisible="quotation_type != 'plasma'">
                     <group>
-                        <field name="plasma_spec_ids" context="{'default_order_id': id, 'default_sequence': 20}">
+                        <field name="plasma_spec_ids" context="{'default_order_id': id}">
                             <tree editable="bottom">
-                                <field name="sequence" readonly="1"/>
+                                <field name="sequence" widget="handle"/>
+                                <field name="sequence" string="Sr. No." readonly="1"/>
                                 <field name="name"/>
                                 <field name="value"/>
                             </tree>
@@ -156,17 +162,18 @@
                       string="Optional Products"
                       invisible="quotation_type != 'laser'">
                     <group>
-                        <field name="optional_spec_ids" context="{'default_order_id': active_id}">
-                            <tree editable="bottom" create="false" delete="true">
-                                <field name="sequence" readonly="1"/>
-                                <field name="name" readonly="1" force_save="1"/>
+                        <field name="optional_spec_ids" context="{'default_order_id': id}">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="sequence" string="Sr. No." readonly="1"/>
+                                <field name="name"/>
                                 <field name="value"/>
                             </tree>
                             <form string="Optional Item">
                                 <group>
                                     <field name="order_id" invisible="1" readonly="1"/>
                                     <field name="sequence" readonly="1"/>
-                                    <field name="name" readonly="1" force_save="1"/>
+                                    <field name="name"/>
                                     <field name="value"/>
                                 </group>
                             </form>
@@ -177,9 +184,10 @@
                       string="Optional Products"
                       invisible="quotation_type != 'plasma'">
                     <group>
-                        <field name="plasma_optional_spec_ids" context="{'default_order_id': id, 'default_sequence': 4}">
-                            <tree editable="bottom" create="false">
-                                <field name="sequence" readonly="1"/>
+                        <field name="plasma_optional_spec_ids" context="{'default_order_id': id}">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="sequence" string="Sr. No." readonly="1"/>
                                 <field name="name"/>
                                 <field name="value"/>
                             </tree>
