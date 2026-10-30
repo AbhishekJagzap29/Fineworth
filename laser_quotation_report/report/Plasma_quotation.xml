@@ -501,7 +501,7 @@
         text-transform:uppercase;
         letter-spacing:1px;">
 
-        <t t-esc="doc.currency_id.with_context(lang='en_IN').amount_to_text(doc.plasma_final_amount)"/>
+        <t t-esc="doc.amount_to_text_inr(doc.plasma_final_amount)"/>
 
     </span>
 

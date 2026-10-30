@@ -184,6 +184,103 @@ class SaleOrderPlasmaTaxOption(models.Model):
     sequence = fields.Integer(default=10)
 
 
+INDIAN_ONES = [
+    "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+    "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
+    "Seventeen", "Eighteen", "Nineteen",
+]
+
+INDIAN_TENS = [
+    "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety",
+]
+
+
+def _two_digits_to_words(n):
+    if n < 20:
+        return INDIAN_ONES[n]
+    tens = INDIAN_TENS[n // 10]
+    rest = INDIAN_ONES[n % 10]
+    return f"{tens} {rest}".strip()
+
+
+def _three_digits_to_words(n):
+    words = []
+    hundreds = n // 100
+    rem = n % 100
+    if hundreds:
+        words.append(f"{INDIAN_ONES[hundreds]} Hundred")
+    if rem:
+        words.append(_two_digits_to_words(rem))
+    return " ".join(words)
+
+
+def _number_to_indian_sub(n):
+    if n >= 10000000:
+        c = n // 10000000
+        r = n % 10000000
+        res = [f"{_number_to_indian_sub(c)} Crore"]
+        if r:
+            res.append(_number_to_indian_sub(r))
+        return " ".join(res)
+    if n >= 100000:
+        l = n // 100000
+        r = n % 100000
+        res = [f"{_two_digits_to_words(l)} Lakh"]
+        if r:
+            res.append(_number_to_indian_sub(r))
+        return " ".join(res)
+    if n >= 1000:
+        t = n // 1000
+        r = n % 1000
+        res = [f"{_two_digits_to_words(t)} Thousand"]
+        if r:
+            res.append(_three_digits_to_words(r))
+        return " ".join(res)
+    if n >= 100:
+        return _three_digits_to_words(n)
+    return _two_digits_to_words(n)
+
+
+def amount_to_text_indian(amount):
+    """Convert amount to text in the Indian numbering format (Crore, Lakh, Thousand)."""
+    if not amount:
+        return "Zero Rupees Only"
+
+    try:
+        amount = round(float(amount), 2)
+    except (ValueError, TypeError):
+        return "Zero Rupees Only"
+
+    is_negative = amount < 0
+    amount = abs(amount)
+
+    integer_part = int(amount)
+    fractional_part = int(round((amount - integer_part) * 100))
+
+    if integer_part == 0 and fractional_part == 0:
+        return "Zero Rupees Only"
+
+    rupees_str = _number_to_indian_sub(integer_part).strip() if integer_part else ""
+    result = []
+    if is_negative:
+        result.append("Minus")
+
+    if rupees_str:
+        unit = "Rupee" if rupees_str == "One" else "Rupees"
+        result.append(f"{rupees_str} {unit}")
+
+    if fractional_part:
+        paise_str = _two_digits_to_words(fractional_part)
+        p_unit = "Paisa" if paise_str == "One" else "Paise"
+        if rupees_str:
+            result.append(f"and {paise_str} {p_unit}")
+        else:
+            result.append(f"{paise_str} {p_unit}")
+
+    result.append("Only")
+    return " ".join(result)
+
+
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
@@ -567,6 +664,13 @@ class SaleOrder(models.Model):
                 )
         return super()._find_mail_template()
 
+    def amount_to_text_inr(self, amount=None):
+        """Convert an amount into words using the Indian numbering system (Lakhs and Crores)."""
+        self.ensure_one()
+        if amount is None:
+            amount = self.amount_total
+        return amount_to_text_indian(amount)
+
 
 class SaleOrderOptionalSpec(models.Model):
     _name = "sale.order.optional.spec"
@@ -695,3 +799,14 @@ class SaleOrderLine(models.Model):
         related="product_id.l10n_in_hsn_code",
         readonly=True,
     )
+
+
+class ResCurrency(models.Model):
+    _inherit = "res.currency"
+
+    def amount_to_text(self, amount):
+        self.ensure_one()
+        if self.name == "INR" or self.env.context.get("lang") == "en_IN":
+            return amount_to_text_indian(amount)
+        return super().amount_to_text(amount)
+

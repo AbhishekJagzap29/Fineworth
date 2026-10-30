@@ -445,7 +445,7 @@
                                 <div>
                                     <span style="font-weight: 600; color: var(--primary);">Rupees in words : </span>
                                     <span style="text-transform: uppercase;">
-                                        <span t-esc="doc.currency_id.with_context(lang='en_IN').amount_to_text(doc.amount_total)"/>
+                                        <span t-esc="doc.amount_to_text_inr(doc.amount_total)"/>
                                     </span>
                             </div>
                         </div>
